@@ -43,6 +43,7 @@ class RegisterFragment : Fragment() {
 
     private fun addCallBack() {
         binding.signUpButton.setOnClickListener {
+            clearErrors()
             val email = binding.emailEditText.editText?.text.toString()
             val password = binding.passwordEditText.editText?.text.toString()
             val firstName = binding.firstNameEditText.editText?.text.toString()
@@ -50,7 +51,7 @@ class RegisterFragment : Fragment() {
             val phoneNumber = binding.phoneNumberEditText.editText?.text.toString()
             if (Validation.validateInput(email, password, firstName, lastName, phoneNumber)) {
 
-                checkUserName(email, password, firstName, lastName, phoneNumber)
+                checkEmail(email, password, firstName, lastName, phoneNumber)
 
             } else {
                 if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
@@ -79,7 +80,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun checkUserName(
+    private fun checkEmail(
         email: String,
         password: String,
         firstName: String,
@@ -127,6 +128,14 @@ class RegisterFragment : Fragment() {
 
     private fun navigateToLoginFragment() {
         findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+    }
+
+    private fun clearErrors() {
+        binding.emailEditText.error = null
+        binding.passwordEditText.error = null
+        binding.firstNameEditText.error = null
+        binding.lastNameEditText.error = null
+        binding.phoneNumberEditText.error = null
     }
 
     override fun onDestroyView() {

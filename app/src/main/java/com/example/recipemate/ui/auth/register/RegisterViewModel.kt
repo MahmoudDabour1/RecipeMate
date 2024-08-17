@@ -14,7 +14,7 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     val userEmailRegistered: LiveData<Boolean> = _userEmailRegistered
 
     private val _registrationStatus = MutableLiveData<Boolean>()
-    val registrationStatus: LiveData<Boolean> get() = _registrationStatus
+    val registrationStatus: LiveData<Boolean> = _registrationStatus
 
     fun checkIfEmailRegistered(username: String) {
         viewModelScope.launch {
