@@ -46,6 +46,8 @@ class LoginFragment : Fragment() {
             if (registered) {
                 SharedPrefUtils.setLoggedIn(requireContext(), true)
                 navigateToRecipeActivity()
+            } else {
+                binding.emailEditText.error = "Invalid email address"
             }
 
         }
@@ -72,9 +74,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun validateInput(username: String, password: String): Boolean {
+        clearErrors()
         return when {
             username.isEmpty() -> {
-                binding.emailEditText.error = "Username is required"
+                binding.emailEditText.error = "Email is required"
                 false
             }
 
@@ -96,6 +99,11 @@ class LoginFragment : Fragment() {
         val intent = Intent(requireContext(), RecipeActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
+    }
+
+    private fun clearErrors() {
+        binding.emailEditText.error = null
+        binding.passwordEditText.error = null
     }
 
     override fun onDestroyView() {
