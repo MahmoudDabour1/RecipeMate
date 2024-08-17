@@ -12,13 +12,11 @@ import com.example.recipemate.data.source.RecipeDetails
 import com.example.recipemate.databinding.FragmentSearchBinding
 import com.example.recipemate.ui.recipe.search.viewModel.SearchViewModel
 
-
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdaptor
     private lateinit var searchRecipesRecycler: RecyclerView
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +31,6 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initUI()
         observeViewModel()
-        viewModel.fetchSearchRecipes("")
     }
 
     private fun initUI() {
@@ -48,8 +45,13 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let {
-                    viewModel.fetchSearchRecipes(it)
+                if (newText.isNullOrEmpty()) {
+                    binding.lottieAnimationView.visibility = View.VISIBLE
+                    binding.recyclerViewSearchRecipes.visibility = View.GONE
+                } else {
+                    binding.lottieAnimationView.visibility = View.GONE
+                    binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
+                    viewModel.fetchSearchRecipes(newText)
                 }
                 return false
             }
@@ -60,13 +62,20 @@ class SearchFragment : Fragment() {
         viewModel.searchRecipes.observe(viewLifecycleOwner) { recipes ->
             recipes?.let {
                 searchRecipesAdapter.updateRecipes(it)
+                if (it.isEmpty()) {
+                    binding.lottieAnimationView.visibility = View.VISIBLE
+                    binding.recyclerViewSearchRecipes.visibility = View.GONE
+                } else {
+                    binding.lottieAnimationView.visibility = View.GONE
+                    binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
+                }
             }
         }
     }
 
     private val communicator = object : Communicator {
         override fun onItemClicked(position: RecipeDetails) {
-
+            // Handle item click
         }
     }
 }
