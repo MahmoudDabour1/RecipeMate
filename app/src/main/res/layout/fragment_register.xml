@@ -67,12 +67,12 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/usernameEditText"
+            android:id="@+id/emailEditText"
             style="@style/CustomTextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
-            android:hint="@string/email_or_phone_number"
+            android:hint="@string/email"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lastNameEditText"
@@ -94,7 +94,7 @@
             app:endIconMode="password_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
+            app:layout_constraintTop_toBottomOf="@+id/emailEditText"
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText

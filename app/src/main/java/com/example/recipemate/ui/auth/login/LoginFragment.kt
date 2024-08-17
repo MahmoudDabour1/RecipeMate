@@ -55,10 +55,10 @@ class LoginFragment : Fragment() {
     private fun addCallBack() {
         binding.apply {
             loginButton.setOnClickListener {
-                val username = binding.usernameEditText.editText?.text.toString()
+                val email = binding.emailEditText.editText?.text.toString()
                 val password = binding.passwordEditText.editText?.text.toString()
-                if (validateInput(username, password)) {
-                    loginViewModel.login(username, password)
+                if (validateInput(email, password)) {
+                    loginViewModel.login(email, password)
                 }
             }
             signUpButton.setOnClickListener {
@@ -74,7 +74,7 @@ class LoginFragment : Fragment() {
     private fun validateInput(username: String, password: String): Boolean {
         return when {
             username.isEmpty() -> {
-                binding.usernameEditText.error = "Username is required"
+                binding.emailEditText.error = "Username is required"
                 false
             }
 

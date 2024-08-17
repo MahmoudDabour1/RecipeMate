@@ -12,9 +12,9 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _loginResult = MutableLiveData<Boolean>()
     val loginResult: LiveData<Boolean> = _loginResult
 
-    fun login(username: String, password: String) {
+    fun login(email: String, password: String) {
         viewModelScope.launch {
-            val status = repository.authenticateUser(username, password)
+            val status = repository.authenticateUser(email, password)
             _loginResult.value = status
         }
     }
