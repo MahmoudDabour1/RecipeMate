@@ -8,7 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.ItemPopularRecipeBinding
 
-class PopularAdapter(private val seafoodRecipes: ArrayList<Recipe>, private val communicator: Communicator) :
+class PopularAdapter(
+    private val seafoodRecipes: ArrayList<Recipe>,
+    private val communicator: Communicator
+) :
     RecyclerView.Adapter<PopularAdapter.MealsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsViewHolder {

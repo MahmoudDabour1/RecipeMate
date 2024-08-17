@@ -7,9 +7,9 @@
     android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="8dp">
+    android:layout_margin="@dimen/_8dp"
+    app:cardCornerRadius="@dimen/_8dp"
+    app:cardElevation="@dimen/_8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageRecentView"
             style="@style/ImageStyle"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/_150dp"
             android:src="@drawable/your_dish_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,9 +45,7 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/ic_bookmark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imageRecentView"
-
-            />
+            app:layout_constraintTop_toBottomOf="@id/imageRecentView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -55,42 +53,3 @@
 
 </androidx.cardview.widget.CardView>
 
-    <!--        <TextView
-                android:id="@+id/textViewCalories"
-                style="@style/textViewStyle"
-                android:text="description"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewName" />
-
-            <TextView
-                android:id="@+id/textViewFats"
-                style="@style/textViewStyle"
-                android:text="fats"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewCalories" />
-
-            <TextView
-                android:id="@+id/textViewDescription"
-                style="@style/textViewStyle"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="description"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFats" />
-
-            <ImageView
-                android:id="@+id/imageViewFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewDescription"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
-    -->

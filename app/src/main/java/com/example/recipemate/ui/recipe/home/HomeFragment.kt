@@ -1,6 +1,7 @@
 package com.example.recipemate.ui.recipe.home
 
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,6 +74,10 @@ class HomeFragment : Fragment() {
         viewModel.fetchPopularRecipes()
         viewModel.fetchRecentRecipes()
         viewModel.fetchCategories()
+        binding.textFieldSearchView.inputType = InputType.TYPE_NULL
+        binding.textFieldSearchView.setOnClickListener {
+
+        }
     }
 
 

@@ -70,35 +70,7 @@ class RecipeViewModel : ViewModel() {
             }
         }
     }
-    /*fun fetchRecipes() {
-        viewModelScope.launch {
-            try {
-                _recipes.value = repository.getRecipe()
-                _status.value = "Success"
-                Log.e("TAG", "success to fetch search recipes: ")
-            } catch (e: Exception) {
-                _status.value = "Error ${e.message}"
-                Log.e("TAG", "failed to fetch search recipes: ")
 
-            }
-        }
-    }
-
-
-    fun fetchRecipesByCategory(category: String) {
-        viewModelScope.launch {
-            try {
-                _recipes.value = repository.fetchRecipesByCategory(category)
-                _status.value = "Success"
-                Log.e("TAG", "success to fetch search recipes: ")
-            } catch (e: Exception) {
-                _status.value = "Error ${e.message}"
-                Log.e("TAG", "failed to fetch search recipes: ")
-
-            }
-        }
-    }
-*/
 
     fun fetchCategories() {
         viewModelScope.launch {

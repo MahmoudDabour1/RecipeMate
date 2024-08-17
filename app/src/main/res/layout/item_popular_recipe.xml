@@ -34,30 +34,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8dp"
-                android:textSize="@dimen/_16sp"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:padding="@dimen/_8dp"
+                android:ellipsize="none"
                 android:gravity="center"
+                android:maxLines="1"
+                android:padding="@dimen/_8dp"
+                android:textSize="@dimen/_16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
                 tools:text="Wagyu Rendang" />
-<!--
-            <TextView
-                android:id="@+id/textViewHomePopularKitche"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_8dp"
-                android:layout_marginTop="@dimen/_8dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="@dimen/_16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName"
-                tools:text="by Jacob Jones" />-->
 
             <TextView
                 android:id="@+id/textViewHomePopularTime"
@@ -84,7 +69,6 @@
                 app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

@@ -57,6 +57,7 @@
             android:layout_marginBottom="@dimen/_8dp"
             android:background="@drawable/search_view_background"
             android:iconifiedByDefault="false"
+
             android:queryHint="Enter Recipe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,8 +66,8 @@
         <TextView
             android:id="@+id/textViewPopularCategory"
             style="@style/textViewStyle"
-            android:text="@string/popular_category"
             android:layout_marginTop="@dimen/_16dp"
+            android:text="@string/popular_category"
             android:textSize="@dimen/_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -103,9 +104,9 @@
         <TextView
             android:id="@+id/textViewRecentRecipes"
             style="@style/textViewStyle"
+            android:layout_marginTop="@dimen/_16dp"
             android:text="@string/recent_recipes"
             android:textSize="@dimen/_16sp"
-            android:layout_marginTop="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularRecipesRecyclerView" />
