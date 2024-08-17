@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.recipemate.R
 import com.example.recipemate.databinding.FragmentSplashBinding
 import com.example.recipemate.ui.recipe.RecipeActivity
 import com.example.recipemate.utils.SharedPrefUtils
@@ -30,20 +31,33 @@ class SplashFragment : Fragment() {
 
         view.postDelayed({
             checkLoginStatus()
+
         }, 3000)
     }
 
     private fun checkLoginStatus() {
-
         val isLoggedIn = SharedPrefUtils.isLoggedIn(requireContext())
 
         if (isLoggedIn) {
-            val intent = Intent(requireContext(), RecipeActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            navigateToRecipeActivity()
         } else {
-
+            navigateToLoginFragment()
         }
+    }
+
+    private fun navigateToLoginFragment() {
+        findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+    }
+
+    private fun navigateToRecipeActivity() {
+        val intent = Intent(requireContext(), RecipeActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
