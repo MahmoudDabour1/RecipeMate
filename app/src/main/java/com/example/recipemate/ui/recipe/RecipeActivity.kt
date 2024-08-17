@@ -6,6 +6,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.recipemate.R
 import com.example.recipemate.databinding.ActivityRecipeBinding
+import com.example.recipemate.ui.recipe.home.RecipeViewModel
 
 class RecipeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRecipeBinding
