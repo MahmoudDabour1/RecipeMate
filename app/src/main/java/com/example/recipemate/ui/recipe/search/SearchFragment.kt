@@ -46,10 +46,10 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    binding.lottieAnimationView.visibility = View.VISIBLE
+                    binding.lottieAnimationSearchView.visibility = View.VISIBLE
                     binding.recyclerViewSearchRecipes.visibility = View.GONE
                 } else {
-                    binding.lottieAnimationView.visibility = View.GONE
+                    binding.lottieAnimationSearchView.visibility = View.GONE
                     binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
                     viewModel.fetchSearchRecipes(newText)
                 }
@@ -63,10 +63,10 @@ class SearchFragment : Fragment() {
             recipes?.let {
                 searchRecipesAdapter.updateRecipes(it)
                 if (it.isEmpty()) {
-                    binding.lottieAnimationView.visibility = View.VISIBLE
+                    binding.lottieAnimationSearchView.visibility = View.VISIBLE
                     binding.recyclerViewSearchRecipes.visibility = View.GONE
                 } else {
-                    binding.lottieAnimationView.visibility = View.GONE
+                    binding.lottieAnimationSearchView.visibility = View.GONE
                     binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
                 }
             }
