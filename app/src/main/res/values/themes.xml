@@ -6,4 +6,18 @@
     </style>
 
     <style name="Theme.RecipeMate" parent="Base.Theme.RecipeMate" />
+    <style name="Circular">
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="titleValues" >
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/greyColor</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="sectionTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
 </resources>

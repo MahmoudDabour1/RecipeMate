@@ -1,14 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.recipe.user.UserFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/tvSetting"
+        style="@style/ShapeAppearanceOverlay.Material3.Corner.Top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8dp"
+        android:text="@string/settings"
+        android:textSize="@dimen/_24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:padding="@dimen/_8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_user_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSetting"
+        app:shapeAppearanceOverlay="@style/Circular"
+        app:strokeWidth="@dimen/_2dp" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:text="@string/user_name"
+        android:textSize="@dimen/_16sp"
+        app:layout_constraintEnd_toEndOf="@+id/btnEditPhoto"
+        app:layout_constraintStart_toStartOf="@+id/btnEditPhoto"
+        app:layout_constraintTop_toBottomOf="@+id/userImage" />
+
+    <Button
+        android:id="@+id/btnEditPhoto"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:text="@string/edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+
+    <TextView
+        android:id="@+id/tvAbout"
+        style="@style/sectionTitle"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_24dp"
+        android:text="@string/about"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditPhoto" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAbout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        app:cardCornerRadius="@dimen/_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAbout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/emailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                android:text="@string/email"
+                app:drawableStartCompat="@drawable/ic_message"
+                app:drawableTint="@color/blackColor"
+                app:layout_constraintBottom_toBottomOf="@+id/tvEmailAddress"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvEmailAddress"
+                style="@style/titleValues"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/emailTitle"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="ss1s1s1@example.com" />
+
+            <TextView
+                android:id="@+id/tvPhoneTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                android:text="@string/phone"
+                app:drawableStartCompat="@drawable/ic_phone"
+                app:drawableTint="@color/blackColor"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/emailTitle" />
+
+            <TextView
+                android:id="@+id/tvPhoneNumber"
+                style="@style/titleValues"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvPhoneTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmailAddress"
+                tools:text="01822859357" />
+
+            <TextView
+                android:id="@+id/tvGenderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                android:text="@string/gender"
+                app:drawableStartCompat="@drawable/ic_girl"
+                app:drawableTint="@color/blackColor"
+                app:layout_constraintBottom_toBottomOf="@+id/tvGenderValue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhoneTitle" />
+
+            <TextView
+                android:id="@+id/tvGenderValue"
+                style="@style/titleValues"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvGenderTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber"
+                tools:text="Female" />
+
+            <TextView
+                android:id="@+id/tvPassTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                android:text="@string/password"
+                app:drawableStartCompat="@drawable/ic_lock"
+                app:drawableTint="@color/blackColor"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvGenderTitle" />
+
+            <TextView
+                android:id="@+id/tvPassValue"
+                style="@style/titleValues"
+                android:drawablePadding="@dimen/_8dp"
+                android:padding="@dimen/_16dp"
+                android:text="@string/display_pass"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvPassTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvGenderValue" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardSystem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_16dp"
+        app:cardCornerRadius="@dimen/_16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSystem">
+
+        <TextView
+            android:id="@+id/tvSignOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/redColor"
+            android:gravity="center"
+            android:padding="@dimen/_16dp"
+            android:text="@string/sign_out"
+            android:textColor="@color/whiteColor"
+            app:drawableStartCompat="@drawable/ic_logout"
+            app:drawableTint="@color/whiteColor"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvGenderTitle" />
+
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tvSystem"
+        style="@style/sectionTitle"
+        android:layout_marginStart="@dimen/_24dp"
+        android:layout_marginTop="@dimen/_16dp"
+        android:text="@string/system"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardAbout" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
