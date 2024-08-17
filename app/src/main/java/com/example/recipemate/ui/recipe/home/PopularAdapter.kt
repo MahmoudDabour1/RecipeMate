@@ -30,6 +30,7 @@ class PopularAdapter(private val seafoodRecipes: ArrayList<Recipe>, private val 
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
             binding.textViewHomePopularName.text = recipe.strMeal
+            binding.textViewHomePopularTime.text = "20 mins"
             Glide.with(binding.imageViewRecipe.context).load(recipe.strMealThumb)
                 .into(binding.imageViewRecipe)
             itemView.setOnClickListener {

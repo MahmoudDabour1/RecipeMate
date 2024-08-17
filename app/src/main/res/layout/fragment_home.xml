@@ -14,8 +14,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/textViewFindRecipe"
             android:layout_width="0dp"
-            android:layout_marginTop="@dimen/_24dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -66,10 +66,25 @@
             android:id="@+id/textViewPopularCategory"
             style="@style/textViewStyle"
             android:text="@string/popular_category"
+            android:layout_marginTop="@dimen/_16dp"
             android:textSize="@dimen/_16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldSearchView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/categoryRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPopularCategory"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_row_category" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/popularRecipesRecyclerView"
@@ -81,15 +96,16 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPopularCategory"
+            app:layout_constraintTop_toBottomOf="@+id/categoryRecyclerView"
             tools:itemCount="5"
             tools:listitem="@layout/item_popular_recipe" />
 
         <TextView
-            android:id="@+id/textViewPopular"
+            android:id="@+id/textViewRecentRecipes"
             style="@style/textViewStyle"
             android:text="@string/recent_recipes"
             android:textSize="@dimen/_16sp"
+            android:layout_marginTop="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularRecipesRecyclerView" />
@@ -97,14 +113,14 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentRecipesRecyclerView"
             android:layout_width="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
             android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewPopular"
+            app:layout_constraintTop_toBottomOf="@+id/textViewRecentRecipes"
             tools:itemCount="5"
             tools:listitem="@layout/item_recent_recipes" />
 

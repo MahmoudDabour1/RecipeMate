@@ -11,7 +11,7 @@ import com.example.recipemate.ui.recipe.home.PopularAdapter.Communicator
 
 class RecentAdapter(
     private val recentRecipes: ArrayList<Recipe>,
-    private val communicator: Communicator
+    private val communicator: Communicator,
 ) :
     RecyclerView.Adapter<RecentAdapter.RecentViewHolder>() {
 
@@ -25,6 +25,7 @@ class RecentAdapter(
             itemView.setOnClickListener {
                 communicator.onItemClicked(recipe)
             }
+
         }
     }
 
@@ -54,4 +55,12 @@ class RecentAdapter(
 
 }
 
+
+/*binding.imageViewFavorite.setOnClickListener {
+                recyclerInterface.onItemClick(adapterPosition)
+                recipe.isSelected = !recipe.isSelected
+                binding.imageViewFavorite.setImageResource(
+                    if (recipe.isSelected) R.drawable.ic_bookmark_red else R.drawable.ic_bookmark_white
+                )
+            }*/
 

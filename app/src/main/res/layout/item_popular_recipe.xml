@@ -33,16 +33,17 @@
                 style="@style/textViewStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16dp"
                 android:layout_marginTop="@dimen/_8dp"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:textSize="@dimen/_16sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:padding="@dimen/_8dp"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
                 tools:text="Wagyu Rendang" />
-
+<!--
             <TextView
                 android:id="@+id/textViewHomePopularKitche"
                 style="@style/textViewStyle"
@@ -56,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName"
-                tools:text="by Jacob Jones" />
+                tools:text="by Jacob Jones" />-->
 
             <TextView
                 android:id="@+id/textViewHomePopularTime"
@@ -66,7 +67,7 @@
                 android:textColor="@android:color/holo_red_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularKitche"
+                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName"
                 tools:text="20 Mins" />
 
             <ImageView
@@ -80,7 +81,7 @@
                 android:src="@drawable/ic_bookmark_white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularKitche" />
+                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

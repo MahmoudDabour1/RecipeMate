@@ -6,24 +6,74 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipemate.data.repository.RecipeRepository
+import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import kotlinx.coroutines.launch
 
 class RecipeViewModel : ViewModel() {
 
-    private val _seafoodRecipes: MutableLiveData<ArrayList<Recipe>> = MutableLiveData()
+    private val _popularRecipes = MutableLiveData<List<Recipe>>()
+    val popularRecipes: LiveData<List<Recipe>> get() = _popularRecipes
+
+    private val _recentRecipes = MutableLiveData<List<Recipe>>()
+    val recentRecipes: LiveData<List<Recipe>> get() = _recentRecipes
+
+
+    private val _recipes: MutableLiveData<ArrayList<Recipe>> = MutableLiveData()
     private val _status: MutableLiveData<String> = MutableLiveData()
-    val seafoodRecipe: MutableLiveData<ArrayList<Recipe>> = _seafoodRecipes
+
+
+    val recipe: MutableLiveData<ArrayList<Recipe>> = _recipes
+
+
     private val repository = RecipeRepository()
 
-    private val _categories = MutableLiveData<List<String>>()
-    val categories: LiveData<List<String>> get() = _categories
 
+    private val _categories = MutableLiveData<List<Category>>()
+    val categories: LiveData<List<Category>> get() = _categories
 
-    fun fetchRecipes() {
+    fun fetchPopularRecipes() {
         viewModelScope.launch {
             try {
-                _seafoodRecipes.value = repository.getSeafoodRecipes()
+                val popularList = repository.getRecipe()
+                _popularRecipes.postValue(popularList)
+                _status.value = "Success fetching popular recipes"
+            } catch (e: Exception) {
+                _status.value = "Error fetching popular recipes: ${e.message}"
+                Log.e("RecipeViewModel", "Error fetching popular recipes", e)
+            }
+        }
+    }
+
+    fun fetchRecipesByCategory(category: String) {
+        viewModelScope.launch {
+            try {
+                val recipesByCategory = repository.fetchRecipesByCategory(category)
+                _popularRecipes.postValue(recipesByCategory)
+                _status.value = "Success fetching recipes by category"
+            } catch (e: Exception) {
+                _status.value = "Error fetching recipes by category: ${e.message}"
+                Log.e("RecipeViewModel", "Error fetching recipes by category", e)
+            }
+        }
+    }
+
+    fun fetchRecentRecipes() {
+        viewModelScope.launch {
+            try {
+                val recentList = repository.fetchRecipesByCategory("Seafood") // Fixed category
+                _recentRecipes.postValue(recentList)
+                _status.value = "Success fetching recent recipes"
+            } catch (e: Exception) {
+                _status.value = "Error fetching recent recipes: ${e.message}"
+                Log.e("RecipeViewModel", "Error fetching recent recipes", e)
+            }
+        }
+    }
+    /*fun fetchRecipes() {
+        viewModelScope.launch {
+            try {
+                _recipes.value = repository.getRecipe()
                 _status.value = "Success"
                 Log.e("TAG", "success to fetch search recipes: ")
             } catch (e: Exception) {
@@ -34,6 +84,21 @@ class RecipeViewModel : ViewModel() {
         }
     }
 
+
+    fun fetchRecipesByCategory(category: String) {
+        viewModelScope.launch {
+            try {
+                _recipes.value = repository.fetchRecipesByCategory(category)
+                _status.value = "Success"
+                Log.e("TAG", "success to fetch search recipes: ")
+            } catch (e: Exception) {
+                _status.value = "Error ${e.message}"
+                Log.e("TAG", "failed to fetch search recipes: ")
+
+            }
+        }
+    }
+*/
 
     fun fetchCategories() {
         viewModelScope.launch {
