@@ -1,9 +1,32 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.RecipeMate" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/primaryColor</item>
     </style>
 
     <style name="Theme.RecipeMate" parent="Base.Theme.RecipeMate" />
+
+    <style name="AuthFirstHeaderTextStyle">
+        <item name="android:textColor">@color/blackColor</item>
+        <item name="android:textSize">@dimen/_24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="AuthBodyTextStyle">
+        <item name="android:textColor">@color/greyColor</item>
+        <item name="android:textSize">@dimen/_16sp</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
+    <style name="CustomTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <item name="boxBackgroundMode">outline</item>
+        <item name="boxStrokeColor">@color/primaryColor</item>
+        <item name="boxCornerRadiusTopStart">@dimen/_24dp</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/_24dp</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/_24dp</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/_24dp</item>
+    </style>
 </resources>
