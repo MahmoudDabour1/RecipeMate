@@ -106,7 +106,7 @@
                 android:drawablePadding="@dimen/_8dp"
                 android:padding="@dimen/_16dp"
                 android:text="@string/phone"
-                app:drawableStartCompat="@drawable/ic_phone"
+                app:drawableStartCompat="@drawable/ic_smartphone"
                 app:drawableTint="@color/blackColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
                 app:layout_constraintStart_toStartOf="parent"

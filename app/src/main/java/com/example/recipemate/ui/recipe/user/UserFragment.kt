@@ -1,25 +1,31 @@
 package com.example.recipemate.ui.recipe.user
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import android.os.Bundle
 import android.provider.MediaStore
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.example.recipemate.R
 import com.example.recipemate.databinding.FragmentUserBinding
+import com.example.recipemate.ui.auth.AuthActivity
+import com.example.recipemate.ui.auth.login.LoginFragment
+import com.example.recipemate.utils.Constants.Companion.IS_LOGGED_OUT
 import com.example.recipemate.utils.Constants.Companion.PICK_IMAGE_CODE
 import com.example.recipemate.utils.Constants.Companion.REQUEST_PERMISSION_CODE
-
+import com.example.recipemate.utils.SharedPrefUtils
 
 
 class UserFragment : Fragment() {
@@ -37,6 +43,7 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         changeProfilePicture()
+        showSignOutDialog()
     }
 
     private fun changeProfilePicture() {
@@ -104,9 +111,7 @@ class UserFragment : Fragment() {
         if (requestCode == PICK_IMAGE_CODE && resultCode == Activity.RESULT_OK) {
             val imageUri: Uri? = data?.data
             imageUri?.let {
-                Glide.with(this).
-                load(it).
-                into(binding.userImage)
+                Glide.with(this).load(it).into(binding.userImage)
             }
         }
     }
@@ -114,5 +119,37 @@ class UserFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun showSignOutDialog() {
+        binding.tvSignOut.setOnClickListener {
+            val dialogView = layoutInflater.inflate(R.layout.custom_sign_out_dialog, null)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+            builder
+                .setMessage("Are you sure you want to sign out?")
+                .setTitle("Sign Out")
+                .setIcon(R.drawable.ic_alert)
+                .setView(dialogView)
+            val dialog: AlertDialog = builder.create()
+            dialogView.findViewById<Button>(R.id.yesButton).setOnClickListener {
+                signOut()
+                dialog.dismiss()
+            }
+            dialogView.findViewById<Button>(R.id.cancelButton).setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+        }
+    }
+
+    fun signOut() {
+        val sharedPreferences =
+            requireContext().getSharedPreferences(SharedPrefUtils.PREF_NAME, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putBoolean(SharedPrefUtils.IS_LOGGED_IN, false).apply()
+        val intent = Intent(activity, AuthActivity::class.java)
+        intent.putExtra(IS_LOGGED_OUT,true)
+        activity?.finish()
+        startActivity(intent)
+
     }
 }
