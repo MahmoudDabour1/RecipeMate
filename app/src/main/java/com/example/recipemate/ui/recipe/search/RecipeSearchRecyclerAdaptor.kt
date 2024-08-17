@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.recipemate.data.source.RecipeDetails
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.SearchItemRawBinding
 
 class RecipeSearchRecyclerAdaptor(

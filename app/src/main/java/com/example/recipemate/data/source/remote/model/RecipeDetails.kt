@@ -1,4 +1,4 @@
-package com.example.recipemate.data.source
+package com.example.recipemate.data.source.remote.model
 
 import com.google.gson.annotations.SerializedName
 

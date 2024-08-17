@@ -1,11 +1,9 @@
 package com.example.recipemate.data.repository
 
-import com.example.recipemate.data.source.remote.network.RetrofitModule
-import com.example.recipemate.data.source.RecipeDetails
-
-import com.example.recipeapplication.data.source.remote.network.RetrofitModule
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
+import com.example.recipemate.data.source.remote.network.RetrofitModule
 
 class RecipeRepository {
     private val apiService = RetrofitModule.apiService

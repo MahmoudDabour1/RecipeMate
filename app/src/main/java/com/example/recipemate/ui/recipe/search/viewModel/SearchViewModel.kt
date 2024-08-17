@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.recipemate.data.repository.RecipeRepository
-import com.example.recipemate.data.source.RecipeDetails
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {

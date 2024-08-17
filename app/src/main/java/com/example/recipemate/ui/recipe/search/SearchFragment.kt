@@ -8,7 +8,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import com.example.recipemate.data.source.RecipeDetails
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentSearchBinding
 import com.example.recipemate.ui.recipe.search.viewModel.SearchViewModel
 
