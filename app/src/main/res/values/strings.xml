@@ -11,4 +11,9 @@
     <string name="email_or_phone_number">Email or phone number</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
+    <string name="welcome">Welcome!</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>

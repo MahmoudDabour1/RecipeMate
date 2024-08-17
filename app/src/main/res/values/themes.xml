@@ -14,6 +14,12 @@
         <item name="android:fontFamily">@font/roboto</item>
     </style>
 
+    <style name="AuthSecondHeaderTextStyle">
+        <item name="android:textSize">@dimen/_20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/roboto</item>
+    </style>
+
     <style name="AuthBodyTextStyle">
         <item name="android:textColor">@color/greyColor</item>
         <item name="android:textSize">@dimen/_16sp</item>

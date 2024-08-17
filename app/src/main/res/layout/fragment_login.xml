@@ -15,7 +15,7 @@
         app:layout_constraintGuide_percent="0.15" />
 
     <TextView
-        android:id="@+id/textWelcome"
+        android:id="@+id/textWelcomeBack"
         style="@style/AuthFirstHeaderTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:text="@string/please_enter_your_account_here"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textWelcome" />
+        app:layout_constraintTop_toBottomOf="@+id/textWelcomeBack" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/usernameEditText"
@@ -61,6 +61,7 @@
         android:layout_marginTop="@dimen/_16dp"
         android:hint="Password"
         android:inputType="textPassword"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameEditText"
