@@ -6,4 +6,14 @@
     <string name="user">User</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_welcome_back">Welcome Back!</string>
+    <string name="please_enter_your_account_here">Please enter your account here</string>
+    <string name="email">Email </string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="welcome">Welcome!</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
 </resources>
