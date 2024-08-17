@@ -32,7 +32,7 @@ class SplashFragment : Fragment() {
         view.postDelayed({
             checkLoginStatus()
 
-        }, 3000)
+        }, 4000)
     }
 
     private fun checkLoginStatus() {
