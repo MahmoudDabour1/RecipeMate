@@ -1,5 +1,6 @@
 package com.example.recipemate.ui.recipe.search
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +9,7 @@ import com.example.recipemate.data.source.RecipeDetails
 import com.example.recipemate.databinding.SearchItemRawBinding
 
 class RecipeSearchRecyclerAdaptor(
-    private val recipes: List<RecipeDetails>,
+    private var recipes: List<RecipeDetails>,
     private val communicator: Communicator
 ) : RecyclerView.Adapter<RecipeSearchRecyclerAdaptor.RecipeSearchViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeSearchViewHolder {
@@ -30,6 +31,12 @@ class RecipeSearchRecyclerAdaptor(
         holder.itemView.setOnClickListener {
             communicator.onItemClicked(currentRecipe)
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateRecipes(newRecipes: List<RecipeDetails>) {
+        recipes = newRecipes
+        notifyDataSetChanged()
     }
 
     class RecipeSearchViewHolder(private val binding: SearchItemRawBinding) :
