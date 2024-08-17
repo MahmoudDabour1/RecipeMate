@@ -6,4 +6,9 @@
     <string name="user">User</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find">Find</string>
+    <string name="best_recipes"> best recipes</string>
+    <string name="for_cooking">for cooking</string>
+    <string name="popular_category">Popular category</string>
+    <string name="recent_recipes">Recent recipes</string>
 </resources>

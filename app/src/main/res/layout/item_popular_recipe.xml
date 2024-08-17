@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/_200dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/_8dp"
+        app:cardBackgroundColor="@color/primaryColor"
+        app:cardCornerRadius="@dimen/_16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imageViewRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/your_dish_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ImageStyle" />
+
+            <TextView
+                android:id="@+id/textViewHomePopularName"
+                style="@style/textViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
+                tools:text="Wagyu Rendang" />
+
+            <TextView
+                android:id="@+id/textViewHomePopularKitche"
+                style="@style/textViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="@dimen/_16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName"
+                tools:text="by Jacob Jones" />
+
+            <TextView
+                android:id="@+id/textViewHomePopularTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8dp"
+                android:textColor="@android:color/holo_red_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularKitche"
+                tools:text="20 Mins" />
+
+            <ImageView
+                android:id="@+id/imageViewBookmark"
+                android:layout_width="@dimen/_24dp"
+                android:layout_height="@dimen/_24dp"
+                android:layout_margin="@dimen/_16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginBottom="@dimen/_16dp"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_bookmark_white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularKitche" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
+
+
