@@ -4,8 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.recipemate.utils.UriConverter
 
 @Database(entities = [User::class], version = 1)
+@TypeConverters(UriConverter::class)
 abstract class RecipeDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

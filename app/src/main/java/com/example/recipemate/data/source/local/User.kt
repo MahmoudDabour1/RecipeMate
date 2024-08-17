@@ -1,5 +1,6 @@
 package com.example.recipemate.data.source.local
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -9,5 +10,6 @@ data class User(
     val password: String,
     val firstName: String,
     val lastName: String,
-    val phone: String
+    val phone: String,
+    val imageUri: Uri?
 )
