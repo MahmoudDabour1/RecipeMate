@@ -9,7 +9,11 @@ class AuthRepository(private val userDao: UserDao) {
         userDao.insert(user)
     }
 
-    suspend fun authenticateUser(username: String, password: String): Boolean {
-        return userDao.getUser(username, password) != null
+    suspend fun authenticateUser(email: String, password: String): Boolean {
+        return userDao.getUser(email, password) != null
+    }
+
+    suspend fun isUserRegistered(email: String): Boolean {
+        return userDao.getUserByEmail(email) != null
     }
 }

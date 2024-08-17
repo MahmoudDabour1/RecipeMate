@@ -1,4 +1,4 @@
-package com.example.recipemate.utils
+package com.example.recipemate.data.source.local
 
 import android.net.Uri
 import androidx.room.TypeConverter
