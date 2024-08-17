@@ -9,6 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitModule {
     private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
     const val SEARCH_END_POINT = "search.php"
+    const val MEALS_END_POINT = "filter.php"
+    const val LIST_ALL_CATEGORIES_END_POINT = "list.php?c=list"
 
     private val httpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
