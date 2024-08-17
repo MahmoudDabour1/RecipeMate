@@ -1,6 +1,6 @@
 package com.example.recipemate.data.repository
 
-import com.example.recipeapplication.data.source.remote.network.RetrofitModule
+import com.example.recipemate.data.source.remote.network.RetrofitModule
 import com.example.recipemate.data.source.RecipeDetails
 
 class RecipeRepository {

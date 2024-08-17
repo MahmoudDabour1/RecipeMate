@@ -1,6 +1,5 @@
-package com.example.recipeapplication.data.source.remote.network
+package com.example.recipemate.data.source.remote.network
 
-import com.example.recipemate.data.source.remote.network.ApiService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,7 +7,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitModule {
-    private const val BASE_URL = "www.themealdb.com/api/json/v1/1/"
+    private const val BASE_URL = "https://www.themealdb.com/api/json/v1/1/"
     const val SEARCH_END_POINT = "search.php"
 
     private val httpLoggingInterceptor =

@@ -2,8 +2,14 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.RecipeMate" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-         <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimary">@color/primaryColor</item>
     </style>
 
     <style name="Theme.RecipeMate" parent="Base.Theme.RecipeMate" />
+
+    <style name="CornerImageShape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_10dp</item>
+        <item name="color">@color/transparentColor</item>
+    </style>
 </resources>
