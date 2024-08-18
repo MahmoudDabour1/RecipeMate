@@ -2,8 +2,8 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <solid android:color="@color/loveBackgroundColor" />
     <size
-        android:width="@dimen/_64dp"
-        android:height="@dimen/_64dp" />
-    <corners android:radius="@dimen/_32dp" />
+        android:width="@dimen/_48dp"
+        android:height="@dimen/_48dp" />
+    <corners android:radius="@dimen/_24dp" />
 
 </shape>
