@@ -14,7 +14,15 @@
         android:id="@+id/searchFragment"
         android:name="com.example.recipemate.ui.recipe.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/bookMarkFragment"
         android:name="com.example.recipemate.ui.recipe.bookMark.BookMarkFragment"
@@ -29,10 +37,14 @@
         android:id="@+id/recipeDetailsFragment"
         android:name="com.example.recipemate.ui.recipe.recipeDetails.RecipeDetailsFragment"
         android:label="fragment_recipe_details"
-        tools:layout="@layout/fragment_recipe_details" />
+        tools:layout="@layout/fragment_recipe_details">
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/wathchVideoFragment"
+        android:id="@+id/watchVideoFragment"
         android:name="com.example.recipemate.ui.recipe.recipeDetails.WatchVideoFragment"
-        android:label="fragment_wathch_video"
-        tools:layout="@layout/fragment_wathch_video" />
+        android:label="fragment_watch_video"
+        tools:layout="@layout/fragment_watch_video" />
 </navigation>
