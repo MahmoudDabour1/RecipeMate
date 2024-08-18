@@ -25,4 +25,9 @@
         android:name="com.example.recipemate.ui.recipe.user.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.recipemate.ui.recipe.recipeDetails.RecipeDetailsFragment"
+        android:label="fragment_recipe_details"
+        tools:layout="@layout/fragment_recipe_details" />
 </navigation>
