@@ -20,12 +20,20 @@
                 android:layout_height="match_parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/recipeDetailsHeaderLayout"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:background="@drawable/dummy_data"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/recipeDetailsHeaderImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/dummy_data"
+                        tools:ignore="ContentDescription" />
 
                     <ImageView
                         android:id="@+id/imageViewRecipeDetailsBackArrow"
@@ -92,6 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/_24dp"
+                        android:paddingBottom="@dimen/_90dp"
                         android:paddingTop="@dimen/_24dp">
 
                         <TextView
@@ -175,7 +184,7 @@
                             app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider" />
 
                         <TextView
-                            android:id="@+id/textViewRecipeDetailsDescription"
+                            android:id="@+id/textViewRecipeDetailsDescriptionIngredientOrInstructions"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_16dp"

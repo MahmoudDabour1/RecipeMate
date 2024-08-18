@@ -29,4 +29,9 @@ class RecipeRepository {
     suspend fun fetchCategories(): List<Category> {
         return apiService.getAllCategories().categories
     }
+
+    suspend fun fetchRecipeDetails(id: String): ArrayList<RecipeDetails> {
+        val recipeDetails = apiService.getRecipeDetails(id)
+        return recipeDetails.recipes as ArrayList<RecipeDetails>
+    }
 }

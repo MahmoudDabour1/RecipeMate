@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentSearchBinding
@@ -75,7 +76,9 @@ class SearchFragment : Fragment() {
 
     private val communicator = object : Communicator {
         override fun onItemClicked(position: RecipeDetails) {
-            // Handle item click
+            val action =
+                SearchFragmentDirections.actionSearchFragmentToRecipeDetailsFragment(position.idMeal.toString())
+            findNavController().navigate(action)
         }
     }
 }

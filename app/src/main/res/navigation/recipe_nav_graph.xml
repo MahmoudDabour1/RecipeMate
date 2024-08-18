@@ -18,10 +18,6 @@
         <action
             android:id="@+id/action_searchFragment_to_recipeDetailsFragment"
             app:destination="@id/recipeDetailsFragment" />
-
-        <argument
-            android:name="recipeId"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/bookMarkFragment"
@@ -41,6 +37,9 @@
         <action
             android:id="@+id/action_recipeDetailsFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/watchVideoFragment"
