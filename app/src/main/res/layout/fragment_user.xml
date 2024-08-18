@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
                 app:layout_constraintEnd_toEndOf="@+id/tvPassValue"
                 app:layout_constraintTop_toTopOf="@+id/tvPassValue"
                 app:tint="@color/primaryColor" />
