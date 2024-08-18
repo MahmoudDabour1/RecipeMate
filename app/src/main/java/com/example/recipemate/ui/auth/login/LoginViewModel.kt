@@ -17,8 +17,8 @@ class LoginViewModel(private val repository: AuthRepository) : ViewModel() {
     fun login(email: String, password: String) {
         viewModelScope.launch {
             val currentUser = repository.authenticateUser(email, password)
-            if(currentUser!=null) {
-                currentUser.isLoggedIn=!currentUser.isLoggedIn
+            if (currentUser != null) {
+                currentUser.isLoggedIn = !currentUser.isLoggedIn
                 repository.updateCurrentUser(currentUser)
             }
             _loginResult.value = currentUser

@@ -43,11 +43,11 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addCallBack()
         loginViewModel.loginResult.observe(viewLifecycleOwner) { registered ->
-                if (registered?.isLoggedIn == true) {
-                    SharedPrefUtils.setLoggedIn(requireContext(), true)
-                    navigateToRecipeActivity()
-                } else {
-                    binding.emailEditText.error = "Invalid email address"
+            if (registered?.isLoggedIn == true) {
+                SharedPrefUtils.setLoggedIn(requireContext(), true)
+                navigateToRecipeActivity()
+            } else {
+                binding.emailEditText.error = "Invalid email address"
             }
 
         }

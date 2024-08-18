@@ -29,11 +29,11 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
         firstName: String,
         lastName: String,
         phoneNumber: String,
-        isMale : Boolean
+        isMale: Boolean
     ) {
         viewModelScope.launch {
             try {
-                val user = User(email, password, firstName, lastName, phoneNumber, null,isMale)
+                val user = User(email, password, firstName, lastName, phoneNumber, null, isMale)
                 repository.insert(user)
                 _registrationStatus.value = true
             } catch (e: Exception) {

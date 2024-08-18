@@ -52,7 +52,7 @@ class RegisterFragment : Fragment() {
             val isMale = binding.maleRadioButton.isChecked
             if (Validation.validateInput(email, password, firstName, lastName, phoneNumber)) {
 
-                checkEmail(email, password, firstName, lastName, phoneNumber,isMale)
+                checkEmail(email, password, firstName, lastName, phoneNumber, isMale)
 
             } else {
                 if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
@@ -87,14 +87,14 @@ class RegisterFragment : Fragment() {
         firstName: String,
         lastName: String,
         phoneNumber: String,
-        isMale:Boolean
+        isMale: Boolean
     ) {
         registerViewModel.checkIfEmailRegistered(email)
         registerViewModel.userEmailRegistered.observe(viewLifecycleOwner) { registered ->
             if (registered) {
                 binding.emailEditText.error = "Email already registered"
             } else {
-                register(email, password, firstName, lastName, phoneNumber,isMale)
+                register(email, password, firstName, lastName, phoneNumber, isMale)
             }
 
         }
@@ -106,7 +106,7 @@ class RegisterFragment : Fragment() {
         firstName: String,
         lastName: String,
         phoneNumber: String,
-        isMale : Boolean
+        isMale: Boolean
     ) {
         registerViewModel.register(
             email,
@@ -146,7 +146,6 @@ class RegisterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

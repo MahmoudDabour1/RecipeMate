@@ -29,4 +29,16 @@
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="full_user_name">%1$s %2$s</string>
+    <string name="change_password">Change password</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="error_current_password">Current password is incorrect. Please try again.</string>
+    <string name="error_empty_new_password">New password cannot be empty.</string>
+    <string name="error_short_password">New password must be at least 8 characters long.</string>
+    <string name="error_same_as_current_password">New password cannot be the same as the current password.</string>
+    <string name="error_password_mismatch">New password and confirm password do not match.</string>
+    <string name="sign_out_confirmation_message">Are you sure you want to sign out?</string>
+    <string name="sign_out_title">Sign Out</string>
+    <string name="password_updated_success">Password has been updated!</string>
 </resources>
