@@ -25,4 +25,5 @@
     <string name="recipe_details">Recipe Details</string>
     <string name="ingredients">Ingredients</string>
     <string name="instructions">Instructions</string>
+    <string name="watch_video">Watch Video</string>
 </resources>
