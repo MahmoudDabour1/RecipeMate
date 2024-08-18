@@ -75,6 +75,4 @@ dependencies {
 
     //lottie
     implementation(libs.lottie)
-
-
 }
