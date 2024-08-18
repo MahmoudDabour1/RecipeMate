@@ -43,7 +43,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addCallBack()
         loginViewModel.loginResult.observe(viewLifecycleOwner) { registered ->
-            if (registered) {
+            if (registered?.isLoggedIn == true) {
                 SharedPrefUtils.setLoggedIn(requireContext(), true)
                 navigateToRecipeActivity()
             } else {
@@ -95,7 +95,6 @@ class LoginFragment : Fragment() {
         val sharedPreferences =
             requireContext().getSharedPreferences(SharedPrefUtils.PREF_NAME, Context.MODE_PRIVATE)
         sharedPreferences.edit().putBoolean(SharedPrefUtils.IS_LOGGED_IN, true).apply()
-
         val intent = Intent(requireContext(), RecipeActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
