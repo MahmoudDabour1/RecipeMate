@@ -76,36 +76,120 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:ignore="ContentDescription" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_marginTop="300dp"
-                        android:background="@drawable/white_page_top_corner"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-                        
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <include
-                        android:id="@+id/recipeDetailsFavouriteButton"
-                        layout="@layout/favourite_item_raw"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="275dp"
-                        android:layout_marginEnd="@dimen/_48dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="300dp"
+                    android:background="@drawable/white_page_top_corner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/recipeDetailsAreaAndCategoryLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/_24dp"
+                        android:layout_marginTop="@dimen/_24dp">
+
+                        <TextView
+                            android:id="@+id/textViewRecipeDetailsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/blackColor"
+                            android:textSize="@dimen/_20sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="Teriyaki Chicken Casserole" />
+
+                        <TextView
+                            android:id="@+id/textViewRecipeDetailsCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:layout_marginEnd="@dimen/_24dp"
+                            android:drawablePadding="@dimen/_4dp"
+                            android:textColor="@color/blackColor"
+                            android:textSize="@dimen/_16sp"
+                            app:drawableStartCompat="@drawable/ic_category"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsTitle"
+                            tools:text="Chicken" />
+
+                        <TextView
+                            android:id="@+id/textViewRecipeDetailsLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_32dp"
+                            android:layout_marginTop="@dimen/_8dp"
+                            android:layout_marginEnd="@dimen/_16dp"
+                            android:drawablePadding="@dimen/_4dp"
+                            android:textColor="@color/blackColor"
+                            android:textSize="@dimen/_16sp"
+                            app:drawableStartCompat="@drawable/ic_location"
+                            app:layout_constraintStart_toEndOf="@id/textViewRecipeDetailsCategory"
+                            app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsTitle"
+                            tools:text="Japanese" />
+
+                        <View
+                            android:id="@+id/viewRecipeDetailsDivider"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_2dp"
+                            android:layout_marginVertical="@dimen/_20dp"
+                            android:background="@color/greyColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsLocation" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonRecipeDetailsIngredients"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:background="@drawable/rounded_button"
+                            android:backgroundTint="@color/brownColor"
+                            android:text="@string/ingredients"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_16sp"
+                            app:backgroundTint="@color/brownColor"
+
+                            app:layout_constraintEnd_toStartOf="@+id/buttonRecipeDetailsInstructions"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/buttonRecipeDetailsInstructions"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_marginTop="@dimen/_16dp"
+                            android:background="@drawable/rounded_button"
+                            android:text="@string/instructions"
+                            android:textColor="@color/whiteColor"
+                            android:textSize="@dimen/_16sp"
+                            app:backgroundTint="@color/brownColor"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/buttonRecipeDetailsIngredients"
+                            app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <include
+                    android:id="@+id/recipeDetailsFavouriteButton"
+                    layout="@layout/favourite_item_raw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="275dp"
+                    android:layout_marginEnd="64dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
     </ScrollView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="352dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">RecipeMate</string>
-
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="bookmark">BookMark</string>
+    <string name="user">User</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="find">Find</string>
+    <string name="best_recipes"> best recipes</string>
+    <string name="for_cooking">for cooking</string>
+    <string name="popular_category">Popular category</string>
+    <string name="recent_recipes">Recent recipes</string>
+    <string name="text_welcome_back">Welcome Back!</string>
+    <string name="please_enter_your_account_here">Please enter your account here</string>
+    <string name="email">Email </string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="welcome">Welcome!</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="recipe_details">Recipe Details</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
 </resources>

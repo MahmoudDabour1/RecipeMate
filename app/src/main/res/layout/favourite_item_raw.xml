@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/favouriteButtonView"
         android:layout_width="@dimen/_48dp"
         android:layout_height="@dimen/_48dp"
         android:layout_gravity="center"
