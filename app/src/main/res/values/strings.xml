@@ -21,4 +21,5 @@
     <string name="last_name">Last name</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="recipe_details">Recipe Details</string>
 </resources>

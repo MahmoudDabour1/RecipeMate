@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/loveBackgroundColor" />
+    <size
+        android:width="@dimen/_64dp"
+        android:height="@dimen/_64dp" />
+    <corners android:radius="@dimen/_32dp" />
+
+</shape>
