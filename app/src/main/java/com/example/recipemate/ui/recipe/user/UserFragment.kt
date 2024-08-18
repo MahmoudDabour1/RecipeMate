@@ -17,11 +17,15 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.recipemate.R
+import com.example.recipemate.data.repository.AuthRepository
+import com.example.recipemate.data.source.local.RecipeDatabase
+import com.example.recipemate.data.source.local.User
 import com.example.recipemate.databinding.FragmentUserBinding
 import com.example.recipemate.ui.auth.AuthActivity
-import com.example.recipemate.ui.auth.login.LoginFragment
 import com.example.recipemate.utils.Constants.Companion.IS_LOGGED_OUT
 import com.example.recipemate.utils.Constants.Companion.PICK_IMAGE_CODE
 import com.example.recipemate.utils.Constants.Companion.REQUEST_PERMISSION_CODE
@@ -31,6 +35,13 @@ import com.example.recipemate.utils.SharedPrefUtils
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
+    private val userViewModel: UserViewModel by viewModels {
+        UserViewModelFactory(
+            AuthRepository(
+                RecipeDatabase.getInstance(requireContext()).userDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +55,9 @@ class UserFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         changeProfilePicture()
         showSignOutDialog()
+        userViewModel.currentUser.observe(viewLifecycleOwner, Observer {
+            if (it != null) getCurrentUserData(it)
+        })
     }
 
     private fun changeProfilePicture() {
@@ -112,6 +126,8 @@ class UserFragment : Fragment() {
             val imageUri: Uri? = data?.data
             imageUri?.let {
                 Glide.with(this).load(it).into(binding.userImage)
+                userViewModel.updateUserImage(it)
+
             }
         }
     }
@@ -146,10 +162,22 @@ class UserFragment : Fragment() {
         val sharedPreferences =
             requireContext().getSharedPreferences(SharedPrefUtils.PREF_NAME, Context.MODE_PRIVATE)
         sharedPreferences.edit().putBoolean(SharedPrefUtils.IS_LOGGED_IN, false).apply()
+        userViewModel.signOutCurrentUser()
         val intent = Intent(activity, AuthActivity::class.java)
-        intent.putExtra(IS_LOGGED_OUT,true)
+        intent.putExtra(IS_LOGGED_OUT, true)
         activity?.finish()
         startActivity(intent)
+
+    }
+
+    fun getCurrentUserData(user: User) {
+        binding.tvUserName.text = getString(R.string.full_user_name, user.firstName, user.lastName)
+        binding.tvEmailAddress.text = user.email
+        binding.tvPhoneNumber.text = user.phone
+        if (user.isMale) binding.tvGenderValue.text = getString(R.string.male)
+        else binding.tvGenderTitle.text = getString(R.string.female)
+        if(user.imageUri!=null) Glide.with(this).load(user.imageUri).into(binding.userImage)
+
 
     }
 }

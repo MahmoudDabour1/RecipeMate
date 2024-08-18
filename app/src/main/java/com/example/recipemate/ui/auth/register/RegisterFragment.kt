@@ -49,9 +49,10 @@ class RegisterFragment : Fragment() {
             val firstName = binding.firstNameEditText.editText?.text.toString()
             val lastName = binding.lastNameEditText.editText?.text.toString()
             val phoneNumber = binding.phoneNumberEditText.editText?.text.toString()
+            val isMale = binding.maleRadioButton.isChecked
             if (Validation.validateInput(email, password, firstName, lastName, phoneNumber)) {
 
-                checkEmail(email, password, firstName, lastName, phoneNumber)
+                checkEmail(email, password, firstName, lastName, phoneNumber,isMale)
 
             } else {
                 if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
@@ -85,14 +86,15 @@ class RegisterFragment : Fragment() {
         password: String,
         firstName: String,
         lastName: String,
-        phoneNumber: String
+        phoneNumber: String,
+        isMale:Boolean
     ) {
         registerViewModel.checkIfEmailRegistered(email)
         registerViewModel.userEmailRegistered.observe(viewLifecycleOwner) { registered ->
             if (registered) {
                 binding.emailEditText.error = "Email already registered"
             } else {
-                register(email, password, firstName, lastName, phoneNumber)
+                register(email, password, firstName, lastName, phoneNumber,isMale)
             }
 
         }
@@ -103,14 +105,16 @@ class RegisterFragment : Fragment() {
         password: String,
         firstName: String,
         lastName: String,
-        phoneNumber: String
+        phoneNumber: String,
+        isMale : Boolean
     ) {
         registerViewModel.register(
             email,
             password,
             firstName,
             lastName,
-            phoneNumber
+            phoneNumber,
+            isMale
         )
         registerViewModel.registrationStatus.observe(viewLifecycleOwner) { registered ->
             if (registered) {
@@ -142,6 +146,7 @@ class RegisterFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 
 
 }

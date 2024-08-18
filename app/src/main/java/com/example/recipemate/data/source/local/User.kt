@@ -11,5 +11,7 @@ data class User(
     val firstName: String,
     val lastName: String,
     val phone: String,
-    val imageUri: Uri?
+    var imageUri: Uri?,
+    val isMale : Boolean,
+    var isLoggedIn : Boolean = false
 )
