@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
 
     private fun fetchData() {
         viewModel.apply {
-            fetchRecipesByCategory("Beef")
+            fetchRecipesByCategory(DEFAULT_CATEGORY)
             fetchPopularRecipes()
             fetchRecentRecipes()
             fetchCategories()
