@@ -38,7 +38,8 @@ class SearchFragment : Fragment() {
         searchRecipesRecycler = binding.recyclerViewSearchRecipes
         searchRecipesAdapter = RecipeSearchRecyclerAdaptor(arrayListOf(), communicator)
         searchRecipesRecycler.adapter = searchRecipesAdapter
-
+        binding.lottieAnimationSearchView.visibility = View.VISIBLE
+        binding.recyclerViewSearchRecipes.visibility = View.GONE
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()

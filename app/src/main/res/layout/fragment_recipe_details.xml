@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -78,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_32dp"
                         android:layout_marginEnd="@dimen/_32dp"
-                        android:src="@drawable/ic_share"
+                        android:src="@drawable/ic_share_plus"
                         app:layout_constraintBottom_toBottomOf="@id/imageViewRecipeDetailsBackArrow"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -101,7 +102,8 @@
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/_24dp"
                         android:paddingTop="@dimen/_24dp"
-                        android:paddingBottom="@dimen/_90dp">
+                        android:paddingBottom="@dimen/_90dp"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
                         <TextView
                             android:id="@+id/textViewRecipeDetailsTitle"
@@ -153,47 +155,35 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsLocation" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonRecipeDetailsIngredients"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="@dimen/_16dp"
-                            android:background="@drawable/rounded_button"
-                            android:backgroundTint="@color/brownColor"
-                            android:text="@string/ingredients"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_16sp"
-                            app:backgroundTint="@color/brownColor"
-
-                            app:layout_constraintEnd_toStartOf="@+id/buttonRecipeDetailsInstructions"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonRecipeDetailsInstructions"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="@dimen/_16dp"
-                            android:background="@drawable/rounded_button"
-                            android:text="@string/instructions"
-                            android:textColor="@color/whiteColor"
-                            android:textSize="@dimen/_16sp"
-                            app:backgroundTint="@color/brownColor"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/buttonRecipeDetailsIngredients"
-                            app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider" />
-
-                        <TextView
-                            android:id="@+id/textViewRecipeDetailsDescriptionIngredientOrInstructions"
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tabLayoutRecipeDetails"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_16dp"
-                            android:text="loren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sitoren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit oren ipsum dolor sit amet con la\r\nloren ipsum dolor sit amet con la    dolor   sit  "
-                            android:textColor="@color/greyColor"
-                            android:textSize="@dimen/_16sp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/_16dp"
+                            android:layout_marginTop="@dimen/_24dp"
+                            android:background="@null"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/buttonRecipeDetailsIngredients" />
+                            app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider"
+                            app:tabBackground="@drawable/button_selected"
+                            app:tabIndicator="@null"
+                            app:tabIndicatorColor="@null"
+                            app:tabIndicatorGravity="stretch"
+                            app:tabIndicatorHeight="0dp"
+                            app:tabMode="fixed"
+                            app:tabRippleColor="@null"
+                            app:tabTextColor="@color/whiteColor" />
+
+                        <androidx.viewpager2.widget.ViewPager2
+                            android:id="@+id/viewPagerRecipeDetails"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tabLayoutRecipeDetails" />
+
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -208,9 +198,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </LinearLayout>
     </ScrollView>
+
 
     <Button
         android:id="@+id/buttonRecipeDetailsWatchVideoView"
