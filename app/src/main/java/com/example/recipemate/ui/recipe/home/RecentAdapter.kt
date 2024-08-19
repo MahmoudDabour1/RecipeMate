@@ -22,6 +22,20 @@ class RecentAdapter(
             binding.textViewRecentName.text = recipe.strMeal
             Glide.with(binding.imageRecentView.context).load(recipe.strMealThumb)
                 .into(binding.imageRecentView)
+            val bookmarkIcon = if (recipe.isBookmarked) {
+                R.drawable.ic_bookmark_red
+            } else {
+                R.drawable.ic_bookmark
+            }
+
+            binding.imageViewFavorite.setImageResource(bookmarkIcon)
+
+
+            binding.imageViewFavorite.setOnClickListener {
+                recipe.isBookmarked = !recipe.isBookmarked
+                notifyItemChanged(adapterPosition)
+            }
+
             itemView.setOnClickListener {
                 communicator.onItemClicked(recipe)
             }

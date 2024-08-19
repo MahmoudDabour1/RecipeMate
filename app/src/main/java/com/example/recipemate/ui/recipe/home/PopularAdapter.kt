@@ -24,6 +24,20 @@ class PopularAdapter(
             binding.textViewHomePopularTime.text = "20 mins"
             Glide.with(binding.imageViewRecipe.context).load(recipe.strMealThumb)
                 .into(binding.imageViewRecipe)
+            val bookmarkIcon = if (recipe.isBookmarked) {
+                R.drawable.ic_bookmark_red
+            } else {
+                R.drawable.ic_bookmark_white
+            }
+
+            binding.imageViewBookmark.setImageResource(bookmarkIcon)
+
+
+            binding.imageViewBookmark.setOnClickListener {
+                recipe.isBookmarked = !recipe.isBookmarked
+                notifyItemChanged(adapterPosition)
+            }
+
             itemView.setOnClickListener {
                 communicator.onItemClicked(recipe)
             }
