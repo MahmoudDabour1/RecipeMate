@@ -100,8 +100,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="@dimen/_24dp"
-                        android:paddingBottom="@dimen/_90dp"
-                        android:paddingTop="@dimen/_24dp">
+                        android:paddingTop="@dimen/_24dp"
+                        android:paddingBottom="@dimen/_90dp">
 
                         <TextView
                             android:id="@+id/textViewRecipeDetailsTitle"
@@ -212,13 +212,22 @@
         </LinearLayout>
     </ScrollView>
 
-    <include
-        android:id="@+id/recipeDetailsWatchVideoButton"
-        layout="@layout/watch_video_button_raw"
+    <Button
+        android:id="@+id/buttonRecipeDetailsWatchVideoView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_64dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_40dp"
         android:layout_marginBottom="@dimen/_16dp"
+        android:background="@drawable/rounded_button"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawablePadding="@dimen/_4dp"
+        android:text="@string/watch_video"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_20sp"
+        app:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

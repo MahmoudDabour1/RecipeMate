@@ -40,10 +40,20 @@
         <argument
             android:name="recipeId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_watchVideoFragment"
+            app:destination="@id/watchVideoFragment" />
     </fragment>
     <fragment
         android:id="@+id/watchVideoFragment"
         android:name="com.example.recipemate.ui.recipe.recipeDetails.WatchVideoFragment"
         android:label="fragment_watch_video"
-        tools:layout="@layout/fragment_watch_video" />
+        tools:layout="@layout/fragment_watch_video">
+        <action
+            android:id="@+id/action_watchVideoFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+        <argument
+            android:name="recipeYouTubeVideoUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

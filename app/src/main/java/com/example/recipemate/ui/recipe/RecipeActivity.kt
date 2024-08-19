@@ -28,6 +28,7 @@ class RecipeActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.recipeDetailsFragment -> binding.bottomNavigationView.visibility = View.GONE
+                R.id.watchVideoFragment -> binding.bottomNavigationView.visibility = View.GONE
                 else -> binding.bottomNavigationView.visibility = View.VISIBLE
             }
         }

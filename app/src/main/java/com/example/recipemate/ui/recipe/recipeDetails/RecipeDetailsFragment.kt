@@ -14,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.recipemate.R
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import java.io.File
@@ -86,6 +87,14 @@ class RecipeDetailsFragment : Fragment() {
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
             startActivity(Intent.createChooser(shareIntent, null))
+        }
+
+        binding.buttonRecipeDetailsWatchVideoView.setOnClickListener {
+            val action =
+                RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToWatchVideoFragment(
+                    recipeUrl
+                )
+            findNavController().navigate(action)
         }
     }
 
