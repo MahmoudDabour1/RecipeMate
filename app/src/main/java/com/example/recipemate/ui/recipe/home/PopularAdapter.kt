@@ -10,9 +10,6 @@ import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.ItemPopularRecipeBinding
 
-private const val SHIMMER_ITEM_COUNT = 5
-private const val VIEW_TYPE_SHIMMER = 0
-private const val VIEW_TYPE_CATEGORY = 1
 
 class PopularAdapter(
     private val seafoodRecipes: ArrayList<Recipe>,
@@ -20,7 +17,7 @@ class PopularAdapter(
     private var isShimmer: Boolean
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    inner class MealsViewHolder(private val binding: ItemPopularRecipeBinding) :
+    inner class RecipeViewHolder(private val binding: ItemPopularRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
             binding.textViewHomePopularName.text = recipe.strMeal
@@ -47,12 +44,12 @@ class PopularAdapter(
         } else {
             val binding =
                 ItemPopularRecipeBinding.inflate(inflater, parent, false)
-            MealsViewHolder(binding)
+            RecipeViewHolder(binding)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is MealsViewHolder) {
+        if (holder is RecipeViewHolder) {
             val currentItem = seafoodRecipes[position]
             holder.bind(currentItem)
         }
@@ -72,5 +69,11 @@ class PopularAdapter(
 
     interface Communicator {
         fun onItemClicked(recipe: Recipe)
+    }
+
+    companion object {
+        private const val SHIMMER_ITEM_COUNT = 5
+        private const val VIEW_TYPE_SHIMMER = 0
+        private const val VIEW_TYPE_CATEGORY = 1
     }
 }

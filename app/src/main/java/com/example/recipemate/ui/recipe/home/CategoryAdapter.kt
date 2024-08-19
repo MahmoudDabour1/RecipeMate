@@ -11,10 +11,6 @@ import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.databinding.ItemRowCategoryBinding
 
-private const val SHIMMER_ITEM_COUNT = 5
-private const val VIEW_TYPE_SHIMMER = 0
-private const val VIEW_TYPE_CATEGORY = 1
-
 class CategoryAdapter(
     private val category: MutableList<Category>,
     private val communicator: Communicator,
@@ -91,5 +87,11 @@ class CategoryAdapter(
 
     interface Communicator {
         fun onItemClick(category: Category)
+    }
+
+    companion object {
+        private const val SHIMMER_ITEM_COUNT = 5
+        private const val VIEW_TYPE_SHIMMER = 0
+        private const val VIEW_TYPE_CATEGORY = 1
     }
 }

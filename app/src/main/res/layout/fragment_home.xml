@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="@dimen/_16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/textViewFindRecipe"
@@ -55,9 +55,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginBottom="@dimen/_8dp"
+
             android:background="@drawable/search_view_background"
             android:iconifiedByDefault="false"
-
             android:queryHint="Enter Recipe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

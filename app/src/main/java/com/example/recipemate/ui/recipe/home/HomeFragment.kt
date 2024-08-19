@@ -17,6 +17,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var popularAdapter: PopularAdapter
     private lateinit var recentAdapter: RecentAdapter
     private lateinit var categoryAdapter: CategoryAdapter
@@ -37,26 +38,39 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        popularAdapter = PopularAdapter(arrayListOf(), popularCommunicator, isShimmerPopular)
-        recentAdapter = RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent)
-        categoryAdapter = CategoryAdapter(arrayListOf(), categoryCommunicator, isShimmerCategory)
+        setupAdapters()
+        setupRecyclerViews()
+        setupSearchField()
+        observeViewModel()
+        fetchData()
+    }
 
+    private fun fetchData() {
+        viewModel.apply {
+            fetchRecipesByCategory("Beef")
+            fetchPopularRecipes()
+            fetchRecentRecipes()
+            fetchCategories()
+        }
+    }
+
+    private fun setupSearchField() {
+        binding.textFieldSearchView.inputType = InputType.TYPE_NULL
+        binding.textFieldSearchView.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        }
+    }
+
+    private fun setupRecyclerViews() {
         binding.popularRecipesRecyclerView.adapter = popularAdapter
         binding.recentRecipesRecyclerView.adapter = recentAdapter
         binding.categoryRecyclerView.adapter = categoryAdapter
+    }
 
-        observeViewModel()
-
-        viewModel.fetchRecipesByCategory("Beef")
-        viewModel.fetchPopularRecipes()
-        viewModel.fetchRecentRecipes()
-        viewModel.fetchCategories()
-
-        binding.textFieldSearchView.inputType = InputType.TYPE_NULL
-        binding.textFieldSearchView.setOnClickListener {
-
-            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
-        }
+    private fun setupAdapters() {
+        popularAdapter = PopularAdapter(arrayListOf(), popularCommunicator, isShimmerPopular)
+        recentAdapter = RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent)
+        categoryAdapter = CategoryAdapter(arrayListOf(), categoryCommunicator, isShimmerCategory)
     }
 
     private fun observeViewModel() {
@@ -96,7 +110,11 @@ class HomeFragment : Fragment() {
 
     private val categoryCommunicator = object : CategoryAdapter.Communicator {
         override fun onItemClick(category: Category) {
-            viewModel.fetchRecipesByCategory(category.strCategory ?: "Beef")
+            viewModel.fetchRecipesByCategory(category.strCategory ?: DEFAULT_CATEGORY)
         }
+    }
+
+    companion object {
+        private const val DEFAULT_CATEGORY = "Beef"
     }
 }
