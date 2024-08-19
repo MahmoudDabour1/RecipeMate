@@ -2,19 +2,23 @@ package com.example.recipemate.ui.recipe.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.ItemRecentRecipesBinding
-import com.example.recipemate.ui.recipe.home.PopularAdapter.Communicator
+
+private const val SHIMMER_ITEM_COUNT = 5
+private const val VIEW_TYPE_SHIMMER = 0
+private const val VIEW_TYPE_CATEGORY = 1
 
 class RecentAdapter(
     private val recentRecipes: ArrayList<Recipe>,
     private val communicator: Communicator,
-) :
-    RecyclerView.Adapter<RecentAdapter.RecentViewHolder>() {
-
+    private var isShimmer: Boolean
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class RecentViewHolder(private val binding: ItemRecentRecipesBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -25,25 +29,41 @@ class RecentAdapter(
             itemView.setOnClickListener {
                 communicator.onItemClicked(recipe)
             }
-
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentViewHolder {
-        val binding =
-            ItemRecentRecipesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecentViewHolder(binding)
+    inner class ShimmerViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isShimmer) VIEW_TYPE_SHIMMER else VIEW_TYPE_CATEGORY
     }
 
-    override fun getItemCount() = recentRecipes.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return if (viewType == VIEW_TYPE_SHIMMER) {
+            val view = inflater.inflate(R.layout.shimmer_recent_placeholder, parent, false)
+            ShimmerViewHolder(view)
+        } else {
+            val binding = ItemRecentRecipesBinding.inflate(inflater, parent, false)
+            RecentViewHolder(binding)
+        }
+    }
 
-    override fun onBindViewHolder(holder: RecentViewHolder, position: Int) {
-        val currentItem = recentRecipes[position]
-        holder.bind(currentItem)
+    override fun getItemCount(): Int {
+        return if (isShimmer) SHIMMER_ITEM_COUNT else recentRecipes.size
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is RecentViewHolder) {
+            val currentItem = recentRecipes[position]
+            holder.bind(currentItem)
+        }
+
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Recipe>) {
+    fun updateData(newItems: List<Recipe>, isShimmer: Boolean) {
+        this.isShimmer = isShimmer
         recentRecipes.clear()
         recentRecipes.addAll(newItems)
         notifyDataSetChanged()
@@ -52,15 +72,4 @@ class RecentAdapter(
     interface Communicator {
         fun onItemClicked(recipe: Recipe)
     }
-
 }
-
-
-/*binding.imageViewFavorite.setOnClickListener {
-                recyclerInterface.onItemClick(adapterPosition)
-                recipe.isSelected = !recipe.isSelected
-                binding.imageViewFavorite.setImageResource(
-                    if (recipe.isSelected) R.drawable.ic_bookmark_red else R.drawable.ic_bookmark_white
-                )
-            }*/
-

@@ -2,32 +2,23 @@ package com.example.recipemate.ui.recipe.home
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.ItemPopularRecipeBinding
 
+private const val SHIMMER_ITEM_COUNT = 5
+private const val VIEW_TYPE_SHIMMER = 0
+private const val VIEW_TYPE_CATEGORY = 1
+
 class PopularAdapter(
     private val seafoodRecipes: ArrayList<Recipe>,
-    private val communicator: Communicator
-) :
-    RecyclerView.Adapter<PopularAdapter.MealsViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MealsViewHolder {
-        val binding =
-            ItemPopularRecipeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MealsViewHolder(binding)
-    }
-
-
-    override fun onBindViewHolder(holder: MealsViewHolder, position: Int) {
-        val currentItem = seafoodRecipes[position]
-        holder.bind(currentItem)
-    }
-
-    override fun getItemCount() = seafoodRecipes.size
-
+    private val communicator: Communicator,
+    private var isShimmer: Boolean
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class MealsViewHolder(private val binding: ItemPopularRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -42,9 +33,38 @@ class PopularAdapter(
         }
     }
 
+    inner class ShimmerViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isShimmer) VIEW_TYPE_SHIMMER else VIEW_TYPE_CATEGORY
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return if (viewType == VIEW_TYPE_SHIMMER) {
+            val view = inflater.inflate(R.layout.shimmer_popular_placeholder, parent, false)
+            ShimmerViewHolder(view)
+        } else {
+            val binding =
+                ItemPopularRecipeBinding.inflate(inflater, parent, false)
+            MealsViewHolder(binding)
+        }
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is MealsViewHolder) {
+            val currentItem = seafoodRecipes[position]
+            holder.bind(currentItem)
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return if (isShimmer) SHIMMER_ITEM_COUNT else seafoodRecipes.size
+    }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Recipe>) {
+    fun updateData(newItems: List<Recipe>, isShimmer: Boolean) {
+        this.isShimmer = isShimmer
         seafoodRecipes.clear()
         seafoodRecipes.addAll(newItems)
         notifyDataSetChanged()

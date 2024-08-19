@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/_4dp">
@@ -9,9 +8,10 @@
     <TextView
         android:id="@+id/textViewCategory"
         style="@style/textViewStyle"
+        android:layout_width="@dimen/_100dp"
+        android:background="@drawable/circular_background_category_selected"
         android:padding="@dimen/_8dp"
         android:textSize="@dimen/_16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Salad" />
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

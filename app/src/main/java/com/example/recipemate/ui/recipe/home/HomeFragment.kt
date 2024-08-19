@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.findNavController
+import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.FragmentHomeBinding
-
 
 class HomeFragment : Fragment() {
 
@@ -21,10 +21,9 @@ class HomeFragment : Fragment() {
     private lateinit var recentAdapter: RecentAdapter
     private lateinit var categoryAdapter: CategoryAdapter
 
-
-    private lateinit var popularRecyclerView: RecyclerView
-    private lateinit var recentRecyclerView: RecyclerView
-    private lateinit var categoryRecyclerView: RecyclerView
+    private var isShimmerCategory = true
+    private var isShimmerRecent = true
+    private var isShimmerPopular = true
 
     private val viewModel: RecipeViewModel by viewModels()
 
@@ -38,57 +37,59 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        popularRecyclerView = binding.popularRecipesRecyclerView
-        recentRecyclerView = binding.recentRecipesRecyclerView
-        categoryRecyclerView = binding.categoryRecyclerView
+        popularAdapter = PopularAdapter(arrayListOf(), popularCommunicator, isShimmerPopular)
+        recentAdapter = RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent)
+        categoryAdapter = CategoryAdapter(arrayListOf(), categoryCommunicator, isShimmerCategory)
 
-        popularAdapter = PopularAdapter(arrayListOf(), popularCommunicator)
-        recentAdapter = RecentAdapter(arrayListOf(), recentCommunicator)
-        categoryAdapter = CategoryAdapter(arrayListOf(), categoryCommunicator)
+        binding.popularRecipesRecyclerView.adapter = popularAdapter
+        binding.recentRecipesRecyclerView.adapter = recentAdapter
+        binding.categoryRecyclerView.adapter = categoryAdapter
 
-        popularRecyclerView.adapter = popularAdapter
-        recentRecyclerView.adapter = recentAdapter
-        categoryRecyclerView.adapter = categoryAdapter
+        observeViewModel()
 
-        viewModel.popularRecipes.observe(viewLifecycleOwner) { recipe ->
-            recipe?.let {
-                popularAdapter.updateData(it)
-
-            }
-        }
-
-        viewModel.recentRecipes.observe(viewLifecycleOwner) { recipe ->
-            recipe?.let {
-                recentAdapter.updateData(it)
-            }
-        }
-
-
-
-        viewModel.categories.observe(viewLifecycleOwner) { categories ->
-            categories?.let {
-                categoryAdapter.updateData(it)
-            }
-        }
         viewModel.fetchRecipesByCategory("Beef")
         viewModel.fetchPopularRecipes()
         viewModel.fetchRecentRecipes()
         viewModel.fetchCategories()
+
         binding.textFieldSearchView.inputType = InputType.TYPE_NULL
         binding.textFieldSearchView.setOnClickListener {
 
+            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
     }
 
+    private fun observeViewModel() {
+        viewModel.popularRecipes.observe(viewLifecycleOwner) { recipes ->
+            recipes?.let {
+                isShimmerPopular = false
+                popularAdapter.updateData(it, isShimmerPopular)
+            }
+        }
+
+        viewModel.recentRecipes.observe(viewLifecycleOwner) { recipes ->
+            recipes?.let {
+                isShimmerRecent = false
+                recentAdapter.updateData(it, isShimmerRecent)
+            }
+        }
+
+        viewModel.categories.observe(viewLifecycleOwner) { categories ->
+            categories?.let {
+                isShimmerCategory = false
+                categoryAdapter.updateData(it, isShimmerCategory)
+            }
+        }
+    }
 
     private val popularCommunicator = object : PopularAdapter.Communicator {
-        override fun onItemClicked(position: Recipe) {
+        override fun onItemClicked(recipe: Recipe) {
 
         }
     }
+
     private val recentCommunicator = object : RecentAdapter.Communicator {
         override fun onItemClicked(recipe: Recipe) {
-
 
         }
     }
@@ -98,8 +99,4 @@ class HomeFragment : Fragment() {
             viewModel.fetchRecipesByCategory(category.strCategory ?: "Beef")
         }
     }
-
-
 }
-
-
