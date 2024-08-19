@@ -51,8 +51,6 @@ class RecentAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is RecentViewHolder) {
-            holder.itemView.alpha = 0f
-            holder.itemView.animate().alpha(1f).setDuration(1000).start()
             val currentItem = recentRecipes[position]
             holder.bind(currentItem)
         }

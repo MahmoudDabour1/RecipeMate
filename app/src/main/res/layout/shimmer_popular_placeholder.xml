@@ -1,75 +1,81 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/_200dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_margin="@dimen/_8dp"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="500">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/greyColor"
-        android:layout_marginEnd="@dimen/_8dp"
-        app:cardCornerRadius="@dimen/_16dp">
+    <LinearLayout
+        android:layout_width="@dimen/_200dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:background="@color/greyLightColor"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8dp"
+            android:background="@drawable/shimmer_background"
+            app:cardCornerRadius="@dimen/_16dp">
 
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageViewRecipe"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_100dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/ImageStyle" />
-
-            <TextView
-                android:id="@+id/textViewHomePopularName"
-                style="@style/textViewStyle"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8dp"
-                android:ellipsize="none"
-                android:gravity="center"
-                android:maxLines="1"
-                android:padding="@dimen/_8dp"
-                android:textSize="@dimen/_16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imageViewRecipe"
-                />
+                android:background="@drawable/shimmer_background">
 
-            <TextView
-                android:id="@+id/textViewHomePopularTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_8dp"
-                android:textColor="@android:color/holo_red_dark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName"
-                />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageViewRecipe"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_100dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/ImageStyle"
+                    tools:contentDescription="recipe_image" />
 
-            <ImageView
-                android:id="@+id/imageViewBookmark"
-                android:layout_width="@dimen/_24dp"
-                android:layout_height="@dimen/_24dp"
-                android:layout_margin="@dimen/_16dp"
-                android:layout_marginTop="@dimen/_8dp"
-                android:layout_marginBottom="@dimen/_16dp"
-                android:importantForAccessibility="no"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName" />
+                <TextView
+                    android:id="@+id/textViewHomePopularName"
+                    style="@style/textViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8dp"
+                    android:ellipsize="none"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/_8dp"
+                    android:textSize="@dimen/_16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageViewRecipe" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:id="@+id/textViewHomePopularTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8dp"
+                    android:textColor="@android:color/holo_red_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName" />
 
-</LinearLayout>
+                <ImageView
+                    android:id="@+id/imageViewBookmark"
+                    android:layout_width="@dimen/_24dp"
+                    android:layout_height="@dimen/_24dp"
+                    android:layout_margin="@dimen/_16dp"
+                    android:layout_marginTop="@dimen/_8dp"
+                    android:layout_marginBottom="@dimen/_16dp"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewHomePopularName" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.card.MaterialCardView>
 
+    </LinearLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>
