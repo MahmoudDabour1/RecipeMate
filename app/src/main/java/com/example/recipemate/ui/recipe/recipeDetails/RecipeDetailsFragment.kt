@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
@@ -19,6 +20,9 @@ import com.example.recipemate.R
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.google.android.material.tabs.TabLayout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 
@@ -31,8 +35,7 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var viewPagerAdapter: ViewPagerAdaptor
     private lateinit var recipeUrl: String
     private lateinit var recipeImage: String
-    private  var recipeInstructions: String =""
-
+    private var recipeInstructions: String = ""
 
 
     override fun onCreateView(
@@ -121,41 +124,45 @@ class RecipeDetailsFragment : Fragment() {
     }
 
     private fun shareRecipe() {
-        val sendIntent: String = "Recipe: ${binding.textViewRecipeDetailsTitle.text} \n" +
-                "Category: ${binding.textViewRecipeDetailsCategory.text} \n" +
-                "Location: ${binding.textViewRecipeDetailsLocation.text} \n" +
-                "YouTube: $recipeUrl"
-        val imageUri = getLocalBitmapUri(recipeImage)
+        lifecycleScope.launch {
+            val sendIntent: String = "Recipe: ${binding.textViewRecipeDetailsTitle.text} \n" +
+                    "Category: ${binding.textViewRecipeDetailsCategory.text} \n" +
+                    "Location: ${binding.textViewRecipeDetailsLocation.text} \n" +
+                    "YouTube: $recipeUrl"
+            val imageUri = getLocalBitmapUri(recipeImage)
 
-        val shareIntent = Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, sendIntent)
-            putExtra(Intent.EXTRA_STREAM, imageUri)
-            type = "image/*"
-            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            val shareIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, sendIntent)
+                putExtra(Intent.EXTRA_STREAM, imageUri)
+                type = "image/*"
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivity(Intent.createChooser(shareIntent, "Share Recipe"))
         }
-        startActivity(Intent.createChooser(shareIntent, "Share Recipe"))
     }
 
-    private fun getLocalBitmapUri(imageUrl: String): Uri? {
-        return try {
-            val file = File(requireContext().cacheDir, "shared_image.png")
-            val outputStream = FileOutputStream(file)
-            val bitmap = Glide.with(this)
-                .asBitmap()
-                .load(imageUrl)
-                .submit()
-                .get()
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-            outputStream.close()
-            FileProvider.getUriForFile(
-                requireContext(),
-                "${requireContext().packageName}.provider",
-                file
-            )
-        } catch (e: Exception) {
-            Log.e("RecipeDetailsFragment", "Failed to get local bitmap URI", e)
-            null
+    private suspend fun getLocalBitmapUri(imageUrl: String): Uri? {
+        return withContext(Dispatchers.IO){
+            try {
+                val file = File(requireContext().cacheDir, "shared_image.png")
+                val outputStream = FileOutputStream(file)
+                val bitmap = Glide.with(this@RecipeDetailsFragment)
+                    .asBitmap()
+                    .load(imageUrl)
+                    .submit()
+                    .get()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                outputStream.close()
+                FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireContext().packageName}.provider",
+                    file
+                )
+            } catch (e: Exception) {
+                Log.e("RecipeDetailsFragment", "Failed to get local bitmap URI", e)
+                null
+            }
         }
     }
 }
