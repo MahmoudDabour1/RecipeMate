@@ -17,6 +17,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.recipemate.R
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.google.android.material.tabs.TabLayout
@@ -33,6 +34,8 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPagerAdapter: ViewPagerAdaptor
+    private lateinit var ingredientAdapter: IngredientAdaptor
+    private var recipeIngredients: List<Ingredient> = emptyList()
     private lateinit var recipeUrl: String
     private lateinit var recipeImage: String
     private var recipeInstructions: String = ""
@@ -56,7 +59,8 @@ class RecipeDetailsFragment : Fragment() {
 
         tabLayout = binding.tabLayoutRecipeDetails
         viewPager2 = binding.viewPagerRecipeDetails
-        viewPagerAdapter = ViewPagerAdaptor(childFragmentManager, lifecycle, recipeInstructions)
+        viewPagerAdapter =
+            ViewPagerAdaptor(childFragmentManager, lifecycle, recipeInstructions, recipeIngredients)
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"))
         tabLayout.addTab(tabLayout.newTab().setText("Instructions"))
         viewPager2.adapter = viewPagerAdapter
@@ -78,6 +82,9 @@ class RecipeDetailsFragment : Fragment() {
             }
         })
 
+
+
+
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
@@ -90,9 +97,17 @@ class RecipeDetailsFragment : Fragment() {
                 recipeUrl = it[0].strYoutube.toString()
                 recipeImage = it[0].strMealThumb.toString()
                 recipeInstructions = it[0].strInstructions.toString()
+                recipeIngredients = extractIngredients(it[0])
+                ingredientAdapter = IngredientAdaptor(recipeIngredients)
+                Log.e("extract", "onViewCreated:$recipeIngredients ")
 
                 viewPagerAdapter =
-                    ViewPagerAdaptor(childFragmentManager, lifecycle, recipeInstructions)
+                    ViewPagerAdaptor(
+                        childFragmentManager,
+                        lifecycle,
+                        recipeInstructions,
+                        recipeIngredients
+                    )
                 viewPager2.adapter = viewPagerAdapter
 
             } ?: run {
@@ -143,7 +158,7 @@ class RecipeDetailsFragment : Fragment() {
     }
 
     private suspend fun getLocalBitmapUri(imageUrl: String): Uri? {
-        return withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO) {
             try {
                 val file = File(requireContext().cacheDir, "shared_image.png")
                 val outputStream = FileOutputStream(file)
@@ -164,5 +179,21 @@ class RecipeDetailsFragment : Fragment() {
                 null
             }
         }
+    }
+
+    private fun extractIngredients(recipeDetails: RecipeDetails): List<Ingredient> {
+        val ingredients = mutableListOf<Ingredient>()
+        for (i in 1..20) {
+            val ingredientField = recipeDetails::class.java.getDeclaredField("strIngredient$i")
+            val measureField = recipeDetails::class.java.getDeclaredField("strMeasure$i")
+            ingredientField.isAccessible = true
+            measureField.isAccessible = true
+            val ingredient = ingredientField.get(recipeDetails) as? String
+            val measure = measureField.get(recipeDetails) as? String
+            if (!ingredient.isNullOrEmpty() && !measure.isNullOrEmpty()) {
+                ingredients.add(Ingredient(ingredient, measure))
+            }
+        }
+        return ingredients
     }
 }

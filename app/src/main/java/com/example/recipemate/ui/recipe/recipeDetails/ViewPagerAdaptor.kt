@@ -8,7 +8,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class ViewPagerAdaptor(
     fragmentManager: FragmentManager,
     lifecycle: Lifecycle,
-    private val instructions: String
+    private val instructions: String,
+    private val ingredients: List<Ingredient>
 ) : FragmentStateAdapter(fragmentManager, lifecycle) {
     override fun getItemCount(): Int {
         return 2
@@ -16,7 +17,7 @@ class ViewPagerAdaptor(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> IngredientFragment() // Assuming you have an IngredientsFragment
+            0 -> IngredientFragment.newInstance(ingredients)
             1 -> InstructionFragment.newInstance(instructions)
             else -> throw IllegalStateException("Unexpected position $position")
         }

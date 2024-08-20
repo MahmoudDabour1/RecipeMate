@@ -145,7 +145,7 @@
                             app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsTitle"
                             tools:text="Japanese" />
 
-                        <View
+                        <com.google.android.material.divider.MaterialDivider
                             android:id="@+id/viewRecipeDetailsDivider"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_2dp"
@@ -159,7 +159,6 @@
                             android:id="@+id/tabLayoutRecipeDetails"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginHorizontal="@dimen/_16dp"
                             android:layout_marginTop="@dimen/_24dp"
                             android:background="@null"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -177,9 +176,8 @@
                         <androidx.viewpager2.widget.ViewPager2
                             android:id="@+id/viewPagerRecipeDetails"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="300dp"
                             android:layout_marginTop="@dimen/_8dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tabLayoutRecipeDetails" />
