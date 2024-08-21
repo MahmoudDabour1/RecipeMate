@@ -1,7 +1,9 @@
 package com.example.recipemate.data.source.remote.model
 
+import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 
+@Entity(tableName = "recipe_tb")
 data class Recipe(
     @SerializedName("strMeal"      ) var strMeal      : String? = null,
     @SerializedName("strMealThumb" ) var strMealThumb : String? = null,

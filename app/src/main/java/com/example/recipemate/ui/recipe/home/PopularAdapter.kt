@@ -14,7 +14,8 @@ import com.example.recipemate.databinding.ItemPopularRecipeBinding
 class PopularAdapter(
     private val seafoodRecipes: ArrayList<Recipe>,
     private val communicator: Communicator,
-    private var isShimmer: Boolean
+    private var isShimmer: Boolean,
+    val bookMarker: BookMarker
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class RecipeViewHolder(private val binding: ItemPopularRecipeBinding) :
@@ -34,6 +35,7 @@ class PopularAdapter(
 
 
             binding.imageViewBookmark.setOnClickListener {
+                bookMarker.onBookmarkClicked(recipe)
                 recipe.isBookmarked = !recipe.isBookmarked
                 notifyItemChanged(adapterPosition)
             }
@@ -84,6 +86,7 @@ class PopularAdapter(
     interface Communicator {
         fun onItemClicked(recipe: Recipe)
     }
+
 
     companion object {
         private const val SHIMMER_ITEM_COUNT = 5
