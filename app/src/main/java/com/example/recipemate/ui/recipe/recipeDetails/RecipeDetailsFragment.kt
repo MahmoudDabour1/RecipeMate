@@ -120,9 +120,7 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun handleOnClicks() {
         binding.imageViewRecipeDetailsBackArrow.setOnClickListener {
-            val action =
-                RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToSearchFragment()
-            findNavController().navigate(action)
+          findNavController().popBackStack()
         }
 
         binding.imageViewRecipeDetailsShare.setOnClickListener {
