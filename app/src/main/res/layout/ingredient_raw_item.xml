@@ -3,27 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/_24dp"
     android:orientation="horizontal"
     android:padding="8dp">
 
     <TextView
         android:id="@+id/tv_ingredient_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_32dp"
+        android:layout_weight="1.5"
         android:textColor="@color/greyColor"
         android:textSize="@dimen/_16dp"
+        android:textStyle="bold"
         tools:ignore="SpUsage"
         tools:text="Ingredient Name" />
 
     <TextView
         android:id="@+id/tv_ingredient_measure"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_32dp"
+        android:layout_weight="1"
         android:textColor="@color/greyColor"
         android:textSize="@dimen/_16dp"
+        android:textStyle="bold"
         tools:ignore="SpUsage"
         tools:text="Ingredient Measure" />
 
