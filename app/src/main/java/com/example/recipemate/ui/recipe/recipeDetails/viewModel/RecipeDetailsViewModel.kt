@@ -1,4 +1,4 @@
-package com.example.recipemate.ui.recipe.search.viewModel
+package com.example.recipemate.ui.recipe.recipeDetails.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -9,22 +9,25 @@ import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
+class RecipeDetailsViewModel : ViewModel() {
     private val recipeRepository = RecipeRepository()
-    private val _recipes = MutableLiveData<List<RecipeDetails>>()
-    val searchRecipes: LiveData<List<RecipeDetails>> = _recipes
+    private val _recipeDetails = MutableLiveData<List<RecipeDetails>>()
+    val recipeDetails: LiveData<List<RecipeDetails>> = _recipeDetails
+
+
     private val _status = MutableLiveData<String>()
 
-    fun fetchSearchRecipes(query: String) {
+    fun fetchRecipeDetails(id: String) {
         viewModelScope.launch {
             try {
-                val response = recipeRepository.getSearchRecipes(query)
-                _recipes.value = response
+                val details = recipeRepository.fetchRecipeDetails(id)
+                Log.e("RecipeDetailsViewModel", "Fetched details: $details")
+                _recipeDetails.value = details
                 _status.value = "Success"
-                Log.e("TAG", "success to fetch search recipes: ")
+                Log.e("RecipeDetails", "success to fetch recipe details: ")
             } catch (e: Exception) {
                 _status.value = "Error ${e.message}"
-                Log.e("TAG", "failed to fetch search recipes: ", e)
+                Log.e("RecipeDetails", "failed to fetch recipe details: ", e)
             }
         }
     }

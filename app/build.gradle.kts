@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -75,6 +76,12 @@ dependencies {
 
     //lottie
     implementation(libs.lottie)
+
+    //android youtube player
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+
+
 
     //shimmer
     implementation (libs.shimmer.v050)
