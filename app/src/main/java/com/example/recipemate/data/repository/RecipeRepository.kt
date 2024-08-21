@@ -1,12 +1,12 @@
 package com.example.recipemate.data.repository
 
 import com.example.recipemate.data.source.local.RecipeDao
-import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.data.source.remote.network.RetrofitModule
 
-class RecipeRepository(val recipeDao : RecipeDao) {
+class RecipeRepository(val recipeDao: RecipeDao) {
     private val apiService = RetrofitModule.apiService
 
     suspend fun getSearchRecipes(query: String): List<RecipeDetails> {
@@ -32,8 +32,15 @@ class RecipeRepository(val recipeDao : RecipeDao) {
         val recipeDetails = apiService.getRecipeDetails(id)
         return recipeDetails.recipes ?: emptyList()
     }
+
     suspend fun addRecipeToFav(recipe: Recipe) = recipeDao.addFavRecipe(recipe)
     suspend fun deleteRecipeFromFav(recipe: Recipe) = recipeDao.deleteFavRecipe(recipe)
     suspend fun getAllFavRecipes() = recipeDao.getAllFavRecipes()
     suspend fun updateRecipes(recipe: Recipe) = recipeDao.updateRecipes(recipe)
+    suspend fun isRecipeInDatabase (recipe: Recipe) = recipe.idMeal?.let {
+        recipeDao.isRecipeInDatabase(
+            it
+        )
+    }
+
 }

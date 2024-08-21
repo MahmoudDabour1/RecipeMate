@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.ItemSavedItemBinding
 import com.example.recipemate.ui.recipe.home.BookMarker
@@ -23,12 +22,6 @@ class BookMarkerAdapter(
                 .into(binding.imageFav)
             binding.imgBookMark.setOnClickListener {
                 recipe.isBookmarked = !recipe.isBookmarked
-                val bookmarkIcon = if (recipe.isBookmarked) {
-                    R.drawable.ic_bookmark_red
-                } else {
-                    R.drawable.ic_bookmark_white
-                }
-                binding.imgBookMark.setImageResource(bookmarkIcon)
                 notifyItemChanged(adapterPosition)
                 bookMarker.onBookmarkClicked(recipe)
 
@@ -62,9 +55,10 @@ class BookMarkerAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Recipe>, isShimmer: Boolean) {
+    fun updateData(newItems: List<Recipe>) {
         savedRecipes.clear()
         savedRecipes.addAll(newItems)
+        savedRecipes.reverse()
         notifyDataSetChanged()
     }
 

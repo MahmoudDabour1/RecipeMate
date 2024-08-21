@@ -5,17 +5,17 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipemate.R
 import com.example.recipemate.data.repository.RecipeRepository
+import com.example.recipemate.data.source.local.RecipeDao
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.FragmentHomeBinding
-import com.example.recipemate.ui.recipe.bookMark.BookMarkViewModel
-import com.example.recipemate.ui.recipe.bookMark.BookMarkViewModelFactory
 
 class HomeFragment : Fragment() {
 
@@ -29,6 +29,7 @@ class HomeFragment : Fragment() {
     private var isShimmerCategory = true
     private var isShimmerRecent = true
     private var isShimmerPopular = true
+    private lateinit var recipeDao : RecipeDao
 
     private val viewModel: RecipeViewModel by viewModels {
         RecipeViewModelFactory(
@@ -79,7 +80,8 @@ class HomeFragment : Fragment() {
     private fun setupAdapters() {
         popularAdapter =
             PopularAdapter(arrayListOf(), popularCommunicator, isShimmerPopular, bookMarker)
-        recentAdapter = RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent)
+        recentAdapter =
+            RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent, bookMarker)
         categoryAdapter = CategoryAdapter(arrayListOf(), categoryCommunicator, isShimmerCategory)
     }
 

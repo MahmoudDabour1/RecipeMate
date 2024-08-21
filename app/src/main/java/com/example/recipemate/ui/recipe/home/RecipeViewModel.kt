@@ -22,7 +22,6 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
     private val _recipes: MutableLiveData<ArrayList<Recipe>> = MutableLiveData()
     private val _status: MutableLiveData<String> = MutableLiveData()
 
-
     val recipe: MutableLiveData<ArrayList<Recipe>> = _recipes
 
 
@@ -83,9 +82,30 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
 
     fun chooseToAddOrDelete(recipe: Recipe) {
         viewModelScope.launch {
-            if (recipe.isBookmarked) repository.addRecipeToFav(recipe)
-            else repository.deleteRecipeFromFav(recipe)
+            val isInDatabase = repository.isRecipeInDatabase(recipe) ?: false
+            if (!isInDatabase) {
+                repository.addRecipeToFav(recipe)
+            } else {
+                repository.deleteRecipeFromFav(recipe)
+            }
         }
 
     }
+
+    fun isInDatabase(recipe: Recipe): Boolean {
+        var isInDatabase = false
+        viewModelScope.launch {
+            isInDatabase = repository.isRecipeInDatabase(recipe) ?: false
+        }
+        return isInDatabase
+    }
+
+
+    fun updateRecipe(recipe: Recipe) {
+        viewModelScope.launch {
+            repository.updateRecipes(recipe)
+        }
+    }
 }
+
+

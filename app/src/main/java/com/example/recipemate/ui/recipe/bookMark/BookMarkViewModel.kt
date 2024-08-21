@@ -8,19 +8,27 @@ import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.Recipe
 import kotlinx.coroutines.launch
 
-class BookMarkViewModel(val repo : RecipeRepository) : ViewModel() {
+class BookMarkViewModel(val repo: RecipeRepository) : ViewModel() {
     private val _savedRecipes = MutableLiveData<List<Recipe>>()
-    val savedRecipes : LiveData<List<Recipe>> = _savedRecipes
+    val savedRecipes: LiveData<List<Recipe>> = _savedRecipes
 
     fun getAllSavedRecipes() {
         viewModelScope.launch {
             _savedRecipes.value = repo.getAllFavRecipes()
         }
     }
-    fun chooseToAddOrDelete(recipe: Recipe){
+
+    fun deleteRecipe(recipe: Recipe) {
         viewModelScope.launch {
-            if(recipe.isBookmarked) repo.addRecipeToFav(recipe)
-            else repo.deleteRecipeFromFav(recipe)
+            repo.deleteRecipeFromFav(recipe)
+            getAllSavedRecipes()
         }
     }
+    fun addRecipe(recipe: Recipe){
+        viewModelScope.launch {
+            repo.addRecipeToFav(recipe)
+            getAllSavedRecipes()
+        }
+    }
+
 }

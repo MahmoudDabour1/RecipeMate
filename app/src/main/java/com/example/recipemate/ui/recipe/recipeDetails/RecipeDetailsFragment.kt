@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,6 +19,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
+import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
@@ -40,6 +42,7 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipeUrl: String
     private lateinit var recipeImage: String
     private var recipeInstructions: String = ""
+    private lateinit var recipe: Recipe
 
     private val viewModel: RecipeDetailsViewModel by viewModels {
         DetailsViewModelFactory(
@@ -90,12 +93,16 @@ class RecipeDetailsFragment : Fragment() {
             }
         })
 
+        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
+        }
 
 
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
+                recipe = Recipe(it[0].strMeal.toString(), it[0].strMealThumb, it[0].idMeal)
                 binding.textViewRecipeDetailsTitle.text = it[0].strMeal.toString()
                 binding.textViewRecipeDetailsCategory.text = it[0].strCategory
                 binding.textViewRecipeDetailsLocation.text = it[0].strArea
@@ -141,6 +148,9 @@ class RecipeDetailsFragment : Fragment() {
                     recipeUrl
                 )
             findNavController().navigate(action)
+        }
+        binding.recipeDetailsFavouriteButton.favouriteButtonView.setOnClickListener {
+            viewModel.addRecipeToFav(recipe)
         }
     }
 
