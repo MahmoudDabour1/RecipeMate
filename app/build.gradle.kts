@@ -82,4 +82,7 @@ dependencies {
 
 
 
+
+    //shimmer
+    implementation (libs.shimmer.v050)
 }

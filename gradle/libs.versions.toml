@@ -23,6 +23,7 @@ roomRuntimeAndroid = "2.7.0-alpha06"
 room_version = "2.6.1"
 roomCommon = "2.6.1"
 lottie = "4.2.2"
+shimmerVersion = "0.5.0"
 
 
 [libraries]
@@ -52,6 +53,7 @@ androidx-room-runtime = { group = "androidx.room", name = "room-runtime", versio
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room_version" }
 
 lottie = { module = "com.airbnb.android:lottie", version.ref = "lottie" }
+shimmer-v050 = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmerVersion" }
 
 
 [plugins]
