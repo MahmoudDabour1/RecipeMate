@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_8dp"
-    app:cardCornerRadius="@dimen/_8dp"
+    app:cardCornerRadius="@dimen/_16dp"
     app:cardElevation="@dimen/_8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,17 +28,20 @@
         <TextView
             android:id="@+id/textViewRecentName"
             style="@style/textViewStyle"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="@dimen/_8dp"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewFavorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageRecentView"
             tools:text="name" />
 
         <ImageView
             android:id="@+id/imageViewFavorite"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/_30dp"
             android:layout_height="@dimen/_30dp"
-            android:layout_margin="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_8dp"
+            android:layout_marginEnd="@dimen/_16dp"
+            android:layout_marginBottom="@dimen/_8dp"
             android:importantForAccessibility="no"
             android:src="@drawable/ic_bookmark"
             app:layout_constraintEnd_toEndOf="parent"
