@@ -1,19 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/_16dp"
     tools:context=".ui.recipe.recipeDetails.InstructionFragment">
-
 
     <TextView
         android:id="@+id/textViewInstructions"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textColor="@color/greyColor"
         android:textSize="@dimen/_16dp"
         android:textStyle="bold"
         tools:ignore="SpUsage"
         tools:text="Ingredients" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100dp" />
 
 </FrameLayout>

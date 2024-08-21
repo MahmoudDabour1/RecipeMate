@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide
 import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
+import com.example.recipemate.databinding.RecipeCategoryAndAreaLayoutBinding
+import com.example.recipemate.databinding.RecipeHeaderLayoutBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +41,8 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipeUrl: String
     private lateinit var recipeImage: String
     private var recipeInstructions: String = ""
+    private lateinit var recipeHeaderLayoutBinding: RecipeHeaderLayoutBinding
+    private lateinit var recipeCategoryAndAreaLayoutBinding: RecipeCategoryAndAreaLayoutBinding
 
 
     override fun onCreateView(
@@ -47,7 +51,6 @@ class RecipeDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
-        recipeImage = binding.recipeDetailsHeaderImageView.toString()
         return binding.root
     }
 
@@ -57,8 +60,11 @@ class RecipeDetailsFragment : Fragment() {
         viewModel.fetchRecipeDetails(args.recipeId)
         Log.e("TAG", "onViewCreated:  ${args.recipeId}")
 
-        tabLayout = binding.tabLayoutRecipeDetails
-        viewPager2 = binding.viewPagerRecipeDetails
+        recipeHeaderLayoutBinding = binding.recipeDetailsHeaderLayout
+        recipeCategoryAndAreaLayoutBinding = binding.recipeDetailsCategoryAndAreaLayout
+
+        tabLayout = recipeCategoryAndAreaLayoutBinding.tabLayoutRecipeDetails
+        viewPager2 = recipeCategoryAndAreaLayoutBinding.viewPagerRecipeDetails
         viewPagerAdapter =
             ViewPagerAdaptor(childFragmentManager, lifecycle, recipeInstructions, recipeIngredients)
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"))
@@ -88,12 +94,15 @@ class RecipeDetailsFragment : Fragment() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
-                binding.textViewRecipeDetailsTitle.text = it[0].strMeal.toString()
-                binding.textViewRecipeDetailsCategory.text = it[0].strCategory
-                binding.textViewRecipeDetailsLocation.text = it[0].strArea
+                recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text =
+                    it[0].strMeal.toString()
+                recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text =
+                    it[0].strCategory
+                recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text =
+                    it[0].strArea
                 Glide.with(binding.root)
                     .load(it[0].strMealThumb)
-                    .into(binding.recipeDetailsHeaderImageView)
+                    .into(recipeHeaderLayoutBinding.recipeDetailsHeaderImageView)
                 recipeUrl = it[0].strYoutube.toString()
                 recipeImage = it[0].strMealThumb.toString()
                 recipeInstructions = it[0].strInstructions.toString()
@@ -119,13 +128,13 @@ class RecipeDetailsFragment : Fragment() {
     }
 
     private fun handleOnClicks() {
-        binding.imageViewRecipeDetailsBackArrow.setOnClickListener {
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsBackArrow.setOnClickListener {
             val action =
                 RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToSearchFragment()
             findNavController().navigate(action)
         }
 
-        binding.imageViewRecipeDetailsShare.setOnClickListener {
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
             shareRecipe()
         }
 
@@ -140,10 +149,11 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun shareRecipe() {
         lifecycleScope.launch {
-            val sendIntent: String = "Recipe: ${binding.textViewRecipeDetailsTitle.text} \n" +
-                    "Category: ${binding.textViewRecipeDetailsCategory.text} \n" +
-                    "Location: ${binding.textViewRecipeDetailsLocation.text} \n" +
-                    "YouTube: $recipeUrl"
+            val sendIntent: String =
+                "Recipe: ${recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text} \n" +
+                        "Category: ${recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text} \n" +
+                        "Location: ${recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text} \n" +
+                        "YouTube: $recipeUrl"
             val imageUri = getLocalBitmapUri(recipeImage)
 
             val shareIntent = Intent().apply {
