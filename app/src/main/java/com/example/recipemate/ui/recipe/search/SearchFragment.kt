@@ -15,8 +15,9 @@ import com.example.recipemate.ui.recipe.search.viewModel.SearchViewModel
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdaptor
+    private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdapter
     private lateinit var searchRecipesRecycler: RecyclerView
+    private var isShimmer = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +36,12 @@ class SearchFragment : Fragment() {
 
     private fun initUI() {
         searchRecipesRecycler = binding.recyclerViewSearchRecipes
-        searchRecipesAdapter = RecipeSearchRecyclerAdaptor(arrayListOf(), communicator)
+        searchRecipesAdapter = RecipeSearchRecyclerAdapter(arrayListOf(), communicator,isShimmer)
         searchRecipesRecycler.adapter = searchRecipesAdapter
+
+
+        binding.lottieAnimationSearchView.visibility = View.VISIBLE
+        binding.recyclerViewSearchRecipes.visibility = View.GONE
 
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -49,6 +54,7 @@ class SearchFragment : Fragment() {
                     binding.lottieAnimationSearchView.visibility = View.VISIBLE
                     binding.recyclerViewSearchRecipes.visibility = View.GONE
                 } else {
+                    isShimmer = true
                     binding.lottieAnimationSearchView.visibility = View.GONE
                     binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
                     viewModel.fetchSearchRecipes(newText)
@@ -61,7 +67,8 @@ class SearchFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.searchRecipes.observe(viewLifecycleOwner) { recipes ->
             recipes?.let {
-                searchRecipesAdapter.updateRecipes(it)
+                isShimmer = false
+                searchRecipesAdapter.updateRecipes(it,isShimmer)
                 if (it.isEmpty()) {
                     binding.lottieAnimationSearchView.visibility = View.VISIBLE
                     binding.recyclerViewSearchRecipes.visibility = View.GONE

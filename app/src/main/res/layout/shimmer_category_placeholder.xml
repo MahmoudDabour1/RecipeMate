@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_4dp"
+    app:shimmer_auto_start="true"
+    app:shimmer_duration="500">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@drawable/shimmer_background">
+
+        <TextView
+            android:id="@+id/textViewCategory"
+            style="@style/textViewStyle"
+            android:layout_width="@dimen/_100dp"
+            android:padding="@dimen/_8dp"
+            android:textSize="@dimen/_16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>
