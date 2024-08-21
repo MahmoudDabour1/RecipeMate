@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeFragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -47,6 +50,9 @@
         <action
             android:id="@+id/action_recipeDetailsFragment_to_watchVideoFragment"
             app:destination="@id/watchVideoFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/watchVideoFragment"

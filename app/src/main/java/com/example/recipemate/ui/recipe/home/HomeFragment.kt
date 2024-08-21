@@ -48,7 +48,6 @@ class HomeFragment : Fragment() {
     private fun fetchData() {
         viewModel.apply {
             fetchRecipesByCategory(DEFAULT_CATEGORY)
-            fetchPopularRecipes()
             fetchRecentRecipes()
             fetchCategories()
         }
@@ -98,12 +97,18 @@ class HomeFragment : Fragment() {
 
     private val popularCommunicator = object : PopularAdapter.Communicator {
         override fun onItemClicked(recipe: Recipe) {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToRecipeDetailsFragment(recipe.idMeal.toString())
+            findNavController().navigate(action)
 
         }
     }
 
     private val recentCommunicator = object : RecentAdapter.Communicator {
         override fun onItemClicked(recipe: Recipe) {
+            val action =
+                HomeFragmentDirections.actionHomeFragmentToRecipeDetailsFragment(recipe.idMeal.toString())
+            findNavController().navigate(action)
 
         }
     }

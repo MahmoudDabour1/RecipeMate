@@ -16,7 +16,7 @@ import com.example.recipemate.ui.recipe.search.viewModel.SearchViewModel
 class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdaptor
+    private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdapter
     private lateinit var searchRecipesRecycler: RecyclerView
     private var isShimmer = true
 
