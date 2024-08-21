@@ -17,7 +17,6 @@ class PopularAdapter(
     private var isShimmer: Boolean,
     val bookMarker: BookMarker
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     inner class RecipeViewHolder(private val binding: ItemPopularRecipeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
@@ -25,19 +24,17 @@ class PopularAdapter(
             binding.textViewHomePopularTime.text = "20 mins"
             Glide.with(binding.imageViewRecipe.context).load(recipe.strMealThumb)
                 .into(binding.imageViewRecipe)
-            val bookmarkIcon = if (recipe.isBookmarked) {
-                R.drawable.ic_bookmark_red
-            } else {
-                R.drawable.ic_bookmark_white
-            }
-
-            binding.imageViewBookmark.setImageResource(bookmarkIcon)
-
-
             binding.imageViewBookmark.setOnClickListener {
-                bookMarker.onBookmarkClicked(recipe)
                 recipe.isBookmarked = !recipe.isBookmarked
+                val bookmarkIcon = if (recipe.isBookmarked) {
+                    R.drawable.ic_bookmark_red
+                } else {
+                    R.drawable.ic_bookmark_white
+                }
+                binding.imageViewBookmark.setImageResource(bookmarkIcon)
                 notifyItemChanged(adapterPosition)
+                bookMarker.onBookmarkClicked(recipe)
+
             }
 
             itemView.setOnClickListener {
@@ -83,6 +80,7 @@ class PopularAdapter(
         notifyDataSetChanged()
     }
 
+
     interface Communicator {
         fun onItemClicked(recipe: Recipe)
     }
@@ -93,4 +91,5 @@ class PopularAdapter(
         private const val VIEW_TYPE_SHIMMER = 0
         private const val VIEW_TYPE_CATEGORY = 1
     }
+
 }

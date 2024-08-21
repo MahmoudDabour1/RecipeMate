@@ -9,8 +9,7 @@ import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
-    private val recipeRepository = RecipeRepository()
+class SearchViewModel(val recipeRepository: RecipeRepository) : ViewModel() {
     private val _recipes = MutableLiveData<List<RecipeDetails>>()
     val searchRecipes: LiveData<List<RecipeDetails>> = _recipes
     private val _status = MutableLiveData<String>()

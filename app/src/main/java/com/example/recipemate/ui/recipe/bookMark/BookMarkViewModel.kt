@@ -14,8 +14,13 @@ class BookMarkViewModel(val repo : RecipeRepository) : ViewModel() {
 
     fun getAllSavedRecipes() {
         viewModelScope.launch {
-
+            _savedRecipes.value = repo.getAllFavRecipes()
         }
-
+    }
+    fun chooseToAddOrDelete(recipe: Recipe){
+        viewModelScope.launch {
+            if(recipe.isBookmarked) repo.addRecipeToFav(recipe)
+            else repo.deleteRecipeFromFav(recipe)
+        }
     }
 }

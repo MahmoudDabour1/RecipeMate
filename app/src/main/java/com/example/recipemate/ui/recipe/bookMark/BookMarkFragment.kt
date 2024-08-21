@@ -18,7 +18,7 @@ import com.example.recipemate.ui.recipe.home.PopularAdapter
 class BookMarkFragment : Fragment() {
     private var _binding: FragmentBookMarkBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter : PopularAdapter
+    private lateinit var adapter: BookMarkerAdapter
 
     private val bookMarkViewModel: BookMarkViewModel by viewModels {
         BookMarkViewModelFactory(
@@ -40,22 +40,23 @@ class BookMarkFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bookMarkViewModel.getAllSavedRecipes()
-         adapter = PopularAdapter( arrayListOf(),popularCommunicator,false,bookMarker)
-        bookMarkViewModel.savedRecipes.observe(viewLifecycleOwner , Observer { value ->
-          adapter.updateData(value)
+        adapter = BookMarkerAdapter(arrayListOf(),savedCommunicator, bookMarker)
+        bookMarkViewModel.savedRecipes.observe(viewLifecycleOwner, Observer { value ->
+            adapter.updateData(value, false)
             binding.recyclerViewBookmarkedRecipes.adapter = adapter
-      })
+        })
 
     }
-    private val popularCommunicator = object : PopularAdapter.Communicator {
+
+    private val savedCommunicator = object : BookMarkerAdapter.Communicator {
         override fun onItemClicked(recipe: Recipe) {
 
         }
     }
-    private val bookMarker = object  : BookMarker {
-        override fun onBookmarkClick(recipe: Recipe) {
+    private val bookMarker = object : BookMarker {
+        override fun onBookmarkClicked(recipe: Recipe) {
             bookMarkViewModel.chooseToAddOrDelete(recipe)
-            bookMarkViewModel.getAllSavedRecipe()
+            bookMarkViewModel.getAllSavedRecipes()
         }
 
     }

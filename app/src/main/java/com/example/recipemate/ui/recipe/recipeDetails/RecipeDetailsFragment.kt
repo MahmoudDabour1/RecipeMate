@@ -16,9 +16,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.recipemate.R
+import com.example.recipemate.data.repository.RecipeRepository
+import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
+import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
@@ -30,7 +32,6 @@ import java.io.FileOutputStream
 class RecipeDetailsFragment : Fragment() {
     private lateinit var binding: FragmentRecipeDetailsBinding
     private val args: RecipeDetailsFragmentArgs by navArgs()
-    private val viewModel: RecipeDetailsViewModel by viewModels()
     private lateinit var viewPager2: ViewPager2
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPagerAdapter: ViewPagerAdaptor
@@ -40,6 +41,13 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipeImage: String
     private var recipeInstructions: String = ""
 
+    private val viewModel: RecipeDetailsViewModel by viewModels {
+        DetailsViewModelFactory(
+            RecipeRepository(
+                RecipeDatabase.getInstance(requireContext()).recipeDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -120,7 +128,7 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun handleOnClicks() {
         binding.imageViewRecipeDetailsBackArrow.setOnClickListener {
-          findNavController().popBackStack()
+            findNavController().popBackStack()
         }
 
         binding.imageViewRecipeDetailsShare.setOnClickListener {

@@ -35,5 +35,5 @@ class RecipeRepository(val recipeDao : RecipeDao) {
     suspend fun addRecipeToFav(recipe: Recipe) = recipeDao.addFavRecipe(recipe)
     suspend fun deleteRecipeFromFav(recipe: Recipe) = recipeDao.deleteFavRecipe(recipe)
     suspend fun getAllFavRecipes() = recipeDao.getAllFavRecipes()
-    suspend fun updateRecipes() = recipeDao.updateRecipes()
+    suspend fun updateRecipes(recipe: Recipe) = recipeDao.updateRecipes(recipe)
 }

@@ -10,7 +10,7 @@ import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import kotlinx.coroutines.launch
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
 
     private val _popularRecipes = MutableLiveData<List<Recipe>>()
     val popularRecipes: LiveData<List<Recipe>> get() = _popularRecipes
@@ -24,9 +24,6 @@ class RecipeViewModel : ViewModel() {
 
 
     val recipe: MutableLiveData<ArrayList<Recipe>> = _recipes
-
-
-    private val repository = RecipeRepository()
 
 
     private val _categories = MutableLiveData<List<Category>>()
@@ -82,5 +79,13 @@ class RecipeViewModel : ViewModel() {
                 Log.e("TAG", "failed to fetch categories: ")
             }
         }
+    }
+
+    fun chooseToAddOrDelete(recipe: Recipe) {
+        viewModelScope.launch {
+            if (recipe.isBookmarked) repository.addRecipeToFav(recipe)
+            else repository.deleteRecipeFromFav(recipe)
+        }
+
     }
 }

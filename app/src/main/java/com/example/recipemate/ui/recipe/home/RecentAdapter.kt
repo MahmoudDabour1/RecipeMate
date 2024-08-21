@@ -29,8 +29,6 @@ class RecentAdapter(
             }
 
             binding.imageViewFavorite.setImageResource(bookmarkIcon)
-
-
             binding.imageViewFavorite.setOnClickListener {
                 recipe.isBookmarked = !recipe.isBookmarked
                 notifyItemChanged(adapterPosition)
