@@ -9,12 +9,23 @@
         android:id="@+id/homeFragment"
         android:name="com.example.recipemate.ui.recipe.home.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.recipemate.ui.recipe.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/bookMarkFragment"
         android:name="com.example.recipemate.ui.recipe.bookMark.BookMarkFragment"
@@ -25,4 +36,34 @@
         android:name="com.example.recipemate.ui.recipe.user.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/recipeDetailsFragment"
+        android:name="com.example.recipemate.ui.recipe.recipeDetails.RecipeDetailsFragment"
+        android:label="fragment_recipe_details"
+        tools:layout="@layout/fragment_recipe_details">
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_watchVideoFragment"
+            app:destination="@id/watchVideoFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/watchVideoFragment"
+        android:name="com.example.recipemate.ui.recipe.recipeDetails.WatchVideoFragment"
+        android:label="fragment_watch_video"
+        tools:layout="@layout/fragment_watch_video">
+        <action
+            android:id="@+id/action_watchVideoFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+        <argument
+            android:name="recipeYouTubeVideoUrl"
+            app:argType="string" />
+    </fragment>
 </navigation>

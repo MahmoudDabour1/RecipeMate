@@ -18,12 +18,13 @@ class SearchViewModel : ViewModel() {
     fun fetchSearchRecipes(query: String) {
         viewModelScope.launch {
             try {
-                _recipes.value = recipeRepository.getSearchRecipes(query)
+                val response = recipeRepository.getSearchRecipes(query)
+                _recipes.value = response
                 _status.value = "Success"
                 Log.e("TAG", "success to fetch search recipes: ")
             } catch (e: Exception) {
                 _status.value = "Error ${e.message}"
-                Log.e("TAG", "failed to fetch search recipes: ")
+                Log.e("TAG", "failed to fetch search recipes: ", e)
             }
         }
     }
