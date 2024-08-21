@@ -8,30 +8,27 @@ import com.example.recipemate.data.source.remote.network.RetrofitModule
 class RecipeRepository {
     private val apiService = RetrofitModule.apiService
 
-
-    suspend fun getSearchRecipes(query: String): ArrayList<RecipeDetails> {
+    suspend fun getSearchRecipes(query: String): List<RecipeDetails> {
         val searchRecipes = apiService.getSearchRecipes(query)
-        return searchRecipes.recipes as ArrayList<RecipeDetails>
+        return searchRecipes.recipes ?: emptyList()
     }
 
     suspend fun getRecipe(): List<Recipe> {
         val recipes = apiService.getRecipes()
-        return recipes.recipe
+        return recipes.recipe ?: emptyList()
     }
 
     suspend fun fetchRecipesByCategory(category: String): List<Recipe> {
         val recipe = apiService.getRecipeByCategory(category)
-        return recipe.recipe
-
+        return recipe.recipe ?: emptyList()
     }
-
 
     suspend fun fetchCategories(): List<Category> {
-        return apiService.getAllCategories().categories
+        return apiService.getAllCategories().categories ?: emptyList()
     }
 
-    suspend fun fetchRecipeDetails(id: String): ArrayList<RecipeDetails> {
+    suspend fun fetchRecipeDetails(id: String): List<RecipeDetails> {
         val recipeDetails = apiService.getRecipeDetails(id)
-        return recipeDetails.recipes as ArrayList<RecipeDetails>
+        return recipeDetails.recipes ?: emptyList()
     }
 }

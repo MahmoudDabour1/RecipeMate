@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whiteColor"
     android:orientation="vertical"
     tools:context=".ui.recipe.search.SearchFragment">
 
@@ -20,15 +21,28 @@
 
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieAnimationSearchView"
-        android:layout_width="@dimen/_200dp"
-        android:layout_height="0dp"
+        android:id="@+id/lottieAnimationEmptySearch"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
         android:layout_gravity="center"
         android:layout_weight="1"
         android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/empty" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationNoDataFound"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:background="@color/whiteColor"
+        android:layout_weight="1"
+        android:visibility="gone"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/no_data_found" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearchRecipes"
@@ -37,7 +51,7 @@
         android:layout_marginHorizontal="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        tools:itemCount="30"
+        tools:itemCount="10"
         tools:listitem="@layout/search_item_raw" />
 
 </LinearLayout>

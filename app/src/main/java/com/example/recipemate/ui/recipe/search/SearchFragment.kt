@@ -38,7 +38,7 @@ class SearchFragment : Fragment() {
         searchRecipesRecycler = binding.recyclerViewSearchRecipes
         searchRecipesAdapter = RecipeSearchRecyclerAdaptor(arrayListOf(), communicator)
         searchRecipesRecycler.adapter = searchRecipesAdapter
-        binding.lottieAnimationSearchView.visibility = View.VISIBLE
+        binding.lottieAnimationEmptySearch.visibility = View.VISIBLE
         binding.recyclerViewSearchRecipes.visibility = View.GONE
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -48,10 +48,11 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    binding.lottieAnimationSearchView.visibility = View.VISIBLE
+                    binding.lottieAnimationEmptySearch.visibility = View.VISIBLE
+                    binding.lottieAnimationNoDataFound.visibility = View.GONE
                     binding.recyclerViewSearchRecipes.visibility = View.GONE
                 } else {
-                    binding.lottieAnimationSearchView.visibility = View.GONE
+                    binding.lottieAnimationEmptySearch.visibility = View.GONE
                     binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
                     viewModel.fetchSearchRecipes(newText)
                 }
@@ -62,15 +63,15 @@ class SearchFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.searchRecipes.observe(viewLifecycleOwner) { recipes ->
-            recipes?.let {
-                searchRecipesAdapter.updateRecipes(it)
-                if (it.isEmpty()) {
-                    binding.lottieAnimationSearchView.visibility = View.VISIBLE
-                    binding.recyclerViewSearchRecipes.visibility = View.GONE
-                } else {
-                    binding.lottieAnimationSearchView.visibility = View.GONE
-                    binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
-                }
+            if (recipes.isNullOrEmpty()) {
+                binding.lottieAnimationEmptySearch.visibility = View.GONE
+                binding.lottieAnimationNoDataFound.visibility = View.VISIBLE
+                binding.recyclerViewSearchRecipes.visibility = View.GONE
+            } else {
+                searchRecipesAdapter.updateRecipes(recipes)
+                binding.lottieAnimationEmptySearch.visibility = View.GONE
+                binding.lottieAnimationNoDataFound.visibility = View.GONE
+                binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
             }
         }
     }
