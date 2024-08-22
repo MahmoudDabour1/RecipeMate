@@ -62,6 +62,13 @@ class RecipeDetailsFragment : Fragment() {
         viewModel.fetchRecipeDetails(args.recipeId)
         Log.e("TAG", "onViewCreated:  ${args.recipeId}")
 
+        initUi()
+        observeData()
+        handleOnClicks()
+    }
+
+    @SuppressLint("InflateParams")
+    private fun initUi() {
         recipeHeaderLayoutBinding = binding.recipeDetailsHeaderLayout
         recipeCategoryAndAreaLayoutBinding = binding.recipeDetailsCategoryAndAreaLayout
 
@@ -99,7 +106,9 @@ class RecipeDetailsFragment : Fragment() {
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
+    }
 
+    private fun observeData() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
@@ -132,8 +141,6 @@ class RecipeDetailsFragment : Fragment() {
                 Log.e("RecipeDetailsFragment", "Recipe details are null")
             }
         }
-
-        handleOnClicks()
     }
 
     private fun handleOnClicks() {
