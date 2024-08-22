@@ -10,7 +10,7 @@ import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import kotlinx.coroutines.launch
 
-class RecipeViewModel : ViewModel() {
+class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
 
     private val _popularRecipes = MutableLiveData<List<Recipe>>()
     val popularRecipes: LiveData<List<Recipe>> get() = _popularRecipes
@@ -22,11 +22,7 @@ class RecipeViewModel : ViewModel() {
     private val _recipes: MutableLiveData<ArrayList<Recipe>> = MutableLiveData()
     private val _status: MutableLiveData<String> = MutableLiveData()
 
-
     val recipe: MutableLiveData<ArrayList<Recipe>> = _recipes
-
-
-    private val repository = RecipeRepository()
 
 
     private val _categories = MutableLiveData<List<Category>>()
@@ -83,4 +79,18 @@ class RecipeViewModel : ViewModel() {
             }
         }
     }
+
+    fun chooseToAddOrDelete(recipe: Recipe) {
+        viewModelScope.launch {
+            val isInDatabase = repository.isRecipeInDatabase(recipe) ?: false
+            if (!isInDatabase) {
+                repository.addRecipeToFav(recipe)
+            } else {
+                repository.deleteRecipeFromFav(recipe)
+            }
+        }
+
+    }
 }
+
+

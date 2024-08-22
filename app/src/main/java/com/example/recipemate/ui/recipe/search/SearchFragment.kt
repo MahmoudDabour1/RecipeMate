@@ -9,17 +9,26 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.recipemate.data.repository.RecipeRepository
+import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentSearchBinding
+import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
+import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.example.recipemate.ui.recipe.search.viewModel.SearchViewModel
 
 class SearchFragment : Fragment() {
-    private val viewModel: SearchViewModel by viewModels()
     private lateinit var binding: FragmentSearchBinding
     private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdapter
     private lateinit var searchRecipesRecycler: RecyclerView
     private var isShimmer = true
-
+    private val viewModel: SearchViewModel by viewModels {
+        SearchViewModelFactory(
+            RecipeRepository(
+                RecipeDatabase.getInstance(requireContext()).recipeDao()
+            )
+        )
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

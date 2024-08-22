@@ -77,7 +77,7 @@ class CategoryAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Category>,isShimmer: Boolean) {
+    fun updateData(newItems: List<Category>, isShimmer: Boolean) {
         this.isShimmer = isShimmer
         category.clear()
         category.addAll(newItems)
