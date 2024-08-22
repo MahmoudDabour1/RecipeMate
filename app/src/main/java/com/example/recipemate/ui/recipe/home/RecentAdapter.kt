@@ -13,7 +13,8 @@ import com.example.recipemate.databinding.ItemRecentRecipesBinding
 class RecentAdapter(
     private val recentRecipes: ArrayList<Recipe>,
     private val communicator: Communicator,
-    private var isShimmer: Boolean
+    private var isShimmer: Boolean,
+    private val bookMarker: BookMarker
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class RecentViewHolder(private val binding: ItemRecentRecipesBinding) :
@@ -27,13 +28,11 @@ class RecentAdapter(
             } else {
                 R.drawable.ic_bookmark
             }
-
             binding.imageViewFavorite.setImageResource(bookmarkIcon)
-
-
             binding.imageViewFavorite.setOnClickListener {
                 recipe.isBookmarked = !recipe.isBookmarked
                 notifyItemChanged(adapterPosition)
+                bookMarker.onBookmarkClicked(recipe)
             }
 
             itemView.setOnClickListener {
