@@ -13,6 +13,7 @@ abstract class RecipeDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao
     abstract fun recipeDao(): RecipeDao
+
     companion object {
 
         @Volatile

@@ -7,18 +7,21 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.recipemate.data.source.remote.model.Recipe
-import com.google.android.material.circularreveal.CircularRevealHelper.Strategy
 
 @Dao
-interface RecipeDao{
-    @Insert (onConflict = OnConflictStrategy.IGNORE)
-    suspend fun addFavRecipe(recipe : Recipe)
+interface RecipeDao {
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun addFavRecipe(recipe: Recipe)
+
     @Delete
     suspend fun deleteFavRecipe(recipe: Recipe)
+
     @Update
     suspend fun updateRecipes(recipe: Recipe)
+
     @Query("Select * From recipe_tb")
-    suspend fun getAllFavRecipes():List<Recipe>
+    suspend fun getAllFavRecipes(): List<Recipe>
+
     @Query("SELECT EXISTS (SELECT 1 FROM recipe_tb WHERE idMeal = :id)")
     suspend fun isRecipeInDatabase(id: String): Boolean
 }

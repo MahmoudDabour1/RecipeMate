@@ -91,21 +91,6 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
         }
 
     }
-
-    fun isInDatabase(recipe: Recipe): Boolean {
-        var isInDatabase = false
-        viewModelScope.launch {
-            isInDatabase = repository.isRecipeInDatabase(recipe) ?: false
-        }
-        return isInDatabase
-    }
-
-
-    fun updateRecipe(recipe: Recipe) {
-        viewModelScope.launch {
-            repository.updateRecipes(recipe)
-        }
-    }
 }
 
 

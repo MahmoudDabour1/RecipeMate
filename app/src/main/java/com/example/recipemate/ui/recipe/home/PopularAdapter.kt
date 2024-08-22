@@ -32,7 +32,7 @@ class PopularAdapter(
             }
             binding.imageViewBookmark.setImageResource(bookmarkIcon)
             binding.imageViewBookmark.setOnClickListener {
-                recipe.isBookmarked=!recipe.isBookmarked
+                recipe.isBookmarked = !recipe.isBookmarked
                 notifyItemChanged(adapterPosition)
                 bookMarker.onBookmarkClicked(recipe)
 

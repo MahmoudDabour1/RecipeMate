@@ -24,7 +24,8 @@ class BookMarkViewModel(val repo: RecipeRepository) : ViewModel() {
             getAllSavedRecipes()
         }
     }
-    fun addRecipe(recipe: Recipe){
+
+    fun addRecipe(recipe: Recipe) {
         viewModelScope.launch {
             repo.addRecipeToFav(recipe)
             getAllSavedRecipes()
