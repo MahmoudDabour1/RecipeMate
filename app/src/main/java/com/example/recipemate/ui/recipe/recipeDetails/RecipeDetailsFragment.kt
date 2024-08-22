@@ -44,7 +44,6 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipeHeaderLayoutBinding: RecipeHeaderLayoutBinding
     private lateinit var recipeCategoryAndAreaLayoutBinding: RecipeCategoryAndAreaLayoutBinding
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -88,9 +87,6 @@ class RecipeDetailsFragment : Fragment() {
             }
         })
 
-
-
-
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
@@ -133,22 +129,22 @@ class RecipeDetailsFragment : Fragment() {
                 RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToSearchFragment()
             findNavController().navigate(action)
             recipeHeaderLayoutBinding.imageViewRecipeDetailsBackArrow.setOnClickListener {
-          findNavController().popBackStack()
-        }
+                findNavController().popBackStack()
+            }
 
-        recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
-            shareRecipe()
-        }
+            recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
+                shareRecipe()
+            }
 
-        binding.buttonRecipeDetailsWatchVideoView.setOnClickListener {
-            val action =
-                RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToWatchVideoFragment(
-                    recipeUrl
-                )
-            findNavController().navigate(action)
+            binding.buttonRecipeDetailsWatchVideoView.setOnClickListener {
+                val action =
+                    RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToWatchVideoFragment(
+                        recipeUrl
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
-        }
 
     private fun shareRecipe() {
         lifecycleScope.launch {
@@ -169,12 +165,11 @@ class RecipeDetailsFragment : Fragment() {
             startActivity(Intent.createChooser(shareIntent, "Share Recipe"))
         }
     }
-        }
 
     private suspend fun getLocalBitmapUri(imageUrl: String): Uri? {
         return withContext(Dispatchers.IO) {
             try {
-                val file = File(requireContext().cacheDir, "shared_image.png")
+                val file = File(requireContext().cacheDir, "recipe_image.png")
                 val outputStream = FileOutputStream(file)
                 val bitmap = Glide.with(this@RecipeDetailsFragment)
                     .asBitmap()
