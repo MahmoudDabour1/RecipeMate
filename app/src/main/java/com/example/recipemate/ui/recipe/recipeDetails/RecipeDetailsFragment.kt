@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -19,10 +20,14 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.recipemate.R
+import com.example.recipemate.data.repository.RecipeRepository
+import com.example.recipemate.data.source.local.RecipeDatabase
+import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
 import com.example.recipemate.databinding.RecipeCategoryAndAreaLayoutBinding
 import com.example.recipemate.databinding.RecipeHeaderLayoutBinding
+import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +39,6 @@ import java.io.FileOutputStream
 class RecipeDetailsFragment : Fragment() {
     private lateinit var binding: FragmentRecipeDetailsBinding
     private val args: RecipeDetailsFragmentArgs by navArgs()
-    private val viewModel: RecipeDetailsViewModel by viewModels()
     private lateinit var viewPager2: ViewPager2
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPagerAdapter: ViewPagerAdaptor
@@ -45,6 +49,14 @@ class RecipeDetailsFragment : Fragment() {
     private var recipeInstructions: String = ""
     private lateinit var recipeHeaderLayoutBinding: RecipeHeaderLayoutBinding
     private lateinit var recipeCategoryAndAreaLayoutBinding: RecipeCategoryAndAreaLayoutBinding
+    private lateinit var recipe: Recipe
+    private val viewModel: RecipeDetailsViewModel by viewModels {
+        DetailsViewModelFactory(
+            RecipeRepository(
+                RecipeDatabase.getInstance(requireContext()).recipeDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -122,9 +134,14 @@ class RecipeDetailsFragment : Fragment() {
                 Log.e("RecipeDetailsFragment", "Recipe details are null")
             }
         }
+        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+        }
     }
 
     private fun updateRecipeUI(it: List<RecipeDetails>) {
+        recipe = Recipe(it[0].strMeal.toString(), it[0].strMealThumb, it[0].idMeal)
         recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text =
             it[0].strMeal.toString()
         recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text =
@@ -165,6 +182,9 @@ class RecipeDetailsFragment : Fragment() {
                     recipeUrl
                 )
             findNavController().navigate(action)
+        }
+        binding.recipeDetailsFavouriteButton.favouriteButtonView.setOnClickListener {
+            viewModel.addRecipeToFav(recipe)
         }
     }
 
