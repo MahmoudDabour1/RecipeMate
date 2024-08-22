@@ -32,7 +32,7 @@ class RecipeActivity : AppCompatActivity() {
                     navController.popBackStack(
                         R.id.homeFragment,
                         false
-                    ) // Pop back to HomeFragment if not already there
+                    )
                     true
                 }
 
