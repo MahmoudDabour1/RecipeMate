@@ -72,6 +72,10 @@ class RecipeDetailsFragment : Fragment() {
         recipeHeaderLayoutBinding = binding.recipeDetailsHeaderLayout
         recipeCategoryAndAreaLayoutBinding = binding.recipeDetailsCategoryAndAreaLayout
 
+        setUpTabLayout()
+    }
+
+    private fun setUpTabLayout() {
         tabLayout = recipeCategoryAndAreaLayoutBinding.tabLayoutRecipeDetails
         viewPager2 = recipeCategoryAndAreaLayoutBinding.viewPagerRecipeDetails
         viewPagerAdapter =
@@ -112,35 +116,39 @@ class RecipeDetailsFragment : Fragment() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
-                recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text =
-                    it[0].strMeal.toString()
-                recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text =
-                    it[0].strCategory
-                recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text =
-                    it[0].strArea
-                Glide.with(binding.root)
-                    .load(it[0].strMealThumb)
-                    .into(recipeHeaderLayoutBinding.recipeDetailsHeaderImageView)
-                recipeUrl = it[0].strYoutube.toString()
-                recipeImage = it[0].strMealThumb.toString()
-                recipeInstructions = it[0].strInstructions.toString()
-                recipeIngredients = extractIngredients(it[0])
-                ingredientAdapter = IngredientAdaptor(recipeIngredients)
-                Log.e("extract", "onViewCreated:$recipeIngredients ")
-
-                viewPagerAdapter =
-                    ViewPagerAdaptor(
-                        childFragmentManager,
-                        lifecycle,
-                        recipeInstructions,
-                        recipeIngredients
-                    )
-                viewPager2.adapter = viewPagerAdapter
+                updateRecipeUI(it)
 
             } ?: run {
                 Log.e("RecipeDetailsFragment", "Recipe details are null")
             }
         }
+    }
+
+    private fun updateRecipeUI(it: List<RecipeDetails>) {
+        recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text =
+            it[0].strMeal.toString()
+        recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text =
+            it[0].strCategory
+        recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text =
+            it[0].strArea
+        Glide.with(binding.root)
+            .load(it[0].strMealThumb)
+            .into(recipeHeaderLayoutBinding.recipeDetailsHeaderImageView)
+        recipeUrl = it[0].strYoutube.toString()
+        recipeImage = it[0].strMealThumb.toString()
+        recipeInstructions = it[0].strInstructions.toString()
+        recipeIngredients = extractIngredients(it[0])
+        ingredientAdapter = IngredientAdaptor(recipeIngredients)
+        Log.e("extract", "onViewCreated:$recipeIngredients ")
+
+        viewPagerAdapter =
+            ViewPagerAdaptor(
+                childFragmentManager,
+                lifecycle,
+                recipeInstructions,
+                recipeIngredients
+            )
+        viewPager2.adapter = viewPagerAdapter
     }
 
     private fun handleOnClicks() {
