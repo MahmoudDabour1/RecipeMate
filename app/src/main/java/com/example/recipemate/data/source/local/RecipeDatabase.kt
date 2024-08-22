@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.recipemate.data.source.remote.model.Recipe
 
-@Database(entities = [User::class, Recipe::class], version = 1)
+@Database(entities = [User::class, Recipe::class], version = 2)
 @TypeConverters(UriConverter::class)
 abstract class RecipeDatabase : RoomDatabase() {
 

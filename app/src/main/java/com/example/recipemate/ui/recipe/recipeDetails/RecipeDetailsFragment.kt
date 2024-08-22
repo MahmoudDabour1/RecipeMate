@@ -1,5 +1,6 @@
 package com.example.recipemate.ui.recipe.recipeDetails
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
@@ -17,11 +19,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.recipemate.R
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
+import com.example.recipemate.databinding.RecipeCategoryAndAreaLayoutBinding
+import com.example.recipemate.databinding.RecipeHeaderLayoutBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.google.android.material.tabs.TabLayout
@@ -42,8 +47,9 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipeUrl: String
     private lateinit var recipeImage: String
     private var recipeInstructions: String = ""
+    private lateinit var recipeHeaderLayoutBinding: RecipeHeaderLayoutBinding
+    private lateinit var recipeCategoryAndAreaLayoutBinding: RecipeCategoryAndAreaLayoutBinding
     private lateinit var recipe: Recipe
-
     private val viewModel: RecipeDetailsViewModel by viewModels {
         DetailsViewModelFactory(
             RecipeRepository(
@@ -58,23 +64,47 @@ class RecipeDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentRecipeDetailsBinding.inflate(inflater, container, false)
-        recipeImage = binding.recipeDetailsHeaderImageView.toString()
         return binding.root
     }
 
+    @SuppressLint("MissingInflatedId", "InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.fetchRecipeDetails(args.recipeId)
         Log.e("TAG", "onViewCreated:  ${args.recipeId}")
 
-        tabLayout = binding.tabLayoutRecipeDetails
-        viewPager2 = binding.viewPagerRecipeDetails
+        initUi()
+        observeData()
+        handleOnClicks()
+    }
+
+    @SuppressLint("InflateParams")
+    private fun initUi() {
+        recipeHeaderLayoutBinding = binding.recipeDetailsHeaderLayout
+        recipeCategoryAndAreaLayoutBinding = binding.recipeDetailsCategoryAndAreaLayout
+
+        setUpTabLayout()
+    }
+
+    private fun setUpTabLayout() {
+        tabLayout = recipeCategoryAndAreaLayoutBinding.tabLayoutRecipeDetails
+        viewPager2 = recipeCategoryAndAreaLayoutBinding.viewPagerRecipeDetails
         viewPagerAdapter =
             ViewPagerAdaptor(childFragmentManager, lifecycle, recipeInstructions, recipeIngredients)
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"))
         tabLayout.addTab(tabLayout.newTab().setText("Instructions"))
         viewPager2.adapter = viewPagerAdapter
+
+        for (i in 0 until tabLayout.tabCount) {
+            val tab = tabLayout.getTabAt(i)
+            if (tab != null) {
+                val customView = LayoutInflater.from(context).inflate(R.layout.tab_item_raw, null)
+                val tabTextView = customView.findViewById<TextView>(R.id.tabTextView)
+                tabTextView.text = tab.text
+                tab.customView = customView
+            }
+        }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -92,56 +122,60 @@ class RecipeDetailsFragment : Fragment() {
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
+    }
 
-        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
-        }
-
-
+    private fun observeData() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 Log.e("RecipeDetailsFragment", "Observed details: $it")
-                recipe = Recipe(it[0].strMeal.toString(), it[0].strMealThumb, it[0].idMeal)
-                binding.textViewRecipeDetailsTitle.text = it[0].strMeal.toString()
-                binding.textViewRecipeDetailsCategory.text = it[0].strCategory
-                binding.textViewRecipeDetailsLocation.text = it[0].strArea
-                Glide.with(binding.root)
-                    .load(it[0].strMealThumb)
-                    .into(binding.recipeDetailsHeaderImageView)
-                recipeUrl = it[0].strYoutube.toString()
-                recipeImage = it[0].strMealThumb.toString()
-                recipeInstructions = it[0].strInstructions.toString()
-                recipeIngredients = extractIngredients(it[0])
-                ingredientAdapter = IngredientAdaptor(recipeIngredients)
-                Log.e("extract", "onViewCreated:$recipeIngredients ")
-
-                viewPagerAdapter =
-                    ViewPagerAdaptor(
-                        childFragmentManager,
-                        lifecycle,
-                        recipeInstructions,
-                        recipeIngredients
-                    )
-                viewPager2.adapter = viewPagerAdapter
+                updateRecipeUI(it)
 
             } ?: run {
                 Log.e("RecipeDetailsFragment", "Recipe details are null")
             }
         }
+        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
-        handleOnClicks()
+        }
+    }
+
+    private fun updateRecipeUI(it: List<RecipeDetails>) {
+        recipe = Recipe(it[0].strMeal.toString(), it[0].strMealThumb, it[0].idMeal)
+        recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text =
+            it[0].strMeal.toString()
+        recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text =
+            it[0].strCategory
+        recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text =
+            it[0].strArea
+        Glide.with(binding.root)
+            .load(it[0].strMealThumb)
+            .into(recipeHeaderLayoutBinding.recipeDetailsHeaderImageView)
+        recipeUrl = it[0].strYoutube.toString()
+        recipeImage = it[0].strMealThumb.toString()
+        recipeInstructions = it[0].strInstructions.toString()
+        recipeIngredients = extractIngredients(it[0])
+        ingredientAdapter = IngredientAdaptor(recipeIngredients)
+        Log.e("extract", "onViewCreated:$recipeIngredients ")
+
+        viewPagerAdapter =
+            ViewPagerAdaptor(
+                childFragmentManager,
+                lifecycle,
+                recipeInstructions,
+                recipeIngredients
+            )
+        viewPager2.adapter = viewPagerAdapter
     }
 
     private fun handleOnClicks() {
-        binding.imageViewRecipeDetailsBackArrow.setOnClickListener {
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsBackArrow.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        binding.imageViewRecipeDetailsShare.setOnClickListener {
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
             shareRecipe()
         }
-
         binding.buttonRecipeDetailsWatchVideoView.setOnClickListener {
             val action =
                 RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToWatchVideoFragment(
@@ -156,10 +190,11 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun shareRecipe() {
         lifecycleScope.launch {
-            val sendIntent: String = "Recipe: ${binding.textViewRecipeDetailsTitle.text} \n" +
-                    "Category: ${binding.textViewRecipeDetailsCategory.text} \n" +
-                    "Location: ${binding.textViewRecipeDetailsLocation.text} \n" +
-                    "YouTube: $recipeUrl"
+            val sendIntent: String =
+                "Recipe: ${recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsTitle.text} \n" +
+                        "Category: ${recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsCategory.text} \n" +
+                        "Location: ${recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text} \n" +
+                        "YouTube: $recipeUrl"
             val imageUri = getLocalBitmapUri(recipeImage)
 
             val shareIntent = Intent().apply {
@@ -176,7 +211,7 @@ class RecipeDetailsFragment : Fragment() {
     private suspend fun getLocalBitmapUri(imageUrl: String): Uri? {
         return withContext(Dispatchers.IO) {
             try {
-                val file = File(requireContext().cacheDir, "shared_image.png")
+                val file = File(requireContext().cacheDir, "recipe_image.png")
                 val outputStream = FileOutputStream(file)
                 val bitmap = Glide.with(this@RecipeDetailsFragment)
                     .asBitmap()

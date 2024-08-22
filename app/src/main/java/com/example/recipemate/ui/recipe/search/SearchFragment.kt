@@ -46,7 +46,7 @@ class SearchFragment : Fragment() {
 
     private fun initUI() {
         searchRecipesRecycler = binding.recyclerViewSearchRecipes
-        searchRecipesAdapter = RecipeSearchRecyclerAdapter(arrayListOf(), communicator,isShimmer)
+        searchRecipesAdapter = RecipeSearchRecyclerAdapter(arrayListOf(), communicator, isShimmer)
         searchRecipesRecycler.adapter = searchRecipesAdapter
         binding.lottieAnimationEmptySearch.visibility = View.VISIBLE
         binding.recyclerViewSearchRecipes.visibility = View.GONE
@@ -81,7 +81,7 @@ class SearchFragment : Fragment() {
                 binding.recyclerViewSearchRecipes.visibility = View.GONE
             } else {
                 isShimmer = false
-                searchRecipesAdapter.updateRecipes(recipes,isShimmer)
+                searchRecipesAdapter.updateRecipes(recipes, isShimmer)
                 binding.lottieAnimationEmptySearch.visibility = View.GONE
                 binding.lottieAnimationNoDataFound.visibility = View.GONE
                 binding.recyclerViewSearchRecipes.visibility = View.VISIBLE

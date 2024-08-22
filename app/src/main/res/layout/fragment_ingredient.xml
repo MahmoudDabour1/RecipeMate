@@ -15,4 +15,8 @@
         tools:itemCount="20"
         tools:listitem="@layout/ingredient_raw_item" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_100dp" />
+
 </LinearLayout>

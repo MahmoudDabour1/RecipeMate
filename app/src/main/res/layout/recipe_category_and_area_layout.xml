@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginHorizontal="@dimen/_24dp"
+    android:background="@color/transparentColor"
+    android:paddingTop="@dimen/_24dp">
+
+    <TextView
+        android:id="@+id/textViewRecipeDetailsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blackColor"
+        android:textSize="@dimen/_20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Teriyaki Chicken Casserole" />
+
+    <TextView
+        android:id="@+id/textViewRecipeDetailsCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_24dp"
+        android:drawablePadding="@dimen/_4dp"
+        android:textColor="@color/blackColor"
+        android:textSize="@dimen/_16sp"
+        app:drawableStartCompat="@drawable/ic_category"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsTitle"
+        tools:text="Chicken" />
+
+    <TextView
+        android:id="@+id/textViewRecipeDetailsLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_32dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:drawablePadding="@dimen/_4dp"
+        android:textColor="@color/blackColor"
+        android:textSize="@dimen/_16sp"
+        app:drawableStartCompat="@drawable/ic_location"
+        app:layout_constraintStart_toEndOf="@id/textViewRecipeDetailsCategory"
+        app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsTitle"
+        tools:text="Japanese" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/viewRecipeDetailsDivider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2dp"
+        android:layout_marginVertical="@dimen/_20dp"
+        android:background="@color/greyColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewRecipeDetailsLocation" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutRecipeDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24dp"
+        android:background="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewRecipeDetailsDivider"
+        app:tabBackground="@drawable/button_selected"
+        app:tabGravity="fill"
+        app:tabIndicator="@null"
+        app:tabIndicatorColor="@null"
+        app:tabIndicatorGravity="stretch"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabRippleColor="@null"
+        app:tabTextColor="@color/whiteColor"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerRecipeDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayoutRecipeDetails" />
+</androidx.constraintlayout.widget.ConstraintLayout>
