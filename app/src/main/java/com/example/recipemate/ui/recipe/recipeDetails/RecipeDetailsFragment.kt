@@ -132,6 +132,8 @@ class RecipeDetailsFragment : Fragment() {
             val action =
                 RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToSearchFragment()
             findNavController().navigate(action)
+            recipeHeaderLayoutBinding.imageViewRecipeDetailsBackArrow.setOnClickListener {
+          findNavController().popBackStack()
         }
 
         recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
@@ -146,6 +148,7 @@ class RecipeDetailsFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
+        }
 
     private fun shareRecipe() {
         lifecycleScope.launch {
@@ -166,6 +169,7 @@ class RecipeDetailsFragment : Fragment() {
             startActivity(Intent.createChooser(shareIntent, "Share Recipe"))
         }
     }
+        }
 
     private suspend fun getLocalBitmapUri(imageUrl: String): Uri? {
         return withContext(Dispatchers.IO) {
