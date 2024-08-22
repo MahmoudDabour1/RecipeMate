@@ -1,5 +1,6 @@
 package com.example.recipemate.ui.recipe.recipeDetails
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
@@ -8,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,6 +55,7 @@ class RecipeDetailsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("MissingInflatedId", "InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -69,6 +72,16 @@ class RecipeDetailsFragment : Fragment() {
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"))
         tabLayout.addTab(tabLayout.newTab().setText("Instructions"))
         viewPager2.adapter = viewPagerAdapter
+
+        for (i in 0 until tabLayout.tabCount) {
+            val tab = tabLayout.getTabAt(i)
+            if (tab != null) {
+                val customView = LayoutInflater.from(context).inflate(R.layout.tab_item_raw, null)
+                val tabTextView = customView.findViewById<TextView>(R.id.tabTextView)
+                tabTextView.text = tab.text
+                tab.customView = customView
+            }
+        }
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -125,24 +138,18 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun handleOnClicks() {
         recipeHeaderLayoutBinding.imageViewRecipeDetailsBackArrow.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
+            shareRecipe()
+        }
+        binding.buttonRecipeDetailsWatchVideoView.setOnClickListener {
             val action =
-                RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToSearchFragment()
+                RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToWatchVideoFragment(
+                    recipeUrl
+                )
             findNavController().navigate(action)
-            recipeHeaderLayoutBinding.imageViewRecipeDetailsBackArrow.setOnClickListener {
-                findNavController().popBackStack()
-            }
-
-            recipeHeaderLayoutBinding.imageViewRecipeDetailsShare.setOnClickListener {
-                shareRecipe()
-            }
-
-            binding.buttonRecipeDetailsWatchVideoView.setOnClickListener {
-                val action =
-                    RecipeDetailsFragmentDirections.actionRecipeDetailsFragmentToWatchVideoFragment(
-                        recipeUrl
-                    )
-                findNavController().navigate(action)
-            }
         }
     }
 

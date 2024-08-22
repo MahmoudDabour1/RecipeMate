@@ -61,7 +61,7 @@
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayoutRecipeDetails"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_24dp"
         android:background="@null"
         app:layout_constraintEnd_toEndOf="parent"
