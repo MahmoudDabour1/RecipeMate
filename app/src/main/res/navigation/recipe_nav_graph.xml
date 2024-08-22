@@ -30,7 +30,11 @@
         android:id="@+id/bookMarkFragment"
         android:name="com.example.recipemate.ui.recipe.bookMark.BookMarkFragment"
         android:label="fragment_book_mark"
-        tools:layout="@layout/fragment_book_mark" />
+        tools:layout="@layout/fragment_book_mark" >
+        <action
+            android:id="@+id/action_bookMarkFragment_to_recipeDetailsFragment"
+            app:destination="@id/recipeDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/userFragment"
         android:name="com.example.recipemate.ui.recipe.user.UserFragment"
@@ -53,6 +57,9 @@
         <action
             android:id="@+id/action_recipeDetailsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_recipeDetailsFragment_to_bookMarkFragment"
+            app:destination="@id/bookMarkFragment" />
     </fragment>
     <fragment
         android:id="@+id/watchVideoFragment"

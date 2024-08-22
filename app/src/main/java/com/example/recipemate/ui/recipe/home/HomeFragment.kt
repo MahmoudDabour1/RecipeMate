@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipemate.R
+import com.example.recipemate.data.repository.RecipeRepository
+import com.example.recipemate.data.source.local.RecipeDao
+import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.FragmentHomeBinding
@@ -26,7 +29,13 @@ class HomeFragment : Fragment() {
     private var isShimmerRecent = true
     private var isShimmerPopular = true
 
-    private val viewModel: RecipeViewModel by viewModels()
+    private val viewModel: RecipeViewModel by viewModels {
+        RecipeViewModelFactory(
+            RecipeRepository(
+                RecipeDatabase.getInstance(requireContext()).recipeDao()
+            )
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,8 +76,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupAdapters() {
-        popularAdapter = PopularAdapter(arrayListOf(), popularCommunicator, isShimmerPopular)
-        recentAdapter = RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent)
+        popularAdapter =
+            PopularAdapter(arrayListOf(), popularCommunicator, isShimmerPopular, bookMarker)
+        recentAdapter =
+            RecentAdapter(arrayListOf(), recentCommunicator, isShimmerRecent, bookMarker)
         categoryAdapter = CategoryAdapter(arrayListOf(), categoryCommunicator, isShimmerCategory)
     }
 
@@ -111,6 +122,12 @@ class HomeFragment : Fragment() {
             findNavController().navigate(action)
 
         }
+    }
+    private val bookMarker = object : BookMarker {
+        override fun onBookmarkClicked(recipe: Recipe) {
+            viewModel.chooseToAddOrDelete(recipe)
+        }
+
     }
 
     private val categoryCommunicator = object : CategoryAdapter.Communicator {
