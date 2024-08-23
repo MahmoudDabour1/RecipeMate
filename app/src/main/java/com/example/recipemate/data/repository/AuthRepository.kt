@@ -13,7 +13,7 @@ class AuthRepository(private val userDao: UserDao) {
         return userDao.getUser(email, password)
     }
 
-    suspend fun isUserRegistered(email: String): Boolean {
+    suspend fun isEmailRegistered(email: String): Boolean {
         return userDao.getUserByEmail(email) != null
     }
     suspend fun findCurrentUser() = userDao.findCurrentUser()
