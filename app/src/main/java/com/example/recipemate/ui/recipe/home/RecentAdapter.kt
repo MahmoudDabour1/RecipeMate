@@ -21,7 +21,7 @@ class RecentAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
             binding.textViewRecentName.text = recipe.strMeal
-            Glide.with(binding.imageRecentView.context).load(recipe.strMealThumb)
+            Glide.with(binding.imageRecentView.context).load(recipe.strMealThumb).placeholder(R.drawable.image_placeholder)
                 .into(binding.imageRecentView)
             val bookmarkIcon = if (recipe.isBookmarked) {
                 R.drawable.ic_bookmark_red

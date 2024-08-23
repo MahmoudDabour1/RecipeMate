@@ -186,6 +186,9 @@ class RecipeDetailsFragment : Fragment() {
         binding.recipeDetailsFavouriteButton.favouriteButtonView.setOnClickListener {
             viewModel.addRecipeToFav(recipe)
         }
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsBookmark.setOnClickListener{
+            viewModel.addRecipeToFav(recipe)
+        }
     }
 
     private fun shareRecipe() {
