@@ -6,9 +6,11 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 import com.example.recipemate.data.source.remote.model.CategoryList
+import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.data.source.remote.model.RecipeResponse
 import com.example.recipemate.data.source.remote.network.RetrofitModule.LIST_ALL_CATEGORIES_END_POINT
 import com.example.recipemate.data.source.remote.network.RetrofitModule.MEALS_END_POINT
+import com.example.recipemate.data.source.remote.network.RetrofitModule.RECIPE_DETAILS_END_POINT
 
 interface ApiService {
 
@@ -25,5 +27,7 @@ interface ApiService {
     @GET(LIST_ALL_CATEGORIES_END_POINT)
     suspend fun getAllCategories(): CategoryList
 
+    @GET(RECIPE_DETAILS_END_POINT)
+    suspend fun getRecipeDetails(@Query("i") query: String): SearchRecipes
 
 }

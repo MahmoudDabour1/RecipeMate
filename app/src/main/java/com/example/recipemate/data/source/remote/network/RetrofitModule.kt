@@ -11,6 +11,7 @@ object RetrofitModule {
     const val SEARCH_END_POINT = "search.php"
     const val MEALS_END_POINT = "filter.php"
     const val LIST_ALL_CATEGORIES_END_POINT = "list.php?c=list"
+    const val RECIPE_DETAILS_END_POINT = "lookup.php"
 
     private val httpLoggingInterceptor =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

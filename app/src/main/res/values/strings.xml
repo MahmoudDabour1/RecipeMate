@@ -15,7 +15,6 @@
     <string name="display_pass">• • • • • • • •</string>
     <string name="sign_out">Sign out</string>
     <string name="system">System</string>
-
     <string name="find">Find</string>
     <string name="best_recipes"> best recipes</string>
     <string name="for_cooking">for cooking</string>
@@ -31,6 +30,10 @@
     <string name="last_name">Last name</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
+    <string name="recipe_details">Recipe Details</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="watch_video">Watch Video</string>
     <string name="cancel">Cancel</string>
     <string name="yes">Yes</string>
     <string name="full_user_name">%1$s %2$s</string>
@@ -46,4 +49,5 @@
     <string name="sign_out_confirmation_message">Are you sure you want to sign out?</string>
     <string name="sign_out_title">Sign Out</string>
     <string name="password_updated_success">Password has been updated!</string>
+    <string name="bookmarked_recipes">Bookmarked Recipes</string>
 </resources>

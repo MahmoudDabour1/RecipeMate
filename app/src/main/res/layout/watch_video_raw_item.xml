@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/buttonRecipeDetailsWatchVideoView"
+
+        app:backgroundTint="@color/primaryColor"
+        android:background="@drawable/rounded_button"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawablePadding="@dimen/_4dp"
+        android:text="@string/watch_video"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_20sp" />
+</LinearLayout>

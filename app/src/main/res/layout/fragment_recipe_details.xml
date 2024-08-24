@@ -1,0 +1,78 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recipeDetailsView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/recipeDetailsHeaderLayout"
+                layout="@layout/recipe_header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="350dp" />
+
+            <FrameLayout
+                android:id="@+id/recipeDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="300dp"
+                android:background="@drawable/white_page_top_corner"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    android:id="@+id/recipeDetailsCategoryAndAreaLayout"
+                    layout="@layout/recipe_category_and_area_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recipeDetailsLayout" />
+            </FrameLayout>
+
+            <include
+                android:id="@+id/recipeDetailsFavouriteButton"
+                layout="@layout/favourite_item_raw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_275dp"
+                android:layout_marginEnd="@dimen/_32dp"
+                android:layout_marginBottom="@dimen/_25dp"
+                app:layout_constraintBottom_toBottomOf="@+id/recipeDetailsHeaderLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/buttonRecipeDetailsWatchVideoView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_64dp"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_30dp"
+        android:layout_marginBottom="@dimen/_16dp"
+        android:background="@drawable/rounded_button"
+        android:drawableEnd="@drawable/ic_arrow_right"
+        android:drawablePadding="@dimen/_4dp"
+        android:text="@string/watch_video"
+        android:textColor="@color/whiteColor"
+        android:textSize="@dimen/_20sp"
+        app:backgroundTint="@color/primaryColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

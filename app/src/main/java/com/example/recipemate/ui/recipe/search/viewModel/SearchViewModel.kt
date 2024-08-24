@@ -9,8 +9,7 @@ import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import kotlinx.coroutines.launch
 
-class SearchViewModel : ViewModel() {
-    private val recipeRepository = RecipeRepository()
+class SearchViewModel(val recipeRepository: RecipeRepository) : ViewModel() {
     private val _recipes = MutableLiveData<List<RecipeDetails>>()
     val searchRecipes: LiveData<List<RecipeDetails>> = _recipes
     private val _status = MutableLiveData<String>()
@@ -18,12 +17,13 @@ class SearchViewModel : ViewModel() {
     fun fetchSearchRecipes(query: String) {
         viewModelScope.launch {
             try {
-                _recipes.value = recipeRepository.getSearchRecipes(query)
+                val response = recipeRepository.getSearchRecipes(query)
+                _recipes.value = response
                 _status.value = "Success"
                 Log.e("TAG", "success to fetch search recipes: ")
             } catch (e: Exception) {
                 _status.value = "Error ${e.message}"
-                Log.e("TAG", "failed to fetch search recipes: ")
+                Log.e("TAG", "failed to fetch search recipes: ", e)
             }
         }
     }
