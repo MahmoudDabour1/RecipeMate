@@ -5,12 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.Category
 import com.example.recipemate.data.source.remote.model.Recipe
 import kotlinx.coroutines.launch
 
-class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
+class RecipeViewModel(val recipeRepository: RecipeRepository, val authRepository: AuthRepository) :
+    ViewModel() {
 
     private val _popularRecipes = MutableLiveData<List<Recipe>>()
     val popularRecipes: LiveData<List<Recipe>> get() = _popularRecipes
@@ -31,10 +33,12 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>> get() = _categories
 
+    private val cuurentUserEmail = MutableLiveData<String>()
+
     fun fetchPopularRecipes() {
         viewModelScope.launch {
             try {
-                val popularList = repository.getRecipe()
+                val popularList = recipeRepository.getRecipe()
                 _popularRecipes.postValue(popularList)
                 _status.value = "Success fetching popular recipes"
             } catch (e: Exception) {
@@ -47,7 +51,7 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
     fun fetchRecipesByCategory(category: String) {
         viewModelScope.launch {
             try {
-                val recipesByCategory = repository.fetchRecipesByCategory(category)
+                val recipesByCategory = recipeRepository.fetchRecipesByCategory(category)
                 _popularRecipes.postValue(recipesByCategory)
                 _status.value = "Success fetching recipes by category"
             } catch (e: Exception) {
@@ -60,7 +64,8 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
     fun fetchRecentRecipes() {
         viewModelScope.launch {
             try {
-                val recentList = repository.fetchRecipesByCategory("Seafood") // Fixed category
+                val recentList =
+                    recipeRepository.fetchRecipesByCategory("Seafood") // Fixed category
                 _recentRecipes.postValue(recentList)
                 _status.value = "Success fetching recent recipes"
             } catch (e: Exception) {
@@ -74,7 +79,7 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
     fun fetchCategories() {
         viewModelScope.launch {
             try {
-                val result = repository.fetchCategories()
+                val result = recipeRepository.fetchCategories()
                 _categories.value = result
             } catch (e: Exception) {
                 _status.value = "Error ${e.message}"
@@ -85,25 +90,35 @@ class RecipeViewModel(val repository: RecipeRepository) : ViewModel() {
 
     fun chooseToAddOrDelete(recipe: Recipe) {
         viewModelScope.launch {
-            val isInDatabase = repository.isRecipeInDatabase(recipe) ?: false
+            cuurentUserEmail.value = authRepository.findCurrentUser()?.email
+            val isInDatabase = cuurentUserEmail.value?.let {
+                recipeRepository.isRecipeInDatabase(
+                    recipe,
+                    it
+                )
+            }
+                ?: false
             if (!isInDatabase) {
-                repository.addRecipeToFav(recipe)
-                repository.updateRecipes(recipe)
+                cuurentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
+                recipeRepository.updateRecipes(recipe)
                 recipe.isBookmarked = !recipe.isBookmarked
                 _toastMessage.value = "Recipe has been successfully added!"
             } else {
-                repository.deleteRecipeFromFav(recipe)
-                repository.updateRecipes(recipe)
+                recipeRepository.deleteRecipeFromFav(recipe)
+                recipeRepository.updateRecipes(recipe)
                 _toastMessage.value = "Recipe has been successfully deleted!"
             }
         }
 
     }
+
     fun getAllSavedRecipes() {
         viewModelScope.launch {
-            savedRecipes.value = repository.getAllFavRecipes()
+            savedRecipes.value =
+                cuurentUserEmail.value?.let { recipeRepository.getAllFavRecipes(it) }
         }
     }
+
     fun getToastMessage(): MutableLiveData<String?> = _toastMessage
     fun clearToastMessage() {
         _toastMessage.value = null

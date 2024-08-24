@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.recipemate.R
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Category
@@ -34,9 +34,13 @@ class HomeFragment : Fragment() {
     private var savedRecipes = listOf<Recipe>()
 
     private val viewModel: RecipeViewModel by viewModels {
+        val recipeDB = RecipeDatabase.getInstance(requireContext())
         RecipeViewModelFactory(
             RecipeRepository(
-                RecipeDatabase.getInstance(requireContext()).recipeDao()
+                recipeDB.recipeDao()
+            ), AuthRepository(
+                recipeDB.userDao()
+
             )
         )
     }
@@ -137,7 +141,7 @@ class HomeFragment : Fragment() {
         }
         viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
             message?.let {
-                view?.let { it1 -> Snackbar.make(it1, message,LENGTH_SHORT).show() }
+                view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
                 viewModel.clearToastMessage()
             }
         }

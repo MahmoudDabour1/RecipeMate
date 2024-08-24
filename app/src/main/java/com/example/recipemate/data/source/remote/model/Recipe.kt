@@ -10,7 +10,8 @@ data class Recipe(
     @SerializedName("strMealThumb") var strMealThumb: String? = null,
     @SerializedName("idMeal") var idMeal: String? = null,
     var isSelected: Boolean = false,
-    var isBookmarked: Boolean = false
+    var isBookmarked: Boolean = false,
+    var userEmail: String? = null
 
 )
 

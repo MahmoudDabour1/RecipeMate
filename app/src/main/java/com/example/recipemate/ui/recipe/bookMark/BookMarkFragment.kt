@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.recipemate.R
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Recipe
@@ -22,9 +23,13 @@ class BookMarkFragment : Fragment() {
     private lateinit var adapter: BookMarkerAdapter
 
     private val bookMarkViewModel: BookMarkViewModel by viewModels {
+        val recipeDB = RecipeDatabase.getInstance(requireContext())
         BookMarkViewModelFactory(
             RecipeRepository(
-                RecipeDatabase.getInstance(requireContext()).recipeDao()
+                recipeDB.recipeDao()
+            ), AuthRepository(
+                recipeDB.userDao()
+
             )
         )
     }

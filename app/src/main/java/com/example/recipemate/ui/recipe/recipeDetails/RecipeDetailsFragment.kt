@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.example.recipemate.R
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Recipe
@@ -47,9 +47,13 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipe: Recipe
 
     private val viewModel: RecipeDetailsViewModel by viewModels {
+        val recipeDB = RecipeDatabase.getInstance(requireContext())
         DetailsViewModelFactory(
             RecipeRepository(
-                RecipeDatabase.getInstance(requireContext()).recipeDao()
+                recipeDB.recipeDao()
+            ), AuthRepository(
+                recipeDB.userDao()
+
             )
         )
     }
@@ -157,7 +161,8 @@ class RecipeDetailsFragment : Fragment() {
                 viewModel.addRecipeToFav(recipe)
             } else {
                 Toast.makeText(context, "Recipe is not loaded yet.", Toast.LENGTH_SHORT).show()
-            }        }
+            }
+        }
     }
 
     private fun shareRecipe() {
