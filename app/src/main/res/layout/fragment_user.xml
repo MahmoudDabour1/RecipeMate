@@ -4,30 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightWhite"
     tools:context=".ui.recipe.user.UserFragment">
-
-    <TextView
-        android:id="@+id/tvSetting"
-        style="@style/ShapeAppearanceOverlay.Material3.Corner.Top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16dp"
-        android:text="@string/settings"
-        android:textSize="@dimen/_24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/userImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginStart="88dp"
         android:padding="@dimen/_8dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_user_profile"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/user_default"
+        app:layout_constraintBottom_toBottomOf="@+id/btnEditPhoto"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSetting"
+        app:layout_constraintTop_toTopOf="@+id/tvUserName"
+        app:layout_constraintVertical_bias="0.65"
         app:shapeAppearanceOverlay="@style/Circular"
         app:strokeWidth="@dimen/_2dp" />
 
@@ -35,32 +26,34 @@
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginTop="72dp"
         android:text="@string/user_name"
         android:textSize="@dimen/_16sp"
         app:layout_constraintEnd_toEndOf="@+id/btnEditPhoto"
+        app:layout_constraintHorizontal_bias="0.615"
         app:layout_constraintStart_toStartOf="@+id/btnEditPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/userImage" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnEditPhoto"
-        style="@style/Widget.Material3.Button"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="16dp"
         android:text="@string/edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/blackColor"
+        app:layout_constraintStart_toEndOf="@+id/userImage"
         app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
     <TextView
         android:id="@+id/tvAbout"
         style="@style/sectionTitle"
-        android:layout_marginStart="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="@string/about"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/userImage" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardAbout"
@@ -74,7 +67,10 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/emailTitle"
@@ -127,9 +123,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_8dp"
+                android:gravity="center"
                 android:padding="@dimen/_16dp"
                 android:text="@string/gender"
-                android:gravity="center"
                 app:drawableStartCompat="@drawable/ic_gender"
                 app:drawableTint="@color/blackColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tvGenderValue"
@@ -197,15 +193,14 @@
 
         <TextView
             android:id="@+id/tvSignOut"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/redColor"
             android:gravity="center"
             android:padding="@dimen/_16dp"
             android:text="@string/sign_out"
-            android:textColor="@color/whiteColor"
             app:drawableStartCompat="@drawable/ic_logout"
-            app:drawableTint="@color/whiteColor"
+            app:drawableTint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvGenderTitle" />

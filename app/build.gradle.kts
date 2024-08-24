@@ -78,9 +78,11 @@ dependencies {
     implementation(libs.lottie)
 
     //android youtube player
-    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation (libs.core)
 
 
+    //materialDialog
+    implementation ("com.google.android.material:material:1.9.0")
 
 
     //shimmer

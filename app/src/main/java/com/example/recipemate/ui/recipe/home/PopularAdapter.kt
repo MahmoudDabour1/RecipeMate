@@ -1,6 +1,7 @@
 package com.example.recipemate.ui.recipe.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,8 @@ class PopularAdapter(
     private val seafoodRecipes: ArrayList<Recipe>,
     private val communicator: Communicator,
     private var isShimmer: Boolean,
-    val bookMarker: BookMarker
+    val bookMarker: BookMarker,
+    var mySavedRecipes: List<Recipe>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class RecipeViewHolder(private val binding: ItemPopularRecipeBinding) :
@@ -74,11 +76,21 @@ class PopularAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Recipe>, isShimmer: Boolean) {
+    fun updateData(newItems: List<Recipe>, isShimmer: Boolean, savedRecipe: List<Recipe>) {
         this.isShimmer = isShimmer
         seafoodRecipes.clear()
         seafoodRecipes.addAll(newItems)
+        updataDataFromLocal(savedRecipe)
         notifyDataSetChanged()
+    }
+
+    fun updataDataFromLocal(recipes: List<Recipe>) {
+        mySavedRecipes = recipes
+        Log.e("Try and find me", "I am in update data from local function")
+        seafoodRecipes.forEach { popularRecipe ->
+            popularRecipe.isBookmarked =
+                mySavedRecipes.any { savedRecipe -> savedRecipe.idMeal == popularRecipe.idMeal }
+        }
     }
 
 

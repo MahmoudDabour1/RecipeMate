@@ -16,7 +16,6 @@ import com.example.recipemate.databinding.FragmentBookMarkBinding
 import com.example.recipemate.ui.recipe.home.BookMarker
 import com.google.android.material.snackbar.Snackbar
 
-
 class BookMarkFragment : Fragment() {
     private var _binding: FragmentBookMarkBinding? = null
     private val binding get() = _binding!!
@@ -30,7 +29,6 @@ class BookMarkFragment : Fragment() {
         )
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -40,13 +38,20 @@ class BookMarkFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        observeViewModel()
         bookMarkViewModel.getAllSavedRecipes()
-        adapter = BookMarkerAdapter(arrayListOf(), savedCommunicator, bookMarker)
-        bookMarkViewModel.savedRecipes.observe(viewLifecycleOwner, Observer { value ->
-            adapter.updateData(value)
-            binding.recyclerViewBookmarkedRecipes.adapter = adapter
-        })
+    }
 
+    private fun setupRecyclerView() {
+        adapter = BookMarkerAdapter(arrayListOf(), savedCommunicator, bookMarker)
+        binding.recyclerViewBookmarkedRecipes.adapter = adapter
+    }
+
+    private fun observeViewModel() {
+        bookMarkViewModel.savedRecipes.observe(viewLifecycleOwner, Observer { recipes ->
+            adapter.updateData(recipes)
+        })
     }
 
     private val savedCommunicator = object : BookMarkerAdapter.Communicator {
@@ -56,6 +61,7 @@ class BookMarkFragment : Fragment() {
             findNavController().navigate(action)
         }
     }
+
     private val bookMarker = object : BookMarker {
         override fun onBookmarkClicked(recipe: Recipe) {
             bookMarkViewModel.deleteRecipe(recipe)
@@ -65,8 +71,11 @@ class BookMarkFragment : Fragment() {
                         bookMarkViewModel.addRecipe(recipe)
                     }.setActionTextColor(resources.getColor(R.color.primaryColor)).show()
             }
-
         }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

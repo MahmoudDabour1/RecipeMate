@@ -1,6 +1,7 @@
 package com.example.recipemate.ui.recipe.home
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +15,9 @@ class RecentAdapter(
     private val recentRecipes: ArrayList<Recipe>,
     private val communicator: Communicator,
     private var isShimmer: Boolean,
-    private val bookMarker: BookMarker
+    private val bookMarker: BookMarker,
+    private var mySavedRecipes: List<Recipe>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     inner class RecentViewHolder(private val binding: ItemRecentRecipesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
@@ -71,12 +72,25 @@ class RecentAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Recipe>, isShimmer: Boolean) {
+    fun updateData(newItems: List<Recipe>, isShimmer: Boolean, savedRecipe: List<Recipe>) {
         this.isShimmer = isShimmer
         recentRecipes.clear()
         recentRecipes.addAll(newItems)
+        updataDataFromLocal(savedRecipe)
+        Log.e("Try and find me", "I am in update data function")
         notifyDataSetChanged()
+
     }
+
+    fun updataDataFromLocal(recipes: List<Recipe>) {
+        mySavedRecipes = recipes
+        Log.e("Try and find me", "I am in update data from local function")
+        recentRecipes.forEach { recentRecipe ->
+            recentRecipe.isBookmarked =
+                mySavedRecipes.any { savedRecipe -> savedRecipe.idMeal == recentRecipe.idMeal }
+        }
+    }
+
 
     interface Communicator {
         fun onItemClicked(recipe: Recipe)

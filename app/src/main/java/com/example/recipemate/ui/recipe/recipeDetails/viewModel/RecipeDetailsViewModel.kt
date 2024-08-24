@@ -1,7 +1,6 @@
 package com.example.recipemate.ui.recipe.recipeDetails.viewModel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +14,7 @@ class RecipeDetailsViewModel(val recipeRepository: RecipeRepository) : ViewModel
     private val _recipeDetails = MutableLiveData<List<RecipeDetails>>()
     val recipeDetails: LiveData<List<RecipeDetails>> = _recipeDetails
 
-    private val _toastMessage = MutableLiveData<String>()
+    private var _toastMessage = MutableLiveData<String>()
     private val _status = MutableLiveData<String>()
 
     fun fetchRecipeDetails(id: String) {
@@ -32,6 +31,7 @@ class RecipeDetailsViewModel(val recipeRepository: RecipeRepository) : ViewModel
             }
         }
     }
+
     fun addRecipeToFav(recipe: Recipe) {
         viewModelScope.launch {
             val isInDatabase = recipeRepository.isRecipeInDatabase(recipe) ?: false
@@ -46,6 +46,11 @@ class RecipeDetailsViewModel(val recipeRepository: RecipeRepository) : ViewModel
         }
 
     }
+
     fun getToastMessage(): LiveData<String> = _toastMessage
+    fun clearToastMessage() {
+        _toastMessage = MutableLiveData<String>()
+    }
+
 
 }

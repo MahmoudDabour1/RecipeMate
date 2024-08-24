@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.recipemate.R
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Recipe
@@ -24,6 +25,7 @@ import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentRecipeDetailsBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -94,7 +96,8 @@ class RecipeDetailsFragment : Fragment() {
         })
 
         viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
+            viewModel.clearToastMessage()
 
         }
 
@@ -149,9 +152,12 @@ class RecipeDetailsFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
-        binding.recipeDetailsFavouriteButton.favouriteButtonView.setOnClickListener {
-            viewModel.addRecipeToFav(recipe)
-        }
+        binding.imageViewRecipeDetailsBookmark.setOnClickListener {
+            if (this::recipe.isInitialized) {
+                viewModel.addRecipeToFav(recipe)
+            } else {
+                Toast.makeText(context, "Recipe is not loaded yet.", Toast.LENGTH_SHORT).show()
+            }        }
     }
 
     private fun shareRecipe() {
