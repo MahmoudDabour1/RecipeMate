@@ -1,10 +1,10 @@
 package com.example.recipemate.ui.auth.register
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -55,29 +55,39 @@ class RegisterFragment : Fragment() {
                 checkEmail(email, password, firstName, lastName, phoneNumber, isMale)
 
             } else {
-                if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
-                        .matches()
-                ) {
-                    binding.emailEditText.error = "Invalid email address"
-                }
-
-                if (password.isEmpty() || password.length < 6 || !password.any { it.isDigit() }) {
-                    binding.passwordEditText.error =
-                        "Password must contain at least 6 characters and include a number"
-                }
-
-                if (firstName.isEmpty() || !firstName.matches(Regex("^[A-Za-z]+$"))) {
-                    binding.firstNameEditText.error = "First name must contain only letters"
-                }
-
-                if (lastName.isEmpty() || !lastName.matches(Regex("^[A-Za-z]+$"))) {
-                    binding.lastNameEditText.error = "Last name must contain only letters"
-                }
-
-                if (phoneNumber.isEmpty() || !phoneNumber.matches(Regex("^\\+?[0-9]{10,15}$"))) {
-                    binding.phoneNumberEditText.error = "Invalid phone number"
-                }
+                displayValidationErrors(email, password, firstName, lastName, phoneNumber)
             }
+        }
+    }
+
+    private fun displayValidationErrors(
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+        phoneNumber: String
+    ) {
+        if (email.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email)
+                .matches()
+        ) {
+            binding.emailEditText.error = "Invalid email address"
+        }
+
+        if (password.isEmpty() || password.length < 6 || !password.any { it.isDigit() }) {
+            binding.passwordEditText.error =
+                "Password must contain at least 6 characters and include a number"
+        }
+
+        if (firstName.isEmpty() || !firstName.matches(Regex("^[A-Za-z]+$"))) {
+            binding.firstNameEditText.error = "First name must contain only letters"
+        }
+
+        if (lastName.isEmpty() || !lastName.matches(Regex("^[A-Za-z]+$"))) {
+            binding.lastNameEditText.error = "Last name must contain only letters"
+        }
+
+        if (phoneNumber.isEmpty() || !phoneNumber.matches(Regex("^\\+?[0-9]{10,15}$"))) {
+            binding.phoneNumberEditText.error = "Invalid phone number"
         }
     }
 
@@ -108,6 +118,7 @@ class RegisterFragment : Fragment() {
         phoneNumber: String,
         isMale: Boolean
     ) {
+        navigateToLoginFragment()
         registerViewModel.register(
             email,
             password,
@@ -116,22 +127,11 @@ class RegisterFragment : Fragment() {
             phoneNumber,
             isMale
         )
-        registerViewModel.registrationStatus.observe(viewLifecycleOwner) { registered ->
-            if (registered) {
-                navigateToLoginFragment()
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Registration failed. Please try again.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
 
-        }
     }
 
     private fun navigateToLoginFragment() {
-        findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+        findNavController().navigate(R.id.loginFragment)
     }
 
     private fun clearErrors() {

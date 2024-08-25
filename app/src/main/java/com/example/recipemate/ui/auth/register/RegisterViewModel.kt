@@ -13,12 +13,9 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
     private val _userEmailRegistered = MutableLiveData<Boolean>()
     val userEmailRegistered: LiveData<Boolean> = _userEmailRegistered
 
-    private val _registrationStatus = MutableLiveData<Boolean>()
-    val registrationStatus: LiveData<Boolean> = _registrationStatus
-
-    fun checkIfEmailRegistered(username: String) {
+    fun checkIfEmailRegistered(email: String) {
         viewModelScope.launch {
-            val registered = repository.isUserRegistered(username)
+            val registered = repository.isEmailRegistered(email)
             _userEmailRegistered.value = registered
         }
     }
@@ -32,13 +29,9 @@ class RegisterViewModel(private val repository: AuthRepository) : ViewModel() {
         isMale: Boolean
     ) {
         viewModelScope.launch {
-            try {
-                val user = User(email, password, firstName, lastName, phoneNumber, null, isMale)
-                repository.insert(user)
-                _registrationStatus.value = true
-            } catch (e: Exception) {
-                _registrationStatus.value = false
-            }
+            val user = User(email, password, firstName, lastName, phoneNumber, null, isMale)
+            repository.insert(user)
+
         }
     }
 

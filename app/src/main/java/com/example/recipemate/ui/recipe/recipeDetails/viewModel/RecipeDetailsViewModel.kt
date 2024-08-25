@@ -1,22 +1,27 @@
 package com.example.recipemate.ui.recipe.recipeDetails.viewModel
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import kotlinx.coroutines.launch
 
-class RecipeDetailsViewModel(val recipeRepository: RecipeRepository) : ViewModel() {
+class RecipeDetailsViewModel(
+    val recipeRepository: RecipeRepository,
+    val authRepository: AuthRepository
+) : ViewModel() {
     private val _recipeDetails = MutableLiveData<List<RecipeDetails>>()
     val recipeDetails: LiveData<List<RecipeDetails>> = _recipeDetails
 
-    private val _toastMessage = MutableLiveData<String>()
+    private var _toastMessage = MutableLiveData<String?>()
     private val _status = MutableLiveData<String>()
+
+    private val currentUserEmail = MutableLiveData<String>()
 
     fun fetchRecipeDetails(id: String) {
         viewModelScope.launch {
@@ -32,11 +37,19 @@ class RecipeDetailsViewModel(val recipeRepository: RecipeRepository) : ViewModel
             }
         }
     }
+
     fun addRecipeToFav(recipe: Recipe) {
         viewModelScope.launch {
-            val isInDatabase = recipeRepository.isRecipeInDatabase(recipe) ?: false
+            currentUserEmail.value = authRepository.findCurrentUser()?.email
+            val isInDatabase = currentUserEmail.value?.let {
+                recipeRepository.isRecipeInDatabase(
+                    recipe,
+                    it
+                )
+            }
+                ?: false
             if (!isInDatabase) {
-                recipeRepository.addRecipeToFav(recipe)
+                currentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
                 recipeRepository.updateRecipes(recipe)
                 recipe.isBookmarked = !recipe.isBookmarked
                 _toastMessage.value = "Recipe has been successfully added!"
@@ -46,6 +59,11 @@ class RecipeDetailsViewModel(val recipeRepository: RecipeRepository) : ViewModel
         }
 
     }
-    fun getToastMessage(): LiveData<String> = _toastMessage
+
+    fun getToastMessage(): LiveData<String?> = _toastMessage
+    fun clearToastMessage() {
+        _toastMessage.value = null
+    }
+
 
 }

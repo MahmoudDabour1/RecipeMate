@@ -12,6 +12,6 @@
     <color name="blackColor">#000000</color>
     <color name="greyColor">#808080</color>
     <color name="greyLightColor">#D3D3D3</color>
-    <color name="transparentColor">#00000000</color>
-    <color name="backgroundColor">#E8E8E8</color>"
+    <color name="transparentColor">#00000000</color>"
+    <color name="lightWhite">#FBF6F6</color>
 </resources>
