@@ -72,7 +72,7 @@
             style="@style/textViewStyle"
             android:layout_marginTop="@dimen/_16dp"
             android:text="@string/popular_category"
-            android:textSize="@dimen/_24sp"
+            android:textSize="@dimen/_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldSearchView" />
@@ -111,7 +111,7 @@
             style="@style/textViewStyle"
             android:layout_marginTop="@dimen/_16dp"
             android:text="@string/recent_recipes"
-            android:textSize="@dimen/_24sp"
+            android:textSize="@dimen/_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularRecipesRecyclerView" />
