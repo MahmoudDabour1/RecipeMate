@@ -56,20 +56,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16dp"
             android:layout_marginBottom="@dimen/_8dp"
-
+            android:queryBackground="@android:color/transparent"
             android:background="@drawable/search_view_background"
             android:iconifiedByDefault="false"
+            android:searchIcon="@drawable/ic_search"
+            android:paddingVertical="@dimen/_8dp"
             android:queryHint="Enter Recipe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewForCooking" />
+
+
 
         <TextView
             android:id="@+id/textViewPopularCategory"
             style="@style/textViewStyle"
             android:layout_marginTop="@dimen/_16dp"
             android:text="@string/popular_category"
-            android:textSize="@dimen/_16sp"
+            android:textSize="@dimen/_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textFieldSearchView" />
@@ -108,7 +112,7 @@
             style="@style/textViewStyle"
             android:layout_marginTop="@dimen/_16dp"
             android:text="@string/recent_recipes"
-            android:textSize="@dimen/_16sp"
+            android:textSize="@dimen/_20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/popularRecipesRecyclerView" />

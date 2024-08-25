@@ -212,6 +212,9 @@ class RecipeDetailsFragment : Fragment() {
                 Toast.makeText(context, "Recipe is not loaded yet.", Toast.LENGTH_SHORT).show()
             }
         }
+        recipeHeaderLayoutBinding.imageViewRecipeDetailsBookmark.setOnClickListener{
+            viewModel.addRecipeToFav(recipe)
+        }
     }
 
     private fun shareRecipe() {

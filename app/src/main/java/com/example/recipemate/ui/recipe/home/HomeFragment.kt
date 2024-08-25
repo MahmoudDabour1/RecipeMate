@@ -74,8 +74,10 @@ class HomeFragment : Fragment() {
 
     private fun setupSearchField() {
         binding.textFieldSearchView.inputType = InputType.TYPE_NULL
-        binding.textFieldSearchView.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+        binding.textFieldSearchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
+            }
         }
     }
 
