@@ -4,30 +4,39 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.remote.model.Recipe
 import kotlinx.coroutines.launch
 
-class BookMarkViewModel(val repo: RecipeRepository) : ViewModel() {
+class BookMarkViewModel(
+    val recipeRepository: RecipeRepository,
+    val authRepository: AuthRepository
+) : ViewModel() {
     private val _savedRecipes = MutableLiveData<List<Recipe>>()
     val savedRecipes: LiveData<List<Recipe>> = _savedRecipes
+    val currentUserEmail = MutableLiveData<String>()
 
     fun getAllSavedRecipes() {
         viewModelScope.launch {
-            _savedRecipes.value = repo.getAllFavRecipes()
+            currentUserEmail.value = authRepository.findCurrentUser()?.email
+            _savedRecipes.value =
+                currentUserEmail.value?.let { recipeRepository.getAllFavRecipes(it) }
         }
     }
 
     fun deleteRecipe(recipe: Recipe) {
         viewModelScope.launch {
-            repo.deleteRecipeFromFav(recipe)
+            recipe.isBookmarked = false
+            recipeRepository.deleteRecipeFromFav(recipe)
             getAllSavedRecipes()
         }
     }
 
     fun addRecipe(recipe: Recipe) {
         viewModelScope.launch {
-            repo.addRecipeToFav(recipe)
+            recipe.isBookmarked = true
+            currentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
             getAllSavedRecipes()
         }
     }

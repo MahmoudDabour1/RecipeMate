@@ -13,5 +13,7 @@ data class User(
     val phone: String,
     var imageUri: Uri?,
     val isMale: Boolean,
-    var isLoggedIn: Boolean = false
-)
+    var isLoggedIn: Boolean = false,
+
+
+    )
