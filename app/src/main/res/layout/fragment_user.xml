@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightWhite"
     tools:context=".ui.recipe.user.UserFragment">
 
-    <TextView
-        android:id="@+id/tvSetting"
-        style="@style/ShapeAppearanceOverlay.Material3.Corner.Top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_16dp"
-        android:text="@string/settings"
-        android:textSize="@dimen/_24sp"
-        android:textStyle="bold"
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_184dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,51 +20,53 @@
         android:id="@+id/userImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        android:layout_marginTop="120dp"
         android:padding="@dimen/_8dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_user_profile"
+        android:src="@drawable/user_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSetting"
+        app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/Circular"
         app:strokeWidth="@dimen/_2dp" />
+
+    <ImageView
+        android:id="@+id/btnEditPhoto"
+        android:layout_width="@dimen/_32dp"
+        android:layout_height="@dimen/_32dp"
+        android:layout_margin="@dimen/_8dp"
+        android:src="@drawable/ic_edit_picture"
+        app:layout_constraintBottom_toBottomOf="@+id/userImage"
+        app:layout_constraintEnd_toEndOf="@+id/userImage" />
 
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/user_name"
+        android:textColor="@color/blackColor"
         android:textSize="@dimen/_16sp"
-        app:layout_constraintEnd_toEndOf="@+id/btnEditPhoto"
-        app:layout_constraintStart_toStartOf="@+id/btnEditPhoto"
-        app:layout_constraintTop_toBottomOf="@+id/userImage" />
-
-    <Button
-        android:id="@+id/btnEditPhoto"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8dp"
-        android:text="@string/edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+        app:layout_constraintTop_toBottomOf="@+id/userImage" />
 
     <TextView
         android:id="@+id/tvAbout"
         style="@style/sectionTitle"
-        android:layout_marginStart="@dimen/_24dp"
-        android:layout_marginTop="@dimen/_24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:text="@string/about"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEditPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardAbout"
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16dp"
+        app:cardBackgroundColor="@color/whiteColor"
         app:cardCornerRadius="@dimen/_16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/emailTitle"
@@ -127,11 +129,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/_8dp"
-                android:padding="@dimen/_16dp"
+                android:padding="@dimen/_12dp"
                 android:text="@string/gender"
                 android:gravity="center"
                 app:drawableStartCompat="@drawable/ic_gender"
-                app:drawableTint="@color/blackColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tvGenderValue"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPhoneTitle" />
@@ -154,6 +155,7 @@
                 android:drawablePadding="@dimen/_8dp"
                 android:padding="@dimen/_16dp"
                 android:text="@string/password"
+                android:gravity="center"
                 app:drawableStartCompat="@drawable/ic_lock"
                 app:drawableTint="@color/blackColor"
                 app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
@@ -177,39 +179,38 @@
                 android:src="@drawable/ic_edit"
                 app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
                 app:layout_constraintEnd_toEndOf="@+id/tvPassValue"
-                app:layout_constraintTop_toTopOf="@+id/tvPassValue"
-                app:tint="@color/primaryColor" />
+                app:layout_constraintTop_toTopOf="@+id/tvPassValue" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardSystem"
+        style="@style/Widget.Material3.CardView.Elevated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_16dp"
+        android:backgroundTint="@color/whiteColor"
         app:cardCornerRadius="@dimen/_16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSystem">
 
         <TextView
             android:id="@+id/tvSignOut"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/redColor"
             android:gravity="center"
             android:padding="@dimen/_16dp"
             android:text="@string/sign_out"
-            android:textColor="@color/whiteColor"
             app:drawableStartCompat="@drawable/ic_logout"
-            app:drawableTint="@color/whiteColor"
+            app:drawableTint="@color/primaryColor"
             app:layout_constraintBottom_toBottomOf="@+id/tvPassValue"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvGenderTitle" />
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <TextView
         android:id="@+id/tvSystem"
