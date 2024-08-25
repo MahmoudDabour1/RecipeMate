@@ -64,12 +64,6 @@ class HomeFragment : Fragment() {
         fetchData()
     }
 
-    private fun fetchDataFromLocal() {
-        viewModel.getAllSavedRecipes()
-        Log.e("Try and find me", "I am fetching data from local")
-
-    }
-
     private fun fetchData() {
         viewModel.apply {
             fetchRecipesByCategory(DEFAULT_CATEGORY)

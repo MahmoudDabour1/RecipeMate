@@ -18,7 +18,7 @@ class RecipeDetailsViewModel(
     private val _recipeDetails = MutableLiveData<List<RecipeDetails>>()
     val recipeDetails: LiveData<List<RecipeDetails>> = _recipeDetails
 
-    private var _toastMessage = MutableLiveData<String>()
+    private var _toastMessage = MutableLiveData<String?>()
     private val _status = MutableLiveData<String>()
 
     private val currentUserEmail = MutableLiveData<String>()
@@ -39,7 +39,6 @@ class RecipeDetailsViewModel(
     }
 
     fun addRecipeToFav(recipe: Recipe) {
-
         viewModelScope.launch {
             currentUserEmail.value = authRepository.findCurrentUser()?.email
             val isInDatabase = currentUserEmail.value?.let {
@@ -61,9 +60,9 @@ class RecipeDetailsViewModel(
 
     }
 
-    fun getToastMessage(): LiveData<String> = _toastMessage
+    fun getToastMessage(): LiveData<String?> = _toastMessage
     fun clearToastMessage() {
-        _toastMessage = MutableLiveData<String>()
+        _toastMessage.value = null
     }
 
 

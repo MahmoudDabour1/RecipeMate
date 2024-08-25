@@ -30,6 +30,7 @@ import com.example.recipemate.databinding.RecipeCategoryAndAreaLayoutBinding
 import com.example.recipemate.databinding.RecipeHeaderLayoutBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
@@ -130,11 +131,12 @@ class RecipeDetailsFragment : Fragment() {
         })
 
         viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show()
-            viewModel.clearToastMessage()
-
+                message?.let {
+                    view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
+                    viewModel.clearToastMessage()
+                }
+            }
         }
-    }
 
     private fun observeData() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
@@ -145,10 +147,6 @@ class RecipeDetailsFragment : Fragment() {
             } ?: run {
                 Log.e("RecipeDetailsFragment", "Recipe details are null")
             }
-        }
-        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-
         }
     }
 
@@ -195,7 +193,7 @@ class RecipeDetailsFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
-        binding.imageViewRecipeDetailsBookmark.setOnClickListener {
+        binding.recipeDetailsHeaderLayout.imageViewRecipeDetailsBookmark.setOnClickListener {
             if (this::recipe.isInitialized) {
                 viewModel.addRecipeToFav(recipe)
             } else {
