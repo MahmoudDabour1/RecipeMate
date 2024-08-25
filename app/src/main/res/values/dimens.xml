@@ -14,6 +14,7 @@
     <dimen name="_48dp">48dp</dimen>
     <dimen name="_64dp">64dp</dimen>
     <dimen name="_50dp">50dp</dimen>
+    <dimen name="_80dp">80dp</dimen>
     <dimen name="_90dp">90dp</dimen>
     <dimen name="_120dp">120dp</dimen>
 
@@ -27,6 +28,8 @@
     <dimen name="_100dp">100dp</dimen>
     <dimen name="_150dp">150dp</dimen>
     <dimen name="_30dp">30dp</dimen>
+    <dimen name="_25dp">25dp</dimen>
+    <dimen name="_275dp">275dp</dimen>
 
 
 </resources>
