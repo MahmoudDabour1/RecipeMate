@@ -1,6 +1,5 @@
 package com.example.recipemate.ui.auth.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -57,6 +56,7 @@ class LoginFragment : Fragment() {
     private fun addCallBack() {
         binding.apply {
             loginButton.setOnClickListener {
+                clearErrors()
                 val email = binding.emailEditText.editText?.text.toString()
                 val password = binding.passwordEditText.editText?.text.toString()
                 if (validateInput(email, password)) {
@@ -74,7 +74,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun validateInput(username: String, password: String): Boolean {
-        clearErrors()
         return when {
             username.isEmpty() -> {
                 binding.emailEditText.error = "Email is required"
@@ -92,9 +91,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToRecipeActivity() {
-        val sharedPreferences =
-            requireContext().getSharedPreferences(SharedPrefUtils.PREF_NAME, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putBoolean(SharedPrefUtils.IS_LOGGED_IN, true).apply()
         val intent = Intent(requireContext(), RecipeActivity::class.java)
         startActivity(intent)
         requireActivity().finish()

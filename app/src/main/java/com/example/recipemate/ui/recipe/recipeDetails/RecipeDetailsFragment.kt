@@ -20,6 +20,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.recipemate.R
+import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Recipe
@@ -29,6 +30,8 @@ import com.example.recipemate.databinding.RecipeCategoryAndAreaLayoutBinding
 import com.example.recipemate.databinding.RecipeHeaderLayoutBinding
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
 import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
+import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_SHORT
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -52,9 +55,13 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var lottieAnimationLoading: LottieAnimationView
     private lateinit var recipe: Recipe
     private val viewModel: RecipeDetailsViewModel by viewModels {
+        val recipeDB = RecipeDatabase.getInstance(requireContext())
         DetailsViewModelFactory(
             RecipeRepository(
-                RecipeDatabase.getInstance(requireContext()).recipeDao()
+                recipeDB.recipeDao()
+            ), AuthRepository(
+                recipeDB.userDao()
+
             )
         )
     }
@@ -129,7 +136,14 @@ class RecipeDetailsFragment : Fragment() {
                 tabLayout.selectTab(tabLayout.getTabAt(position))
             }
         })
-    }
+
+        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
+                message?.let {
+                    view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
+                    viewModel.clearToastMessage()
+                }
+            }
+        }
 
     private fun observeData() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
@@ -189,8 +203,12 @@ class RecipeDetailsFragment : Fragment() {
                 )
             findNavController().navigate(action)
         }
-        binding.recipeDetailsFavouriteButton.favouriteButtonView.setOnClickListener {
-            viewModel.addRecipeToFav(recipe)
+        binding.recipeDetailsHeaderLayout.imageViewRecipeDetailsBookmark.setOnClickListener {
+            if (this::recipe.isInitialized) {
+                viewModel.addRecipeToFav(recipe)
+            } else {
+                Toast.makeText(context, "Recipe is not loaded yet.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

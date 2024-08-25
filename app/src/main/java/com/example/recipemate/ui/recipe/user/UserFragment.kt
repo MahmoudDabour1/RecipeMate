@@ -2,7 +2,6 @@ package com.example.recipemate.ui.recipe.user
 
 import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -11,7 +10,6 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -27,6 +25,7 @@ import com.example.recipemate.databinding.FragmentUserBinding
 import com.example.recipemate.ui.auth.AuthActivity
 import com.example.recipemate.utils.Constants.Companion.IS_LOGGED_OUT
 import com.example.recipemate.utils.SharedPrefUtils
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
@@ -102,25 +101,22 @@ class UserFragment : Fragment() {
 
     private fun showSignOutDialog() {
         binding.tvSignOut.setOnClickListener {
-            val dialogView = layoutInflater.inflate(R.layout.custom_sign_out_dialog, null)
-            AlertDialog.Builder(requireContext())
-                .setMessage(R.string.sign_out_confirmation_message)
+            MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.sign_out_title)
+                .setMessage(R.string.sign_out_confirmation_message)
                 .setIcon(R.drawable.ic_alert)
-                .setView(dialogView)
-                .create()
-                .apply {
-                    dialogView.findViewById<Button>(R.id.yesButton).setOnClickListener {
-                        signOut()
-                        dismiss()
-                    }
-                    dialogView.findViewById<Button>(R.id.cancelButton).setOnClickListener {
-                        dismiss()
-                    }
+                .setCancelable(true)
+                .setPositiveButton(R.string.yes) { _, _ ->
+                    signOut()
+                }
+                .setNegativeButton(R.string.cancel) { dialog, _ ->
+                    dialog.dismiss()
                 }
                 .show()
         }
+
     }
+
 
     private fun signOut() {
         requireContext().getSharedPreferences(SharedPrefUtils.PREF_NAME, Context.MODE_PRIVATE)
@@ -138,7 +134,8 @@ class UserFragment : Fragment() {
         binding.tvUserName.text = getString(R.string.full_user_name, user.firstName, user.lastName)
         binding.tvEmailAddress.text = user.email
         binding.tvPhoneNumber.text = user.phone
-        binding.tvGenderValue.text = if (user.isMale) getString(R.string.male) else getString(R.string.female)
+        binding.tvGenderValue.text =
+            if (user.isMale) getString(R.string.male) else getString(R.string.female)
         user.imageUri?.let { Glide.with(this).load(it).into(binding.userImage) }
     }
 
@@ -148,49 +145,62 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun validatePassword(binding: CustomPasswordDialogBinding, dialog: AlertDialog) {
-            val currentPass = binding.currentPasswordEditText.editText?.text.toString()
-            val newPass = binding.newPasswordEditText.editText?.text.toString()
-            val confirmPass = binding.confirmPasswordEditText.editText?.text.toString()
+    private fun validatePassword(
+        binding: CustomPasswordDialogBinding,
+        dialog: androidx.appcompat.app.AlertDialog
+    ) {
+        val currentPass = binding.currentPasswordEditText.editText?.text.toString()
+        val newPass = binding.newPasswordEditText.editText?.text.toString()
+        val confirmPass = binding.confirmPasswordEditText.editText?.text.toString()
 
-            clearError(binding)
+        clearError(binding)
 
-            when {
-                currentPass != user.password -> {
-                    binding.currentPasswordEditText.error = getString(R.string.error_current_password)
-                }
-                newPass.isEmpty() -> {
-                    binding.newPasswordEditText.error = getString(R.string.error_empty_new_password)
-                }
-                newPass.length < 8 -> {
-                    binding.newPasswordEditText.error = getString(R.string.error_short_password)
-                }
-                newPass == currentPass -> {
-                    binding.newPasswordEditText.error = getString(R.string.error_same_as_current_password)
-                }
-                newPass != confirmPass -> {
-                    binding.confirmPasswordEditText.error = getString(R.string.error_password_mismatch)
-                }
-                else -> {
-                    dialog.dismiss()
-                    userViewModel.updateUserPass(newPass)
-                    Toast.makeText(requireContext(), R.string.password_updated_success, Toast.LENGTH_SHORT).show()
-                }
+        when {
+            currentPass != user.password -> {
+                binding.currentPasswordEditText.error = getString(R.string.error_current_password)
             }
-       }
+
+            newPass.isEmpty() -> {
+                binding.newPasswordEditText.error = getString(R.string.error_empty_new_password)
+            }
+
+            newPass.length < 8 -> {
+                binding.newPasswordEditText.error = getString(R.string.error_short_password)
+            }
+
+            newPass == currentPass -> {
+                binding.newPasswordEditText.error =
+                    getString(R.string.error_same_as_current_password)
+            }
+
+            newPass != confirmPass -> {
+                binding.confirmPasswordEditText.error = getString(R.string.error_password_mismatch)
+            }
+
+            else -> {
+                dialog.dismiss()
+                userViewModel.updateUserPass(newPass)
+                Toast.makeText(
+                    requireContext(),
+                    R.string.password_updated_success,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
 
     private fun showPassDialog() {
-        val binding = CustomPasswordDialogBinding.inflate(LayoutInflater.from(context))
-        AlertDialog.Builder(requireContext())
-            .setView(binding.root)
+        val dialogBinding = CustomPasswordDialogBinding.inflate(LayoutInflater.from(context))
+        val materialDialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogBinding.root)
             .setCancelable(true)
             .create()
-            .apply {
-                binding.changePasswordButton.setOnClickListener {
-                    validatePassword(binding, this)
-                }
-            }
-            .show()
+
+        dialogBinding.changePasswordButton.setOnClickListener {
+            validatePassword(dialogBinding, materialDialog)
+        }
+
+        materialDialog.show()
     }
 
     private fun clearError(binding: CustomPasswordDialogBinding) {

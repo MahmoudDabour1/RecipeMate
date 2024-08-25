@@ -19,9 +19,9 @@ interface RecipeDao {
     @Update
     suspend fun updateRecipes(recipe: Recipe)
 
-    @Query("Select * From recipe_tb")
-    suspend fun getAllFavRecipes(): List<Recipe>
+    @Query("SELECT * FROM recipe_tb WHERE userEmail = :userEmail")
+    suspend fun getAllFavRecipes(userEmail: String): List<Recipe>
 
-    @Query("SELECT EXISTS (SELECT 1 FROM recipe_tb WHERE idMeal = :id)")
-    suspend fun isRecipeInDatabase(id: String): Boolean
+    @Query("SELECT EXISTS (SELECT 1 FROM recipe_tb WHERE idMeal = :id AND userEmail= :userEmail)")
+    suspend fun isRecipeInDatabase(id: String, userEmail: String): Boolean
 }
