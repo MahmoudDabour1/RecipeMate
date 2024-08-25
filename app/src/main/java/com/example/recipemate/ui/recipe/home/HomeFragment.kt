@@ -33,6 +33,8 @@ class HomeFragment : Fragment() {
     private var isShimmerPopular = true
     private var savedRecipes = listOf<Recipe>()
 
+    private lateinit var userCurrentEmail: String
+
     private val viewModel: RecipeViewModel by viewModels {
         val recipeDB = RecipeDatabase.getInstance(requireContext())
         RecipeViewModelFactory(
@@ -55,7 +57,6 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fetchDataFromLocal()
         setupAdapters()
         setupRecyclerViews()
         setupSearchField()
@@ -111,6 +112,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.currentUserEmail.observe(viewLifecycleOwner) { currentUser ->
+            currentUser?.let {
+                userCurrentEmail = currentUser
+                viewModel.getAllSavedRecipes()
+
+            }
+        }
+
         viewModel.savedRecipes.observe(viewLifecycleOwner) { savedRecipes ->
             savedRecipes?.let {
                 this.savedRecipes = it

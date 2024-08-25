@@ -1,7 +1,6 @@
 package com.example.recipemate.ui.recipe.home
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,14 +76,12 @@ class RecentAdapter(
         recentRecipes.clear()
         recentRecipes.addAll(newItems)
         updataDataFromLocal(savedRecipe)
-        Log.e("Try and find me", "I am in update data function")
         notifyDataSetChanged()
 
     }
 
     fun updataDataFromLocal(recipes: List<Recipe>) {
         mySavedRecipes = recipes
-        Log.e("Try and find me", "I am in update data from local function")
         recentRecipes.forEach { recentRecipe ->
             recentRecipe.isBookmarked =
                 mySavedRecipes.any { savedRecipe -> savedRecipe.idMeal == recentRecipe.idMeal }

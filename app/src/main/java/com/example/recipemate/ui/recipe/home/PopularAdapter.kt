@@ -1,7 +1,6 @@
 package com.example.recipemate.ui.recipe.home
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,7 +85,6 @@ class PopularAdapter(
 
     fun updataDataFromLocal(recipes: List<Recipe>) {
         mySavedRecipes = recipes
-        Log.e("Try and find me", "I am in update data from local function")
         seafoodRecipes.forEach { popularRecipe ->
             popularRecipe.isBookmarked =
                 mySavedRecipes.any { savedRecipe -> savedRecipe.idMeal == popularRecipe.idMeal }

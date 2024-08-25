@@ -33,7 +33,12 @@ class RecipeViewModel(val recipeRepository: RecipeRepository, val authRepository
     private val _categories = MutableLiveData<List<Category>>()
     val categories: LiveData<List<Category>> get() = _categories
 
-    private val cuurentUserEmail = MutableLiveData<String>()
+    private val _currentUserEmail = MutableLiveData<String?>()
+    val currentUserEmail: LiveData<String?> = _currentUserEmail
+
+    init {
+        findCurrentUserEmail()
+    }
 
     fun fetchPopularRecipes() {
         viewModelScope.launch {
@@ -90,8 +95,7 @@ class RecipeViewModel(val recipeRepository: RecipeRepository, val authRepository
 
     fun chooseToAddOrDelete(recipe: Recipe) {
         viewModelScope.launch {
-            cuurentUserEmail.value = authRepository.findCurrentUser()?.email
-            val isInDatabase = cuurentUserEmail.value?.let {
+            val isInDatabase = _currentUserEmail.value?.let {
                 recipeRepository.isRecipeInDatabase(
                     recipe,
                     it
@@ -99,7 +103,7 @@ class RecipeViewModel(val recipeRepository: RecipeRepository, val authRepository
             }
                 ?: false
             if (!isInDatabase) {
-                cuurentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
+                _currentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
                 recipeRepository.updateRecipes(recipe)
                 recipe.isBookmarked = !recipe.isBookmarked
                 _toastMessage.value = "Recipe has been successfully added!"
@@ -115,7 +119,13 @@ class RecipeViewModel(val recipeRepository: RecipeRepository, val authRepository
     fun getAllSavedRecipes() {
         viewModelScope.launch {
             savedRecipes.value =
-                cuurentUserEmail.value?.let { recipeRepository.getAllFavRecipes(it) }
+                currentUserEmail.value?.let { recipeRepository.getAllFavRecipes(it) }
+        }
+    }
+
+    fun findCurrentUserEmail() {
+        viewModelScope.launch {
+            _currentUserEmail.value = authRepository.findCurrentUser()?.email
         }
     }
 
