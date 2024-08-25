@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightWhite"
     android:padding="@dimen/_24dp"
     tools:context=".ui.auth.login.LoginFragment">
 
@@ -12,17 +13,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.15" />
+        app:layout_constraintGuide_percent="0.4" />
+
+    <ImageView
+        android:id="@+id/imageCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineWelcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageLogIn"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/chief"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineWelcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textWelcomeBack"
         style="@style/AuthFirstHeaderTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
         android:text="@string/text_welcome_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guidelineWelcome" />
+        app:layout_constraintTop_toBottomOf="@id/imageLogIn" />
 
     <TextView
         android:id="@+id/textEnterYourAccount"
@@ -40,7 +63,7 @@
         style="@style/CustomTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_32dp"
+        android:layout_marginTop="@dimen/_24dp"
         android:hint="@string/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +83,6 @@
         android:layout_below="@id/emailEditText"
         android:layout_marginTop="@dimen/_16dp"
         android:hint="Password"
-        android:inputType="textPassword"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,14 +91,15 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_32dp"
+        android:layout_marginTop="@dimen/_24dp"
         android:padding="@dimen/_16dp"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"

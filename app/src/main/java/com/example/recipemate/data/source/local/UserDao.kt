@@ -2,13 +2,14 @@ package com.example.recipemate.data.source.local
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 
 @Dao
 interface UserDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: User)
 
     @Query("SELECT * FROM users WHERE email = :email AND password = :password LIMIT 1")
