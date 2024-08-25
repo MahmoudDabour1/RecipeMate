@@ -138,12 +138,12 @@ class RecipeDetailsFragment : Fragment() {
         })
 
         viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-                message?.let {
-                    view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
-                    viewModel.clearToastMessage()
-                }
+            message?.let {
+                view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
+                viewModel.clearToastMessage()
             }
         }
+    }
 
     private fun observeData() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
@@ -157,7 +157,9 @@ class RecipeDetailsFragment : Fragment() {
             }
         }
         viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            message?.takeIf { it.isNotEmpty() }?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
