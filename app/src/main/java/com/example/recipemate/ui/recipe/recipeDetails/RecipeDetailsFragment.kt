@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.example.recipemate.R
 import com.example.recipemate.data.repository.AuthRepository
@@ -52,6 +52,7 @@ class RecipeDetailsFragment : Fragment() {
     private var recipeInstructions: String = ""
     private lateinit var recipeHeaderLayoutBinding: RecipeHeaderLayoutBinding
     private lateinit var recipeCategoryAndAreaLayoutBinding: RecipeCategoryAndAreaLayoutBinding
+    private lateinit var lottieAnimationLoading: LottieAnimationView
     private lateinit var recipe: Recipe
     private val viewModel: RecipeDetailsViewModel by viewModels {
         val recipeDB = RecipeDatabase.getInstance(requireContext())
@@ -78,12 +79,13 @@ class RecipeDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.fetchRecipeDetails(args.recipeId)
-        Log.e("TAG", "onViewCreated:  ${args.recipeId}")
+        lottieAnimationLoading = binding.lottieAnimationLoading
+        lottieAnimationLoading.visibility = View.VISIBLE
 
         initUi()
         observeData()
         handleOnClicks()
+        viewModel.fetchRecipeDetails(args.recipeId)
     }
 
     @SuppressLint("InflateParams")
@@ -94,11 +96,16 @@ class RecipeDetailsFragment : Fragment() {
         setUpTabLayout()
     }
 
+    @SuppressLint("InflateParams")
     private fun setUpTabLayout() {
         tabLayout = recipeCategoryAndAreaLayoutBinding.tabLayoutRecipeDetails
         viewPager2 = recipeCategoryAndAreaLayoutBinding.viewPagerRecipeDetails
-        viewPagerAdapter =
-            ViewPagerAdaptor(childFragmentManager, lifecycle, recipeInstructions, recipeIngredients)
+        ViewPagerAdaptor(
+            childFragmentManager,
+            lifecycle,
+            recipeInstructions,
+            recipeIngredients
+        ).also { viewPagerAdapter = it }
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"))
         tabLayout.addTab(tabLayout.newTab().setText("Instructions"))
         viewPager2.adapter = viewPagerAdapter
@@ -131,21 +138,27 @@ class RecipeDetailsFragment : Fragment() {
         })
 
         viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
-                message?.let {
-                    view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
-                    viewModel.clearToastMessage()
-                }
+            message?.let {
+                view?.let { it1 -> Snackbar.make(it1, message, LENGTH_SHORT).show() }
+                viewModel.clearToastMessage()
             }
         }
+    }
 
     private fun observeData() {
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
-                Log.e("RecipeDetailsFragment", "Observed details: $it")
                 updateRecipeUI(it)
-
+                lottieAnimationLoading.visibility = View.GONE
+                binding.scrollView.visibility = View.VISIBLE
+                binding.buttonRecipeDetailsWatchVideoView.visibility = View.VISIBLE
             } ?: run {
-                Log.e("RecipeDetailsFragment", "Recipe details are null")
+                lottieAnimationLoading.visibility = View.GONE
+            }
+        }
+        viewModel.getToastMessage().observe(viewLifecycleOwner) { message ->
+            message?.takeIf { it.isNotEmpty() }?.let {
+                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -166,7 +179,6 @@ class RecipeDetailsFragment : Fragment() {
         recipeInstructions = it[0].strInstructions.toString()
         recipeIngredients = extractIngredients(it[0])
         ingredientAdapter = IngredientAdaptor(recipeIngredients)
-        Log.e("extract", "onViewCreated:$recipeIngredients ")
 
         viewPagerAdapter =
             ViewPagerAdaptor(
@@ -240,7 +252,6 @@ class RecipeDetailsFragment : Fragment() {
                     file
                 )
             } catch (e: Exception) {
-                Log.e("RecipeDetailsFragment", "Failed to get local bitmap URI", e)
                 null
             }
         }

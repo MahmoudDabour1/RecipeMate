@@ -29,7 +29,6 @@ class BookMarkFragment : Fragment() {
                 recipeDB.recipeDao()
             ), AuthRepository(
                 recipeDB.userDao()
-
             )
         )
     }
@@ -55,7 +54,14 @@ class BookMarkFragment : Fragment() {
 
     private fun observeViewModel() {
         bookMarkViewModel.savedRecipes.observe(viewLifecycleOwner, Observer { recipes ->
-            adapter.updateData(recipes)
+            if (recipes.isEmpty()) {
+                binding.lottieAnimationEmptySearch.visibility = View.VISIBLE
+                binding.recyclerViewBookmarkedRecipes.visibility = View.GONE
+            } else {
+                binding.lottieAnimationEmptySearch.visibility = View.GONE
+                binding.recyclerViewBookmarkedRecipes.visibility = View.VISIBLE
+                adapter.updateData(recipes)
+            }
         })
     }
 

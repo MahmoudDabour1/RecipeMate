@@ -13,13 +13,11 @@ import com.example.recipemate.data.repository.RecipeRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.FragmentSearchBinding
-import com.example.recipemate.ui.recipe.recipeDetails.viewModel.DetailsViewModelFactory
-import com.example.recipemate.ui.recipe.recipeDetails.viewModel.RecipeDetailsViewModel
 import com.example.recipemate.ui.recipe.search.viewModel.SearchViewModel
 
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
-    private lateinit var searchRecipesAdapter: RecipeSearchRecyclerAdapter
+    private lateinit var searchRecipesAdapter: RecipeSearchAdapter
     private lateinit var searchRecipesRecycler: RecyclerView
     private var isShimmer = true
     private val viewModel: SearchViewModel by viewModels {
@@ -46,7 +44,7 @@ class SearchFragment : Fragment() {
 
     private fun initUI() {
         searchRecipesRecycler = binding.recyclerViewSearchRecipes
-        searchRecipesAdapter = RecipeSearchRecyclerAdapter(arrayListOf(), communicator, isShimmer)
+        searchRecipesAdapter = RecipeSearchAdapter(arrayListOf(), communicator, isShimmer)
         searchRecipesRecycler.adapter = searchRecipesAdapter
         binding.lottieAnimationEmptySearch.visibility = View.VISIBLE
         binding.recyclerViewSearchRecipes.visibility = View.GONE
