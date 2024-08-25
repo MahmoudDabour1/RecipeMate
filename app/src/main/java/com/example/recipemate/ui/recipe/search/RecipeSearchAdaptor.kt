@@ -10,7 +10,7 @@ import com.example.recipemate.R
 import com.example.recipemate.data.source.remote.model.RecipeDetails
 import com.example.recipemate.databinding.SearchItemRawBinding
 
-class RecipeSearchRecyclerAdapter(
+class RecipeSearchAdapter(
     private var recipes: List<RecipeDetails>,
     private val communicator: com.example.recipemate.ui.recipe.search.Communicator,
     private var isShimmer: Boolean
@@ -43,7 +43,6 @@ class RecipeSearchRecyclerAdapter(
                 communicator.onItemClicked(currentRecipe)
             }
         }
-
     }
 
     @SuppressLint("NotifyDataSetChanged")
