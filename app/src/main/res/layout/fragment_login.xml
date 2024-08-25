@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightWhite"
     android:padding="@dimen/_24dp"
     tools:context=".ui.auth.login.LoginFragment">
 
@@ -15,6 +16,16 @@
         app:layout_constraintGuide_percent="0.4" />
 
     <ImageView
+        android:id="@+id/imageCircle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/circle"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineWelcome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/imageLogIn"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -23,6 +34,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textWelcomeBack"
