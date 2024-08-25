@@ -14,9 +14,9 @@ class RecentAdapter(
     private val recentRecipes: ArrayList<Recipe>,
     private val communicator: Communicator,
     private var isShimmer: Boolean,
-    private val bookMarker: BookMarker
+    private val bookMarker: BookMarker,
+    private var mySavedRecipes: List<Recipe>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
     inner class RecentViewHolder(private val binding: ItemRecentRecipesBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(recipe: Recipe) {
@@ -71,12 +71,23 @@ class RecentAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateData(newItems: List<Recipe>, isShimmer: Boolean) {
+    fun updateData(newItems: List<Recipe>, isShimmer: Boolean, savedRecipe: List<Recipe>) {
         this.isShimmer = isShimmer
         recentRecipes.clear()
         recentRecipes.addAll(newItems)
+        updataDataFromLocal(savedRecipe)
         notifyDataSetChanged()
+
     }
+
+    fun updataDataFromLocal(recipes: List<Recipe>) {
+        mySavedRecipes = recipes
+        recentRecipes.forEach { recentRecipe ->
+            recentRecipe.isBookmarked =
+                mySavedRecipes.any { savedRecipe -> savedRecipe.idMeal == recentRecipe.idMeal }
+        }
+    }
+
 
     interface Communicator {
         fun onItemClicked(recipe: Recipe)
