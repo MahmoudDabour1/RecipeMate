@@ -2,7 +2,6 @@ package com.example.recipemate.ui.recipe.home
 
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

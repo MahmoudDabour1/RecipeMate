@@ -101,7 +101,7 @@ class UserFragment : Fragment() {
 
     private fun showSignOutDialog() {
         binding.tvSignOut.setOnClickListener {
-            MaterialAlertDialogBuilder(requireContext())
+            MaterialAlertDialogBuilder(requireContext(),R.style.myDialog)
                 .setTitle(R.string.sign_out_title)
                 .setMessage(R.string.sign_out_confirmation_message)
                 .setIcon(R.drawable.ic_alert)
@@ -191,7 +191,7 @@ class UserFragment : Fragment() {
 
     private fun showPassDialog() {
         val dialogBinding = CustomPasswordDialogBinding.inflate(LayoutInflater.from(context))
-        val materialDialog = MaterialAlertDialogBuilder(requireContext())
+        val materialDialog = MaterialAlertDialogBuilder(requireContext(),R.style.myDialog)
             .setView(dialogBinding.root)
             .setCancelable(true)
             .create()

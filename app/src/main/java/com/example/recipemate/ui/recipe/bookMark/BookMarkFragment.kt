@@ -15,6 +15,7 @@ import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.data.source.remote.model.Recipe
 import com.example.recipemate.databinding.FragmentBookMarkBinding
 import com.example.recipemate.ui.recipe.home.BookMarker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 
 class BookMarkFragment : Fragment() {
@@ -65,6 +66,33 @@ class BookMarkFragment : Fragment() {
         })
     }
 
+    private fun showConfirmationDialog(recipe: Recipe) {
+        MaterialAlertDialogBuilder(requireContext(), R.style.myDialog)
+            .setTitle(R.string.confirm_title)
+            .setMessage(R.string.confirm_message)
+            .setIcon(R.drawable.ic_delete)
+            .setCancelable(true)
+            .setPositiveButton(R.string.yes) { _, _ ->
+                bookMarkViewModel.deleteRecipe(recipe)
+                showSnackBar(recipe)
+            }
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    fun showSnackBar(recipe: Recipe) {
+        view?.let {
+            Snackbar.make(it, "Successfully deleted recipe", Snackbar.LENGTH_SHORT)
+                .setAction("UNDO") {
+                    bookMarkViewModel.addRecipe(recipe)
+                }.setActionTextColor(resources.getColor(R.color.primaryColor)).show()
+
+        }
+    }
+
+
     private val savedCommunicator = object : BookMarkerAdapter.Communicator {
         override fun onItemClicked(recipe: Recipe) {
             val action =
@@ -75,13 +103,7 @@ class BookMarkFragment : Fragment() {
 
     private val bookMarker = object : BookMarker {
         override fun onBookmarkClicked(recipe: Recipe) {
-            bookMarkViewModel.deleteRecipe(recipe)
-            view?.let {
-                Snackbar.make(it, "Successfully deleted recipe", Snackbar.LENGTH_SHORT)
-                    .setAction("UNDO") {
-                        bookMarkViewModel.addRecipe(recipe)
-                    }.setActionTextColor(resources.getColor(R.color.primaryColor)).show()
-            }
+            showConfirmationDialog(recipe)
         }
     }
 

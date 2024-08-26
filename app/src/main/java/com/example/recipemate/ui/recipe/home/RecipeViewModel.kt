@@ -96,16 +96,17 @@ class RecipeViewModel(val recipeRepository: RecipeRepository, val authRepository
     fun chooseToAddOrDelete(recipe: Recipe) {
         viewModelScope.launch {
             val isInDatabase = _currentUserEmail.value?.let {
-                recipeRepository.isRecipeInDatabase(
-                    recipe,
-                    it
-                )
+                recipe.idMeal?.let { it1 ->
+                    recipeRepository.isRecipeInDatabase(
+                        it1,
+                        it
+                    )
+                }
             }
                 ?: false
             if (!isInDatabase) {
                 _currentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
                 recipeRepository.updateRecipes(recipe)
-                recipe.isBookmarked = !recipe.isBookmarked
                 _toastMessage.value = "Recipe has been successfully added!"
             } else {
                 recipeRepository.deleteRecipeFromFav(recipe)

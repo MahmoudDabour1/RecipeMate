@@ -21,7 +21,16 @@ class RecipeDetailsViewModel(
     private var _toastMessage = MutableLiveData<String?>()
     private val _status = MutableLiveData<String>()
 
-    private val currentUserEmail = MutableLiveData<String>()
+
+    private val _currentUserEmail = MutableLiveData<String>()
+    val currentUserEmail: LiveData<String> = _currentUserEmail
+
+    private val _bookmarkStatus = MutableLiveData<Boolean?>()
+    val bookmarkStatus: LiveData<Boolean?> = _bookmarkStatus
+
+    init {
+        findCurrentUser()
+    }
 
     fun fetchRecipeDetails(id: String) {
         viewModelScope.launch {
@@ -38,32 +47,55 @@ class RecipeDetailsViewModel(
         }
     }
 
-    fun addRecipeToFav(recipe: Recipe) {
+    fun chooseToAddOrDelete(recipe: Recipe) {
         viewModelScope.launch {
-            currentUserEmail.value = authRepository.findCurrentUser()?.email
-            val isInDatabase = currentUserEmail.value?.let {
-                recipeRepository.isRecipeInDatabase(
-                    recipe,
-                    it
-                )
+            val isInDatabase = _currentUserEmail.value?.let {
+                recipe.idMeal?.let { it1 ->
+                    recipeRepository.isRecipeInDatabase(
+                        it1,
+                        it
+                    )
+                }
             }
                 ?: false
             if (!isInDatabase) {
-                currentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
+                _currentUserEmail.value?.let { recipeRepository.addRecipeToFav(recipe, it) }
                 recipeRepository.updateRecipes(recipe)
-                recipe.isBookmarked = !recipe.isBookmarked
                 _toastMessage.value = "Recipe has been successfully added!"
             } else {
-                _toastMessage.value = "This recipe has already been added!"
+                recipeRepository.deleteRecipeFromFav(recipe)
+                recipeRepository.updateRecipes(recipe)
+                _toastMessage.value = "Recipe has been successfully deleted!"
             }
+            recipe.idMeal?.let { checkIfItemStored(it) }
         }
 
+    }
+
+    fun checkIfItemStored(recipeId: String) {
+        _currentUserEmail.value?.let { email ->
+            viewModelScope.launch {
+                val isInDatabase = recipeRepository.isRecipeInDatabase(recipeId, email)
+                if (isInDatabase) {
+                    _bookmarkStatus.value = true
+                } else {
+                    _bookmarkStatus.value = false
+                }
+            }
+        }
+    }
+
+    fun findCurrentUser() {
+        viewModelScope.launch {
+            _currentUserEmail.value = authRepository.findCurrentUser()?.email
+        }
     }
 
     fun getToastMessage(): LiveData<String?> = _toastMessage
     fun clearToastMessage() {
         _toastMessage.value = null
     }
-
-
 }
+
+
+

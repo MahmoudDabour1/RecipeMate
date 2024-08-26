@@ -52,7 +52,6 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
         recipeDao.updateRecipes(recipe)
     }
 
-    suspend fun isRecipeInDatabase(recipe: Recipe, userEmail: String): Boolean {
-        return recipe.idMeal?.let { recipeDao.isRecipeInDatabase(it, userEmail) } ?: false
-    }
+    suspend fun isRecipeInDatabase(recipeId: String, userEmail: String): Boolean {
+        return recipeDao.isRecipeInDatabase(recipeId, userEmail) }
 }
