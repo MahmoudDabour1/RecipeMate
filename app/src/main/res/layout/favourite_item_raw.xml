@@ -12,7 +12,6 @@
         android:background="@drawable/rounded_icon"
         android:contentDescription="@string/favourite_button"
         android:padding="@dimen/_8dp"
-        android:src="@drawable/ic_heart"
-        android:stateListAnimator="@animator/selected_heart" />
+        android:src="@drawable/ic_heart" />
 
 </FrameLayout>
