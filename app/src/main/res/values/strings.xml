@@ -50,4 +50,5 @@
     <string name="sign_out_title">Sign Out</string>
     <string name="password_updated_success">Password has been updated!</string>
     <string name="bookmarked_recipes">Bookmarked Recipes</string>
+    <string name="favourite_button">Favourite Button</string>
 </resources>

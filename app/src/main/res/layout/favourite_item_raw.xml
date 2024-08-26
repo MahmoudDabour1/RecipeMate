@@ -10,8 +10,9 @@
         android:layout_height="@dimen/_48dp"
         android:layout_gravity="center"
         android:background="@drawable/rounded_icon"
-        android:contentDescription="Favourite Button"
+        android:contentDescription="@string/favourite_button"
         android:padding="@dimen/_8dp"
-        android:src="@drawable/ic_heart" />
+        android:src="@drawable/ic_heart"
+        android:stateListAnimator="@animator/selected_heart" />
 
 </FrameLayout>
