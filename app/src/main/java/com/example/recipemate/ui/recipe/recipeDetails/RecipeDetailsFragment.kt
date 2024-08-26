@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,7 @@ class RecipeDetailsFragment : Fragment() {
     private lateinit var recipeCategoryAndAreaLayoutBinding: RecipeCategoryAndAreaLayoutBinding
     private lateinit var lottieAnimationLoading: LottieAnimationView
     private lateinit var recipe: Recipe
+    private lateinit var userCurrentEmail: String
     private val viewModel: RecipeDetailsViewModel by viewModels {
         val recipeDB = RecipeDatabase.getInstance(requireContext())
         DetailsViewModelFactory(
@@ -86,15 +88,17 @@ class RecipeDetailsFragment : Fragment() {
         observeData()
         handleOnClicks()
         viewModel.fetchRecipeDetails(args.recipeId)
+
     }
 
     @SuppressLint("InflateParams")
     private fun initUi() {
         recipeHeaderLayoutBinding = binding.recipeDetailsHeaderLayout
         recipeCategoryAndAreaLayoutBinding = binding.recipeDetailsCategoryAndAreaLayout
-
         setUpTabLayout()
     }
+
+
 
     @SuppressLint("InflateParams")
     private fun setUpTabLayout() {
@@ -146,6 +150,26 @@ class RecipeDetailsFragment : Fragment() {
     }
 
     private fun observeData() {
+
+        viewModel.bookmarkStatus.observe(viewLifecycleOwner){
+            val image = recipeHeaderLayoutBinding.imageViewRecipeDetailsBookmark
+            if (it == true) {
+                image.setImageResource(R.drawable.ic_bookmark_red)
+                Log.e("Try and find me","I suppose to be red")
+            }
+            else {
+                image.setImageResource(R.drawable.ic_bookmark_white)
+                Log.e("Try and find me","I suppose to be white")
+
+            }
+        }
+        viewModel.currentUserEmail.observe(viewLifecycleOwner) { currentUser ->
+            currentUser?.let {
+                userCurrentEmail = currentUser
+                viewModel.checkIfItemStored(args.recipeId)
+
+            }
+        }
         viewModel.recipeDetails.observe(viewLifecycleOwner) { recipeDetails ->
             recipeDetails?.let {
                 updateRecipeUI(it)
@@ -161,6 +185,7 @@ class RecipeDetailsFragment : Fragment() {
                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
             }
         }
+
     }
 
     private fun updateRecipeUI(it: List<RecipeDetails>) {
@@ -207,13 +232,10 @@ class RecipeDetailsFragment : Fragment() {
         }
         binding.recipeDetailsHeaderLayout.imageViewRecipeDetailsBookmark.setOnClickListener {
             if (this::recipe.isInitialized) {
-                viewModel.addRecipeToFav(recipe)
+                viewModel.chooseToAddOrDelete(recipe)
             } else {
                 Toast.makeText(context, "Recipe is not loaded yet.", Toast.LENGTH_SHORT).show()
             }
-        }
-        recipeHeaderLayoutBinding.imageViewRecipeDetailsBookmark.setOnClickListener{
-            viewModel.addRecipeToFav(recipe)
         }
     }
 

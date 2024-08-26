@@ -24,4 +24,6 @@ interface RecipeDao {
 
     @Query("SELECT EXISTS (SELECT 1 FROM recipe_tb WHERE idMeal = :id AND userEmail= :userEmail)")
     suspend fun isRecipeInDatabase(id: String, userEmail: String): Boolean
+
+
 }
