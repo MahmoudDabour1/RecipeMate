@@ -51,4 +51,7 @@
     <string name="sign_out_title">Sign Out</string>
     <string name="password_updated_success">Password has been updated!</string>
     <string name="favourite_button">Favourite Button</string>
+    <string name="bookmarked_recipes">Bookmarked Recipes</string>
+    <string name="confirm_title">Confirm</string>
+    <string name="confirm_message">Do you want to remove this recipe from saved recipes?</string>
 </resources>
