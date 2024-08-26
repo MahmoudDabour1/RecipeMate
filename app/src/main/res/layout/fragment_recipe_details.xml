@@ -53,6 +53,7 @@
                     app:layout_constraintTop_toBottomOf="@id/recipeDetailsLayout" />
             </FrameLayout>
 
+            <!--
             <include
                 android:id="@+id/recipeDetailsFavouriteButton"
                 layout="@layout/favourite_item_raw"
@@ -64,6 +65,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/recipeDetailsHeaderLayout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            -->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
