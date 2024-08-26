@@ -20,6 +20,14 @@
         <item name="cornerSizeTopRight">10%</item>
     </style>
 
+    <style name="myDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:background">@color/lightWhite</item>
+        <item name="android:windowTitleStyle">@style/dialogTitle</item>
+    </style>
+    <style name="dialogTitle" parent="TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">8sp</item>
+    </style>
+
 
 
 </resources>
