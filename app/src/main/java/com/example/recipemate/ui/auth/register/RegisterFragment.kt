@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.recipemate.R
 import com.example.recipemate.data.repository.AuthRepository
 import com.example.recipemate.data.source.local.RecipeDatabase
 import com.example.recipemate.databinding.FragmentRegisterBinding
@@ -73,9 +72,9 @@ class RegisterFragment : Fragment() {
             binding.emailEditText.error = "Invalid email address"
         }
 
-        if (password.isEmpty() || password.length < 6 || !password.any { it.isDigit() }) {
+        if (password.isEmpty() || password.length < 8 || !password.any { it.isDigit() }) {
             binding.passwordEditText.error =
-                "Password must contain at least 6 characters and include a number"
+                "Password must contain at least 8 characters and include a number"
         }
 
         if (firstName.isEmpty() || !firstName.matches(Regex("^[A-Za-z]+$"))) {
@@ -118,7 +117,7 @@ class RegisterFragment : Fragment() {
         phoneNumber: String,
         isMale: Boolean
     ) {
-        navigateToLoginFragment()
+        navigateToLoginFragment(email, password)
         registerViewModel.register(
             email,
             password,
@@ -130,8 +129,10 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun navigateToLoginFragment() {
-        findNavController().navigate(R.id.loginFragment)
+    private fun navigateToLoginFragment(email: String, password: String) {
+        val action =
+            RegisterFragmentDirections.actionRegisterFragmentToLoginFragment(email, password)
+        findNavController().navigate(action)
     }
 
     private fun clearErrors() {
