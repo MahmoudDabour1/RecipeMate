@@ -56,4 +56,5 @@
     <string name="favourite_button">Favourite Button</string>
     <string name="sad_no_result">Sad no result !!</string>
     <string name="no_data_available_description">We cannot find the item you are searching for. maybe be little spelling mistake or try different keyword ?</string>
+    <string name="todo">TODO</string>
 </resources>
