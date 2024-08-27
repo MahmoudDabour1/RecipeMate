@@ -41,6 +41,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addCallBack()
+        setLoginCredentialsFromArguments()
         loginViewModel.loginResult.observe(viewLifecycleOwner) { registered ->
             if (registered?.isLoggedIn == true) {
                 SharedPrefUtils.setLoggedIn(requireContext(), true)
@@ -49,6 +50,15 @@ class LoginFragment : Fragment() {
                 binding.emailEditText.error = "Invalid email address"
             }
 
+        }
+    }
+
+    private fun setLoginCredentialsFromArguments() {
+        arguments?.let {
+            val email = it.getString("email")
+            val password = it.getString("password")
+            binding.emailEditText.editText?.setText(email)
+            binding.passwordEditText.editText?.setText(password)
         }
     }
 
