@@ -36,7 +36,8 @@
         <activity
             android:name=".ui.recipe.RecipeActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="true"
