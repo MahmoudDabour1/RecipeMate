@@ -15,7 +15,7 @@ object Validation {
                 false
             }
 
-            password.isEmpty() || password.length < 6 || !password.any { it.isDigit() } -> {
+            password.isEmpty() || password.length < 8 || !password.any { it.isDigit() } -> {
                 false
             }
 
