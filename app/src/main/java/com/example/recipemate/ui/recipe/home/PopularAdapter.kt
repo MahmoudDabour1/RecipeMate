@@ -25,7 +25,7 @@ class PopularAdapter(
             val randomTime = (10..60).random()
             binding.textViewHomePopularName.text = recipe.strMeal
             binding.textViewHomePopularTime.text = "$randomTime mins"
-            Glide.with(binding.imageViewRecipe.context).load(recipe.strMealThumb).placeholder(R.drawable.image_placeholder)
+            Glide.with(binding.imageViewRecipe.context).load(recipe.strMealThumb).placeholder(R.drawable.recipe_placeholder)
                 .into(binding.imageViewRecipe)
             val bookmarkIcon = if (recipe.isBookmarked) {
                 R.drawable.ic_bookmark_red

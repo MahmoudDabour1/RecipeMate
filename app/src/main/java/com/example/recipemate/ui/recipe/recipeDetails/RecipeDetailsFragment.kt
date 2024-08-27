@@ -99,7 +99,6 @@ class RecipeDetailsFragment : Fragment() {
     }
 
 
-
     @SuppressLint("InflateParams")
     private fun setUpTabLayout() {
         tabLayout = recipeCategoryAndAreaLayoutBinding.tabLayoutRecipeDetails
@@ -151,15 +150,14 @@ class RecipeDetailsFragment : Fragment() {
 
     private fun observeData() {
 
-        viewModel.bookmarkStatus.observe(viewLifecycleOwner){
+        viewModel.bookmarkStatus.observe(viewLifecycleOwner) {
             val image = recipeHeaderLayoutBinding.imageViewRecipeDetailsBookmark
             if (it == true) {
                 image.setImageResource(R.drawable.ic_bookmark_red)
-                Log.e("Try and find me","I suppose to be red")
-            }
-            else {
+                Log.e("Try and find me", "I suppose to be red")
+            } else {
                 image.setImageResource(R.drawable.ic_bookmark_white)
-                Log.e("Try and find me","I suppose to be white")
+                Log.e("Try and find me", "I suppose to be white")
 
             }
         }
@@ -197,7 +195,7 @@ class RecipeDetailsFragment : Fragment() {
         recipeCategoryAndAreaLayoutBinding.textViewRecipeDetailsLocation.text =
             it[0].strArea
         Glide.with(binding.root)
-            .load(it[0].strMealThumb)
+            .load(it[0].strMealThumb).placeholder(R.drawable.recipe_placeholder)
             .into(recipeHeaderLayoutBinding.recipeDetailsHeaderImageView)
         recipeUrl = it[0].strYoutube.toString()
         recipeImage = it[0].strMealThumb.toString()

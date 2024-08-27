@@ -27,6 +27,7 @@ class SearchFragment : Fragment() {
             )
         )
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -57,7 +58,7 @@ class SearchFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
                     binding.lottieAnimationEmptySearch.visibility = View.VISIBLE
-                    binding.lottieAnimationNoDataFound.visibility = View.GONE
+                    binding.noDataView.root.visibility = View.GONE
                     binding.recyclerViewSearchRecipes.visibility = View.GONE
                 } else {
                     binding.lottieAnimationEmptySearch.visibility = View.GONE
@@ -75,13 +76,13 @@ class SearchFragment : Fragment() {
         viewModel.searchRecipes.observe(viewLifecycleOwner) { recipes ->
             if (recipes.isNullOrEmpty()) {
                 binding.lottieAnimationEmptySearch.visibility = View.GONE
-                binding.lottieAnimationNoDataFound.visibility = View.VISIBLE
+                binding.noDataView.root.visibility = View.VISIBLE
                 binding.recyclerViewSearchRecipes.visibility = View.GONE
             } else {
                 isShimmer = false
                 searchRecipesAdapter.updateRecipes(recipes, isShimmer)
                 binding.lottieAnimationEmptySearch.visibility = View.GONE
-                binding.lottieAnimationNoDataFound.visibility = View.GONE
+                binding.noDataView.root.visibility = View.GONE
                 binding.recyclerViewSearchRecipes.visibility = View.VISIBLE
             }
         }

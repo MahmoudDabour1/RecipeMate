@@ -15,10 +15,10 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/search_view_background"
-        android:searchIcon="@drawable/ic_search"
         android:iconifiedByDefault="false"
         android:queryBackground="@android:color/transparent"
-        android:queryHint="Enter Recipes" />
+        android:queryHint="Enter Recipes"
+        android:searchIcon="@drawable/ic_search" />
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -30,20 +30,13 @@
         android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/empty" />
+        app:lottie_rawRes="@raw/empty"
+        tools:ignore="InefficientWeight" />
 
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieAnimationNoDataFound"
-        android:layout_width="@dimen/_250dp"
-        android:layout_height="@dimen/_250dp"
-        android:layout_gravity="center"
-        android:background="@color/lightWhite"
-        android:layout_weight="1"
-        android:visibility="gone"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/no_data_found" />
-
+    <include
+        android:id="@+id/noDataView"
+        layout="@layout/no_data_view"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewSearchRecipes"
