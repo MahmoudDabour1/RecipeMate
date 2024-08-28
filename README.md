@@ -10,8 +10,9 @@ RecipeMate is a sophisticated Android application designed to enrich your culina
 4. [Technology Stack](#technology-stack)
 5. [Installation Guide](#installation-guide)
 6. [Usage Instructions](#usage-instructions)
-7. [Video Demonstration](#video-demonstration)
-8. [Contact Information](#contact-information)
+7. [Screenshots](#screenshots)
+8. [Video Demonstration](#video-demonstration)
+9. [Contact Information](#contact-information)
 
 ## Overview
 
@@ -121,6 +122,31 @@ Explore the app’s functionality with the following instructions:
   - View comprehensive information about each recipe, including origin, ingredients, and preparation instructions.
   - Share recipes via other apps.
   - Watch related YouTube videos for more details and cooking demonstrations.
+
+## Screenshots
+
+Here are some screenshots showcasing the key features of RecipeMate:
+
+**Home Screen**
+<img src="https://github.com/user-attachments/assets/f2862390-2cea-4a83-81f1-266029cfd1d9" alt="Home Screen" width="350">
+*Home screen displaying a curated list of recipes.*
+
+**Search Functionality**
+<img src="https://github.com/user-attachments/assets/64100b15-72df-4f24-bb3d-05c53f7e46c3" alt="Search Functionality" width="350">
+*Search functionality with grid view of results.*
+
+**Bookmark Management**
+<img src="https://github.com/user-attachments/assets/ffebb7d7-1632-418d-a8a1-3181e1aa6d02" alt="Bookmark Management" width="350">
+*Bookmark management screen with options to remove and undo bookmarks.*
+
+**Recipe Details**
+<img src="https://github.com/user-attachments/assets/24515a71-4c70-42ac-bba6-bbd44c501c31" alt="Recipe Details" width="350">
+*Detailed view of a recipe with ingredients, preparation steps, and video content.*
+
+**Profile Management**
+<img src="https://github.com/user-attachments/assets/c1e1637e-eab2-4263-82fb-b91374f43384" alt="Profile Management" width="350">
+*Profile management screen with options to update personal information.*
+
 
 ## Video Demonstration
 
