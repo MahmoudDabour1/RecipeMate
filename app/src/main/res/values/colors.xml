@@ -9,6 +9,7 @@
     <color name="brownLightColor">#A67C33</color>
     <color name="redColor">#FF0000</color>
     <color name="whiteColor">#FFFFFF</color>
+    <color name="gradientEndColor">#1AFFFFFF</color>
     <color name="blackColor">#000000</color>
     <color name="greyColor">#808080</color>
     <color name="greyLightColor">#D3D3D3</color>

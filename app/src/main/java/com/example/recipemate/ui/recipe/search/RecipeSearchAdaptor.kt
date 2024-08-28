@@ -59,6 +59,7 @@ class RecipeSearchAdapter(
         fun bind(recipe: RecipeDetails) {
             binding.textViewSearchRecipeName.text = recipe.strMeal
             Glide.with(itemView.context).load(recipe.strMealThumb)
+                .placeholder(R.drawable.recipe_placeholder)
                 .into(binding.imageViewRecipeSearch)
         }
     }
